@@ -1,17 +1,27 @@
 # Mapa de recursos sociales
 
-Aplicacion web publica, simple y responsive para consultar refugios, centros diurnos, puertas abiertas y otros dispositivos sociales cercanos.
+Aplicación web pública, simple y responsive para consultar refugios, centros diurnos, puertas abiertas y otros dispositivos sociales cercanos.
 
-El MVP esta pensado para dos usos principales:
+> **Estado actual:** MVP funcional orientado a consulta rápida desde celular o desde computadoras de trabajo en centros y refugios.
+
+El MVP está pensado para dos usos principales:
 
 1. Personas que acceden desde celular y necesitan encontrar recursos cercanos.
 2. Trabajadores de refugios que usan una computadora del trabajo y necesitan orientar o derivar rapidamente a una persona hacia otro recurso cercano.
 
 ## Importante
 
-Los datos incluidos en `src/data/resources.json` son ficticios y sirven solo para probar la interfaz. No deben usarse para derivaciones reales.
+Los datos incluidos en `src/data/resources.json` son **ficticios** y sirven solo para probar la interfaz. No deben usarse para derivaciones reales.
 
 La app no maneja cupos, usuarios, historial de derivaciones ni datos sensibles.
+
+## Demo local
+
+Una vez levantado el proyecto, la app queda disponible normalmente en:
+
+```bash
+http://localhost:5173
+```
 
 ## Stack
 
@@ -24,18 +34,21 @@ La app no maneja cupos, usuarios, historial de derivaciones ni datos sensibles.
 - OpenStreetMap
 - Datos locales en JSON
 
-## Como correr el proyecto localmente
+## Cómo correr el proyecto localmente
+
+### Requisitos
+
+- Node.js 20 LTS recomendado
+- npm 10+
+
+### Instalación
 
 ```bash
 npm install
 npm run dev
 ```
 
-Luego abrir la URL local que muestre Vite, normalmente:
-
-```bash
-http://localhost:5173
-```
+Luego abrí la URL local que muestre Vite.
 
 ## Scripts disponibles
 
@@ -43,11 +56,12 @@ http://localhost:5173
 npm run dev      # entorno local de desarrollo
 npm run build    # validacion TypeScript y build de produccion
 npm run preview  # vista previa del build
+npm run lint     # lint del proyecto
 ```
 
-## Como editar los recursos
+## Cómo editar los recursos
 
-Editar el archivo:
+Editá el archivo:
 
 ```bash
 src/data/resources.json
@@ -87,27 +101,34 @@ Para que un recurso aparezca en el selector `Estoy trabajando en`, usar:
 - Mapa con marcadores usando OpenStreetMap y Leaflet.
 - Lista de recursos en tarjetas.
 - Ordenamiento por distancia cuando existe un punto de origen.
-- Boton `Usar mi ubicacion` con geolocalizacion del navegador.
+- Botón `Usar mi ubicación` con geolocalización del navegador.
 - Selector `Estoy trabajando en` para usar un centro como origen.
-- Busqueda por nombre, direccion, barrio, tipo, telefono, horario, poblacion u observaciones.
+- Búsqueda por nombre, dirección, barrio, tipo, teléfono, horario, población u observaciones.
 - Filtros por tipo de recurso.
 - Filtros por poblacion atendida.
 - Filtro `Abierto ahora` con lectura simple de horarios tipo `09:00 a 17:00` y horarios nocturnos como `18:00 a 08:00`.
 - Filtros por `Requiere derivacion` y `Acceso directo`.
-- Boton `Como llegar` con enlace externo a OpenStreetMap.
-- Boton `Copiar datos` para compartir la informacion practica del recurso.
+- Botón `Como llegar` con enlace externo a OpenStreetMap.
+- Botón `Copiar datos` para compartir la información práctica del recurso.
 - Aviso visible sobre confirmacion de informacion por canales oficiales.
 - Layout responsive: dos columnas en escritorio, una columna en celular.
+
+## Decisiones técnicas del MVP
+
+- **Sin backend**: se priorizó velocidad de validación del flujo y simplicidad operativa.
+- **Datos locales en JSON**: suficiente para prototipado y pruebas de UX sin exponer datos sensibles.
+- **Leaflet + OpenStreetMap**: evita costos de APIs pagas y mantiene bajo el acoplamiento.
+- **Centro de referencia manual**: útil cuando la geolocalización del navegador no sirve bien en computadoras de trabajo.
 
 ## Fuera de alcance por ahora
 
 - Login o cuentas de usuario.
 - Backend.
-- Panel de administracion.
+- Panel de administración.
 - Cupos en tiempo real.
 - Historial de derivaciones.
 - Datos personales o sensibles.
-- Analiticas de seguimiento de personas usuarias.
+- Analíticas de seguimiento de personas usuarias.
 - Datos reales de recursos.
 - Claves API o servicios pagos de mapas.
 
@@ -135,11 +156,20 @@ src/
     distance.ts
     maps.ts
     clipboard.ts
+    coordinates.ts
     openingHours.ts
   App.tsx
   main.tsx
   index.css
 ```
+
+## Troubleshooting
+
+### La página queda en blanco o falla el mapa
+
+- Verificá que estés corriendo el proyecto desde la carpeta correcta del repositorio.
+- Reiniciá Vite con `npm run dev` si hiciste cambios estructurales.
+- Si el navegador entrega coordenadas inválidas, la app debería caer al centro por defecto en vez de romperse.
 
 ## Ideas futuras
 
