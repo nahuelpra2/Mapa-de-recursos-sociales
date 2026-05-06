@@ -15,6 +15,8 @@ Los datos incluidos en `src/data/resources.json` son **ficticios** y sirven solo
 
 La app no maneja cupos, usuarios, historial de derivaciones ni datos sensibles.
 
+Antes de incorporar informacion real, seguí la estrategia de validacion y mantenimiento en [`docs/real-data-strategy.md`](docs/real-data-strategy.md).
+
 ## Demo local
 
 Una vez levantado el proyecto, la app queda disponible normalmente en:
@@ -61,6 +63,8 @@ npm test         # tests automatizados y validacion del JSON local
 ```
 
 ## Cómo editar los recursos
+
+> **Datos reales:** no agregues recursos reales sin fuente verificable, responsable de validacion y fecha de reverificacion. Ver [`docs/real-data-strategy.md`](docs/real-data-strategy.md).
 
 Editá el archivo:
 
