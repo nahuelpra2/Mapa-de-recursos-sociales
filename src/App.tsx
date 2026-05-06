@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Filters } from "./components/Filters";
 import { localResourceRepository } from "./data/localResourceRepository";
 import { Header } from "./components/Header";
@@ -9,23 +9,11 @@ import { ResourceMap } from "./components/ResourceMap";
 import { SearchBar } from "./components/SearchBar";
 import { useFilteredResources } from "./hooks/useFilteredResources";
 import { useGeolocation } from "./hooks/useGeolocation";
-import type { FiltersState, ResourceWithDistance, SearchOrigin } from "./types/resource";
+import { useResourceSearchState } from "./hooks/useResourceSearchState";
+import type { ResourceWithDistance } from "./types/resource";
 import { copyResourceToClipboard } from "./utils/clipboard";
-import { hasValidCoordinates } from "./utils/coordinates";
-
-const defaultFilters: FiltersState = {
-  tipo: "",
-  poblacion: "",
-  abiertoAhora: false,
-  requiereDerivacion: false,
-  accesoDirecto: false
-};
 
 function App() {
-  const [search, setSearch] = useState("");
-  const [filters, setFilters] = useState<FiltersState>(defaultFilters);
-  const [origin, setOrigin] = useState<SearchOrigin | null>(null);
-  const [selectedReferenceCenterId, setSelectedReferenceCenterId] = useState("");
   const [copyMessage, setCopyMessage] = useState<string | null>(null);
 
   const { location, status, error, requestLocation } = useGeolocation();
@@ -42,41 +30,25 @@ function App() {
     []
   );
 
+  const {
+    search,
+    setSearch,
+    filters,
+    setFilters,
+    clearFilters,
+    origin,
+    originLabel,
+    selectedReferenceCenterId,
+    clearReferenceCenterSelection,
+    selectReferenceCenter
+  } = useResourceSearchState({ location, referenceCenters });
+
   const filteredResources = useFilteredResources({
     resources,
     search,
     filters,
     origin
   });
-
-  useEffect(() => {
-    if (!hasValidCoordinates(location)) return;
-
-    setOrigin({
-      lat: location.lat,
-      lng: location.lng,
-      label: "tu ubicacion actual",
-      mode: "current-location"
-    });
-    setSelectedReferenceCenterId("");
-  }, [location]);
-
-  function handleReferenceCenterSelect(centerId: string) {
-    setSelectedReferenceCenterId(centerId);
-
-    const center = referenceCenters.find((resource) => resource.id === centerId);
-    if (!center || !hasValidCoordinates(center)) {
-      setOrigin(null);
-      return;
-    }
-
-    setOrigin({
-      lat: center.lat,
-      lng: center.lng,
-      label: center.nombre,
-      mode: "reference-center"
-    });
-  }
 
   async function handleCopy(resource: ResourceWithDistance) {
     try {
@@ -90,15 +62,9 @@ function App() {
   }
 
   function handleUseLocation() {
-    setSelectedReferenceCenterId("");
+    clearReferenceCenterSelection();
     requestLocation();
   }
-
-  const originLabel = origin
-    ? origin.mode === "current-location"
-      ? "Mostrando recursos cercanos a tu ubicacion actual"
-      : `Mostrando recursos cercanos a ${origin.label}`
-    : "Selecciona tu ubicacion actual o un centro de referencia para ordenar por cercania";
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
@@ -128,10 +94,10 @@ function App() {
             <ReferenceCenterSelector
               centers={referenceCenters}
               selectedCenterId={selectedReferenceCenterId}
-              onSelect={handleReferenceCenterSelect}
+              onSelect={selectReferenceCenter}
             />
 
-            <Filters filters={filters} populationOptions={populationOptions} onChange={setFilters} onClear={() => setFilters(defaultFilters)} />
+            <Filters filters={filters} populationOptions={populationOptions} onChange={setFilters} onClear={clearFilters} />
 
             <p className="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
               {originLabel}
