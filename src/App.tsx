@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Filters } from "./components/Filters";
-import { resources } from "./data/resources";
+import { localResourceRepository } from "./data/localResourceRepository";
 import { Header } from "./components/Header";
 import { Notice } from "./components/Notice";
 import { ReferenceCenterSelector } from "./components/ReferenceCenterSelector";
@@ -30,13 +30,15 @@ function App() {
 
   const { location, status, error, requestLocation } = useGeolocation();
 
+  const resources = useMemo(() => localResourceRepository.listResources(), []);
+
   const referenceCenters = useMemo(
-    () => resources.filter((resource) => resource.esCentroReferencia),
+    () => localResourceRepository.listReferenceCenters(),
     []
   );
 
   const populationOptions = useMemo(
-    () => Array.from(new Set(resources.flatMap((resource) => resource.poblacion))).sort((a, b) => a.localeCompare(b)),
+    () => localResourceRepository.listPopulationOptions(),
     []
   );
 
