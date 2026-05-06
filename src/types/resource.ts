@@ -1,33 +1,13 @@
-export type ResourceType =
-  | "Refugio nocturno"
-  | "Centro diurno"
-  | "Puerta abierta"
-  | "Centro de atenci\u00f3n"
-  | "Otro";
+import type { ResourceFromSchema, ResourceTypeFromSchema } from "../data/resourceSchema";
+
+export type ResourceType = ResourceTypeFromSchema;
 
 export type Coordinates = {
   lat: number;
   lng: number;
 };
 
-export type Resource = {
-  id: string;
-  nombre: string;
-  tipo: ResourceType;
-  direccion: string;
-  barrio?: string;
-  lat: number;
-  lng: number;
-  telefono?: string;
-  horario?: string;
-  poblacion: string[];
-  requiereDerivacion: boolean;
-  accesoDirecto: boolean;
-  observaciones?: string;
-  fuente: string;
-  ultimaActualizacion: string;
-  esCentroReferencia?: boolean;
-};
+export type Resource = ResourceFromSchema;
 
 export type ResourceWithDistance = Resource & {
   distanceKm?: number;

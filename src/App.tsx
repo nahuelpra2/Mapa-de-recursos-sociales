@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import resourcesData from "./data/resources.json";
 import { Filters } from "./components/Filters";
+import { resources } from "./data/resources";
 import { Header } from "./components/Header";
 import { Notice } from "./components/Notice";
 import { ReferenceCenterSelector } from "./components/ReferenceCenterSelector";
@@ -9,11 +9,9 @@ import { ResourceMap } from "./components/ResourceMap";
 import { SearchBar } from "./components/SearchBar";
 import { useFilteredResources } from "./hooks/useFilteredResources";
 import { useGeolocation } from "./hooks/useGeolocation";
-import type { FiltersState, Resource, ResourceWithDistance, SearchOrigin } from "./types/resource";
+import type { FiltersState, ResourceWithDistance, SearchOrigin } from "./types/resource";
 import { copyResourceToClipboard } from "./utils/clipboard";
 import { hasValidCoordinates } from "./utils/coordinates";
-
-const resources = resourcesData as Resource[];
 
 const defaultFilters: FiltersState = {
   tipo: "",
