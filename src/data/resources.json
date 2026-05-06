@@ -15,6 +15,11 @@
     "observaciones": "Dato ficticio para pruebas. Confirmar siempre por canales oficiales.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -33,6 +38,11 @@
     "observaciones": "Dato ficticio para validar filtros y tarjetas.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -51,6 +61,11 @@
     "observaciones": "Dato ficticio. Se recomienda llamar antes de concurrir.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -69,6 +84,11 @@
     "observaciones": "Dato ficticio para pruebas de poblacion atendida.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": false
   },
   {
@@ -87,6 +107,11 @@
     "observaciones": "Dato ficticio. No representa disponibilidad real.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": false
   },
   {
@@ -105,6 +130,11 @@
     "observaciones": "Dato ficticio para probar abierto ahora.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -123,6 +153,11 @@
     "observaciones": "Dato ficticio. Reemplazar por informacion publica validada.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": false
   },
   {
@@ -141,6 +176,11 @@
     "observaciones": "Dato ficticio para probar accesibilidad y filtros.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
+    "verification": {
+      "status": "needs_review",
+      "source": "Datos ficticios de prueba; pendiente de verificación humana",
+      "notes": "No usar para derivaciones reales."
+    },
     "esCentroReferencia": false
   }
 ]

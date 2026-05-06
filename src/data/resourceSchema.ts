@@ -12,6 +12,26 @@ export const resourceTypeSchema = z.enum([
 
 const requiredTextSchema = z.string().min(1);
 const optionalTextSchema = z.string().min(1).optional();
+const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
+export const resourceVerificationSchema = z.discriminatedUnion("status", [
+  z
+    .object({
+      status: z.literal("verified"),
+      verifiedAt: isoDateSchema,
+      source: requiredTextSchema,
+      notes: optionalTextSchema
+    })
+    .strict(),
+  z
+    .object({
+      status: z.literal("needs_review"),
+      verifiedAt: isoDateSchema.optional(),
+      source: requiredTextSchema,
+      notes: optionalTextSchema
+    })
+    .strict()
+]);
 
 export const resourceSchema = z
   .object({
@@ -29,7 +49,8 @@ export const resourceSchema = z
     accesoDirecto: z.boolean(),
     observaciones: optionalTextSchema,
     fuente: requiredTextSchema,
-    ultimaActualizacion: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    ultimaActualizacion: isoDateSchema,
+    verification: resourceVerificationSchema,
     esCentroReferencia: z.boolean().optional()
   })
   .strict();

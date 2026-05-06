@@ -24,6 +24,11 @@ const validResource = {
   observaciones: "Dato de prueba",
   fuente: "Fuente de prueba",
   ultimaActualizacion: "2026-05-01",
+  verification: {
+    status: "verified",
+    verifiedAt: "2026-05-01",
+    source: "Llamada de prueba"
+  },
   esCentroReferencia: true
 };
 
@@ -43,6 +48,51 @@ describe("resources runtime validation", () => {
     delete withoutName.nombre;
 
     expect(() => validateResources([withoutName])).toThrow(ResourceDataValidationError);
+  });
+
+  it("accepts resources with human verification metadata", () => {
+    expect(validateResources([validResource])).toEqual([validResource]);
+    expect(
+      validateResources([
+        {
+          ...validResource,
+          verification: {
+            status: "needs_review",
+            source: "Dato de prueba pendiente de verificación humana",
+            notes: "No usar para derivaciones reales"
+          }
+        }
+      ])
+    ).toEqual([
+      {
+        ...validResource,
+        verification: {
+          status: "needs_review",
+          source: "Dato de prueba pendiente de verificación humana",
+          notes: "No usar para derivaciones reales"
+        }
+      }
+    ]);
+  });
+
+  it("rejects invalid verification metadata", () => {
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          verification: { status: "verified", source: "Llamada de prueba" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          verification: { status: "needs_review", source: "" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
   });
 
   it("throws an actionable domain error instead of a raw Zod error", () => {

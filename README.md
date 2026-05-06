@@ -91,9 +91,16 @@ Cada recurso usa esta estructura:
   "observaciones": "Dato ficticio para pruebas.",
   "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
   "ultimaActualizacion": "2026-05-01",
+  "verification": {
+    "status": "needs_review",
+    "source": "Datos ficticios de prueba; pendiente de verificación humana",
+    "notes": "No usar para derivaciones reales."
+  },
   "esCentroReferencia": true
 }
 ```
+
+`verification.status` puede ser `verified` o `needs_review`. Para recursos `verified`, `verification.verifiedAt` es obligatorio y debe usar formato `YYYY-MM-DD`.
 
 Para que un recurso aparezca en el selector `Estoy trabajando en`, usar:
 

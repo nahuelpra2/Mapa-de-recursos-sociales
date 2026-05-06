@@ -6,17 +6,17 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 
 1. Relevar el recurso desde una fuente oficial o institucional.
 2. Confirmar por un segundo canal cuando el dato impacte una derivacion presencial.
-3. Registrar `fuente` y `ultimaActualizacion` en `src/data/resources.json`.
-4. Registrar responsable, fecha de verificacion y proxima revision en una planilla o issue de mantenimiento hasta que el schema tenga campos dedicados.
+3. Registrar `fuente`, `ultimaActualizacion` y `verification` en `src/data/resources.json`.
+4. Registrar responsable y proxima revision en una planilla o issue de mantenimiento hasta que el schema tenga campos dedicados.
 5. Ejecutar `npm run lint` y `npm test` antes de pedir review.
 
 ## Decisiones de este MVP
 
 | Tema | Decision |
 | --- | --- |
-| Alcance | Documentar primero; no agregar campos al schema en este work unit. |
+| Alcance | El schema incluye metadata minima de verificacion humana; ownership y caducidad siguen fuera del JSON por ahora. |
 | Datos actuales | `resources.json` sigue siendo ficticio y no sirve para derivaciones reales. |
-| Metadatos actuales | El schema ya exige `fuente` y `ultimaActualizacion` por recurso. |
+| Metadatos actuales | El schema exige `fuente`, `ultimaActualizacion` y `verification` por recurso. |
 | Ownership | La responsabilidad operativa vive fuera del JSON por ahora: issue, planilla o documento de mantenimiento. |
 | Caducidad | Todo recurso real debe tener una proxima fecha de reverificacion definida antes de publicarse. |
 | Seguridad | La app informa recursos, no confirma cupos, elegibilidad, urgencias ni disponibilidad en tiempo real. |
@@ -27,7 +27,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 | --- | --- |
 | Fuente (`fuente`) | URL oficial, documento institucional, comunicacion formal o contacto institucional identificable. Evitar datos copiados sin trazabilidad. |
 | Ultima actualizacion (`ultimaActualizacion`) | Fecha ISO `YYYY-MM-DD` del ultimo cambio validado en el JSON. |
-| Fecha de verificacion | Fecha en que una persona confirmo que los datos siguen vigentes. Puede coincidir con `ultimaActualizacion`. |
+| Verificacion (`verification`) | Estado `verified` o `needs_review`, fuente humana de verificacion y fecha `verifiedAt` cuando el estado es `verified`. |
 | Responsable | Persona, equipo o institucion que verifico el dato y puede responder por la revision. |
 | Caducidad | Fecha de proxima reverificacion o regla de cadencia. Sin caducidad, el recurso queda pendiente. |
 | Canales criticos | Telefono, direccion, horario, modalidad de acceso y poblacion atendida deben validarse antes de publicar. |
@@ -51,6 +51,8 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 - [ ] `requiereDerivacion` y `accesoDirecto` no se contradicen.
 - [ ] `fuente` explica de donde sale el dato.
 - [ ] `ultimaActualizacion` usa formato `YYYY-MM-DD`.
+- [ ] `verification.status` refleja si el recurso fue verificado o queda pendiente.
+- [ ] Si `verification.status` es `verified`, `verification.verifiedAt` usa formato `YYYY-MM-DD`.
 - [ ] Hay responsable de verificacion registrado fuera del JSON.
 - [ ] Hay proxima fecha de reverificacion definida.
 - [ ] No se agregaron datos personales, casos individuales ni informacion sensible.
@@ -81,15 +83,19 @@ Usar esta plantilla en un issue, planilla o nota de mantenimiento mientras el sc
 
 ## Seguimiento recomendado
 
-Cuando el proyecto empiece a usar datos reales, evaluar una evolucion backward-compatible del schema con campos opcionales como:
+Cuando el proyecto empiece a usar datos reales, evaluar una evolucion backward-compatible del schema con campos adicionales como ownership y caducidad:
 
 ```json
 {
+  "verification": {
+    "status": "verified",
+    "verifiedAt": "2026-05-01",
+    "source": "Llamada institucional",
+    "notes": "Confirmado por telefono oficial"
+  },
   "verificadoPor": "Equipo responsable o institucion",
-  "fechaVerificacion": "2026-05-01",
-  "reverificarAntesDe": "2026-06-01",
-  "estadoDato": "verificado"
+  "reverificarAntesDe": "2026-06-01"
 }
 ```
 
-Ese cambio deberia venir con tests de schema y actualizacion completa de `resources.json`.
+Cualquier campo adicional deberia venir con tests de schema y actualizacion completa de `resources.json`.

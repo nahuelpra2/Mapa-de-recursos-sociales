@@ -13,7 +13,12 @@ const resource: Resource = {
   requiereDerivacion: false,
   accesoDirecto: true,
   fuente: "Test",
-  ultimaActualizacion: "2026-05-06"
+  ultimaActualizacion: "2026-05-06",
+  verification: {
+    status: "verified",
+    verifiedAt: "2026-05-06",
+    source: "Test"
+  }
 };
 
 describe("map helpers", () => {
