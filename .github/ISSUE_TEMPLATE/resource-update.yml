@@ -1,20 +1,22 @@
 name: Alta o actualización de recurso social
-description: Registrar un alta, actualización, baja/despublicación o revisión periódica de un recurso.
-title: "[Recurso] "
-labels: ["datos", "recurso"]
+description: Registrar un alta, actualización, baja o revisión periódica de un recurso.
+title: "[Recurso]: "
+labels:
+  - datos
+  - recurso
 body:
   - type: markdown
     attributes:
       value: |
-        Usá este formulario para pedir cambios sobre recursos sociales reales.
+        Usá este formulario para dejar trazabilidad antes de publicar o modificar recursos sociales reales.
 
-        Antes de publicar, el dato tiene que tener fuente verificable, responsable de revisión y próxima fecha de reverificación.
+        No cargues datos personales, casos individuales ni información sensible.
 
   - type: dropdown
-    id: tipo-cambio
+    id: accion
     attributes:
       label: Acción solicitada
-      description: Elegí qué necesita pasar con el recurso.
+      description: Elegí qué cambio necesitás registrar.
       options:
         - Alta de recurso nuevo
         - Actualización de recurso existente
@@ -28,12 +30,12 @@ body:
     attributes:
       label: Nombre del recurso
       description: Nombre público o institucional del recurso.
-      placeholder: Centro / refugio / dispositivo...
+      placeholder: Centro, refugio, comedor, dispositivo...
     validations:
       required: true
 
   - type: dropdown
-    id: tipo-recurso
+    id: categoria
     attributes:
       label: Tipo o categoría
       description: Usá una categoría compatible con el JSON cuando aplique.
@@ -57,10 +59,10 @@ body:
         - Barrio:
         - Teléfono o contacto institucional:
         - Horario:
-        - Modalidad de acceso: presencial / telefónica / derivación / acceso directo / otra
+        - Modalidad de acceso:
         - Población atendida:
-        - ¿Requiere derivación?: sí / no / pendiente
-        - ¿Permite acceso directo?: sí / no / pendiente
+        - Requiere derivación: sí / no / pendiente
+        - Permite acceso directo: sí / no / pendiente
         - Observaciones públicas relevantes:
     validations:
       required: true
@@ -81,7 +83,7 @@ body:
     id: verification-status
     attributes:
       label: Estado de verificación
-      description: Debe coincidir con `verification.status` si el recurso pasa al JSON.
+      description: Debe coincidir con verification.status si el recurso pasa al JSON.
       options:
         - verified
         - needs_review
@@ -92,11 +94,11 @@ body:
     id: verification-detail
     attributes:
       label: Detalle de verificación
-      description: Si el estado es `verified`, la fecha de verificación es obligatoria y debe usar formato YYYY-MM-DD.
+      description: Si el estado es verified, la fecha de verificación es obligatoria y debe usar formato YYYY-MM-DD.
       value: |
-        - Fecha de verificación (`verifiedAt`, solo si está verificado): YYYY-MM-DD
-        - Canal/fuente de verificación (`verification.source`):
-        - Notas de verificación (`verification.notes`, opcional):
+        - Fecha de verificación, verifiedAt solo si está verificado: YYYY-MM-DD
+        - Canal o fuente de verificación:
+        - Notas de verificación, opcional:
     validations:
       required: true
 
@@ -104,7 +106,7 @@ body:
     id: mantenimiento
     attributes:
       label: Mantenimiento fuera del JSON
-      description: Estos campos todavía no viven en `resources.json`; quedan registrados en el issue para seguimiento operativo.
+      description: Estos campos todavía no viven en resources.json; quedan registrados en el issue para seguimiento operativo.
       value: |
         - Responsable persona/equipo:
         - Próxima fecha de revisión: YYYY-MM-DD
