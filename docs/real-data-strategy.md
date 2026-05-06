@@ -6,9 +6,10 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 
 1. Relevar el recurso desde una fuente oficial o institucional.
 2. Confirmar por un segundo canal cuando el dato impacte una derivacion presencial.
-3. Registrar `fuente`, `ultimaActualizacion` y `verification` en `src/data/resources.json`.
-4. Registrar responsable y proxima revision en una planilla o issue de mantenimiento hasta que el schema tenga campos dedicados.
-5. Ejecutar `npm run lint` y `npm test` antes de pedir review.
+3. Abrir un issue con la plantilla "Alta o actualización de recurso social" para dejar trazabilidad operativa.
+4. Registrar `fuente`, `ultimaActualizacion` y `verification` en `src/data/resources.json`.
+5. Registrar responsable y proxima revision en una planilla o issue de mantenimiento hasta que el schema tenga campos dedicados.
+6. Ejecutar `npm run lint` y `npm test` antes de pedir review.
 
 ## Decisiones de este MVP
 

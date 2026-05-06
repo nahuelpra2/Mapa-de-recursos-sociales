@@ -1,0 +1,138 @@
+name: Alta o actualización de recurso social
+description: Registrar un alta, actualización, baja/despublicación o revisión periódica de un recurso.
+title: "[Recurso] "
+labels: ["datos", "recurso"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Usá este formulario para pedir cambios sobre recursos sociales reales.
+
+        Antes de publicar, el dato tiene que tener fuente verificable, responsable de revisión y próxima fecha de reverificación.
+
+  - type: dropdown
+    id: tipo-cambio
+    attributes:
+      label: Acción solicitada
+      description: Elegí qué necesita pasar con el recurso.
+      options:
+        - Alta de recurso nuevo
+        - Actualización de recurso existente
+        - Baja o despublicación
+        - Revisión periódica sin cambios
+    validations:
+      required: true
+
+  - type: input
+    id: nombre
+    attributes:
+      label: Nombre del recurso
+      description: Nombre público o institucional del recurso.
+      placeholder: Centro / refugio / dispositivo...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tipo-recurso
+    attributes:
+      label: Tipo o categoría
+      description: Usá una categoría compatible con el JSON cuando aplique.
+      options:
+        - Refugio nocturno
+        - Centro diurno
+        - Puerta abierta
+        - Centro de atención
+        - Otro
+        - No aplica / baja
+    validations:
+      required: true
+
+  - type: textarea
+    id: datos-operativos
+    attributes:
+      label: Datos operativos a publicar o revisar
+      description: Completá solo lo que aplique. Si un dato está pendiente, escribí "pendiente".
+      value: |
+        - Dirección:
+        - Barrio:
+        - Teléfono o contacto institucional:
+        - Horario:
+        - Modalidad de acceso: presencial / telefónica / derivación / acceso directo / otra
+        - Población atendida:
+        - ¿Requiere derivación?: sí / no / pendiente
+        - ¿Permite acceso directo?: sí / no / pendiente
+        - Observaciones públicas relevantes:
+    validations:
+      required: true
+
+  - type: textarea
+    id: fuente
+    attributes:
+      label: Fuente del dato
+      description: Indicá URL oficial, documento institucional, correo, llamada o contacto institucional. Evitá fuentes sin trazabilidad.
+      value: |
+        - Fuente primaria:
+        - Fuente secundaria o confirmación adicional:
+        - Fecha de última actualización del dato: YYYY-MM-DD
+    validations:
+      required: true
+
+  - type: dropdown
+    id: verification-status
+    attributes:
+      label: Estado de verificación
+      description: Debe coincidir con `verification.status` si el recurso pasa al JSON.
+      options:
+        - verified
+        - needs_review
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification-detail
+    attributes:
+      label: Detalle de verificación
+      description: Si el estado es `verified`, la fecha de verificación es obligatoria y debe usar formato YYYY-MM-DD.
+      value: |
+        - Fecha de verificación (`verifiedAt`, solo si está verificado): YYYY-MM-DD
+        - Canal/fuente de verificación (`verification.source`):
+        - Notas de verificación (`verification.notes`, opcional):
+    validations:
+      required: true
+
+  - type: textarea
+    id: mantenimiento
+    attributes:
+      label: Mantenimiento fuera del JSON
+      description: Estos campos todavía no viven en `resources.json`; quedan registrados en el issue para seguimiento operativo.
+      value: |
+        - Responsable persona/equipo:
+        - Próxima fecha de revisión: YYYY-MM-DD
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: chequeos-criticos
+    attributes:
+      label: Chequeos críticos antes de publicar
+      description: Marcá todo antes de pedir que el cambio se publique.
+      options:
+        - label: Confirmé que no hay nombres de personas usuarias, documentos, teléfonos personales, historias clínicas, casos individuales ni datos sensibles.
+          required: true
+        - label: Confirmé que este recurso no se presenta como canal de emergencia ni garantiza cupos, disponibilidad, admisión o elegibilidad en tiempo real.
+          required: true
+        - label: Confirmé que no hay datos ficticios o de ejemplo tratados como datos reales.
+          required: true
+        - label: Confirmé que la fuente es oficial, institucional o verificable.
+          required: true
+        - label: Confirmé que hay responsable de mantenimiento y próxima fecha de revisión fuera del JSON.
+          required: true
+
+  - type: textarea
+    id: pendientes
+    attributes:
+      label: Pendientes, riesgos o motivo de baja
+      description: Usá este espacio para dudas, bloqueos, diferencias entre fuentes o motivo de despublicación.
+      placeholder: Ejemplo: falta confirmar horario de fin de semana; baja temporal hasta nueva comunicación institucional.
+    validations:
+      required: false
