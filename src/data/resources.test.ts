@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 import resourcesData from "./resources.json";
 import { resources } from "./resources";
-import { validateResources } from "./resourceSchema";
+import {
+  ResourceDataValidationError,
+  formatResourceDataValidationError,
+  resourcesSchema,
+  validateResources
+} from "./resourceSchema";
 
 const validResource = {
   id: "recurso-valido-001",
@@ -29,14 +34,38 @@ describe("resources runtime validation", () => {
   });
 
   it("rejects resources with invalid geographic coordinates", () => {
-    expect(() => validateResources([{ ...validResource, lat: -91 }])).toThrow();
-    expect(() => validateResources([{ ...validResource, lng: 181 }])).toThrow();
+    expect(() => validateResources([{ ...validResource, lat: -91 }])).toThrow(ResourceDataValidationError);
+    expect(() => validateResources([{ ...validResource, lng: 181 }])).toThrow(ResourceDataValidationError);
   });
 
   it("rejects resources missing required fields", () => {
     const withoutName: Partial<typeof validResource> = { ...validResource };
     delete withoutName.nombre;
 
-    expect(() => validateResources([withoutName])).toThrow();
+    expect(() => validateResources([withoutName])).toThrow(ResourceDataValidationError);
+  });
+
+  it("throws an actionable domain error instead of a raw Zod error", () => {
+    expect(() => validateResources([{ ...validResource, lat: -91 }])).toThrow(
+      /Invalid bundled resource data: resources\.json failed validation\./
+    );
+    expect(() => validateResources([{ ...validResource, lat: -91 }])).toThrow(
+      /resources\.json\[0\]\.lat:/
+    );
+    expect(() => validateResources([{ ...validResource, lat: -91 }])).toThrow(
+      /the app will not render partial or unsafe resource records/
+    );
+  });
+
+  it("formats all validation issues with paths into resources.json", () => {
+    const invalidResources = [{ ...validResource, lat: -91, lng: 181 }];
+    const result = resourcesSchema.safeParse(invalidResources);
+
+    expect(result.success).toBe(false);
+
+    if (!result.success) {
+      expect(formatResourceDataValidationError(result.error)).toContain("resources.json[0].lat:");
+      expect(formatResourceDataValidationError(result.error)).toContain("resources.json[0].lng:");
+    }
   });
 });
