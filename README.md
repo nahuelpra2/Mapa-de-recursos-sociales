@@ -57,6 +57,7 @@ npm run dev      # entorno local de desarrollo
 npm run build    # validacion TypeScript y build de produccion
 npm run preview  # vista previa del build
 npm run lint     # lint del proyecto
+npm test         # tests automatizados y validacion del JSON local
 ```
 
 ## Cómo editar los recursos
@@ -95,6 +96,8 @@ Para que un recurso aparezca en el selector `Estoy trabajando en`, usar:
 ```json
 "esCentroReferencia": true
 ```
+
+Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSchema.ts` y también mediante `npm test`. Si el JSON no cumple el contrato, corregí `src/data/resources.json` antes de publicar cambios.
 
 ## Funcionalidades del MVP
 
