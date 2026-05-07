@@ -43,7 +43,7 @@ const resources: Resource[] = [
     direccion: "Calle Norte 789",
     lat: -34.6537,
     lng: -58.3816,
-    horario: "Lunes a viernes de 9:00 a 17:00",
+    horario: "Consultar horario",
     poblacion: ["Niñas, niños y adolescentes"],
     observaciones: "Orientacion para adolescencias",
     accesoDirecto: true

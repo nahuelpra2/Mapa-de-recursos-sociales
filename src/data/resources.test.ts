@@ -145,3 +145,43 @@ describe("resources runtime validation", () => {
     }
   });
 });
+
+describe("resources dataset integrity", () => {
+  it("keeps every bundled resource compatible with the Resource schema", () => {
+    expect(validateResources(resourcesData)).toEqual(resources);
+  });
+
+  it("keeps resource IDs unique", () => {
+    const ids = resources.map((resource) => resource.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("keeps coordinates valid for every bundled resource", () => {
+    for (const resource of resources) {
+      expect(Number.isFinite(resource.lat)).toBe(true);
+      expect(resource.lat).toBeGreaterThanOrEqual(-90);
+      expect(resource.lat).toBeLessThanOrEqual(90);
+      expect(Number.isFinite(resource.lng)).toBe(true);
+      expect(resource.lng).toBeGreaterThanOrEqual(-180);
+      expect(resource.lng).toBeLessThanOrEqual(180);
+    }
+  });
+
+  it("keeps manual verification metadata present and consistent", () => {
+    for (const resource of resources) {
+      expect(resource.verification.source.trim()).not.toBe("");
+
+      if (resource.verification.status === "verified") {
+        expect(resource.verification.verifiedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
+    }
+  });
+
+  it("keeps maintenance metadata present and consistent", () => {
+    for (const resource of resources) {
+      expect(resource.maintenance.owner.trim()).not.toBe("");
+      expect(resource.maintenance.reviewBy).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+});

@@ -1,15 +1,41 @@
 # Estrategia para datos reales
 
+Decision actual: la carga y actualizacion de recursos es manual y local en `src/data/resources.json`. Para este MVP no hay API, backend ni importacion remota automatica.
+
 La app puede incorporar datos reales solo si cada recurso tiene fuente verificable, fecha de verificacion, responsable de la validacion y una caducidad clara. Si un dato no cumple esa base minima, no debe publicarse como recurso real.
 
-## Camino rapido
+## Flujo manual local
+
+### Camino rapido
 
 1. Relevar el recurso desde una fuente oficial o institucional.
 2. Confirmar por un segundo canal cuando el dato impacte una derivacion presencial.
 3. Abrir un issue con la plantilla "Alta o actualización de recurso social" para dejar trazabilidad operativa.
 4. Registrar `fuente`, `ultimaActualizacion`, `verification` y `maintenance` en `src/data/resources.json`.
 5. Usar issues o planillas solo como bitacora complementaria; el owner vigente y la proxima revision deben quedar en el JSON.
-6. Ejecutar `npm run lint` y `npm test` antes de pedir review.
+6. Ejecutar `npm run lint` y `npm test` antes de pedir review. No ejecutar build para este flujo.
+
+### Donde editar
+
+| Caso | Archivo | Nota |
+| --- | --- | --- |
+| Alta, baja o correccion de recurso local | `src/data/resources.json` | Es el dataset versionado que consume la app. |
+| Schema y validacion runtime | `src/data/resourceSchema.ts` | Cambiarlo solo si cambia el modelo de datos. |
+| Fixtures de tests | `src/test/fixtures/resources.ts` | No es el dataset real; no usarlo para cargar recursos. |
+
+`src/data/resources.ts` solo importa el JSON y lo valida en el borde de datos. No agregar fetches, clientes HTTP ni supuestos de backend ahi.
+
+### Antes de subir cambios
+
+- [ ] Editaste el recurso en `src/data/resources.json`, no en fixtures de test.
+- [ ] El `id` es estable, descriptivo y unico.
+- [ ] Nombre, tipo, direccion, barrio, coordenadas, telefono y horario fueron copiados desde fuente verificable.
+- [ ] `fuente` explica de donde sale el dato sin exagerar precision.
+- [ ] `ultimaActualizacion`, `verification.verifiedAt` cuando aplique y `maintenance.reviewBy` usan `YYYY-MM-DD`.
+- [ ] `verification` expresa el estado real de verificacion humana.
+- [ ] `maintenance` deja claro quien revisa y cuando vence la proxima revision.
+- [ ] No agregaste datos personales, casos individuales ni informacion sensible.
+- [ ] Corriste `npm run lint` y `npm test`.
 
 ## Decisiones de este MVP
 
@@ -21,6 +47,8 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 | Ownership | `maintenance.owner` identifica la persona, equipo o institucion responsable de mantener el recurso. |
 | Caducidad | `maintenance.reviewBy` define la fecha limite para reverificacion manual; no confirma vigencia real ni disponibilidad. |
 | Seguridad | La app informa recursos, no confirma cupos, elegibilidad, urgencias ni disponibilidad en tiempo real. |
+| Carga de datos | La fuente de verdad del MVP es `src/data/resources.json`, editado manualmente y revisado en PR. |
+| API o backend | Puede evaluarse a futuro, pero no es el plan actual ni debe asumirse en cambios de datos. |
 
 ## Criterio minimo para publicar un recurso real
 
@@ -57,7 +85,34 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 - [ ] `maintenance.owner` identifica al responsable vigente.
 - [ ] `maintenance.reviewBy` define la proxima fecha de reverificacion.
 - [ ] No se agregaron datos personales, casos individuales ni informacion sensible.
-- [ ] Se ejecuto `npm test` para validar el JSON.
+- [ ] Se ejecuto `npm run lint` y `npm test` para validar el JSON y los tests de integridad.
+
+## Como completar `verification`
+
+| Estado | Usar cuando | Campos esperados |
+| --- | --- | --- |
+| `verified` | Una persona confirmo el dato por una fuente verificable. | `status`, `verifiedAt`, `source` y `notes` si aporta contexto. |
+| `needs_review` | El dato existe en una fuente, pero falta confirmacion humana suficiente o hay dudas. | `status`, `source` y `notes` explicando la duda cuando sea util. |
+
+No marcar como `verified` por intuicion, por datos viejos o porque "parece oficial". Si la fuente no permite sostener el dato, usar `needs_review` o no publicar el recurso.
+
+## Como completar `maintenance`
+
+| Campo | Que registrar | Ejemplo |
+| --- | --- | --- |
+| `owner` | Persona, equipo o institucion responsable de la proxima revision. | `Equipo de datos sociales` |
+| `reviewBy` | Fecha limite de reverificacion manual en formato `YYYY-MM-DD`. | `2026-06-01` |
+| `notes` | Cadencia, motivo o pendiente de mantenimiento. | `Reverificar telefono antes de invierno` |
+
+`maintenance.reviewBy` no confirma que el recurso siga activo: solo marca hasta cuando aceptamos la informacion sin nueva revision.
+
+## Que NO hacer
+
+- No inventar coordenadas, horarios, cupos, modalidad de acceso ni poblacion atendida.
+- No marcar un dato como oficial si la fuente no es oficial o institucional.
+- No convertir issues, planillas o fixtures en fuente de verdad paralela.
+- No asumir datos remotos, API o backend en este MVP.
+- No ejecutar `npm run build` como parte de la verificacion de carga manual.
 
 ## Plantilla operativa complementaria
 
