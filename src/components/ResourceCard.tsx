@@ -2,6 +2,7 @@ import type { Coordinates, ResourceWithDistance } from "../types/resource";
 import { formatDistance } from "../utils/distance";
 import { createMapLink } from "../utils/maps";
 import { isOpenNow } from "../utils/openingHours";
+import { getResourceVerificationDisplay } from "../utils/resourceVerification";
 
 type ResourceCardProps = {
   resource: ResourceWithDistance;
@@ -12,6 +13,11 @@ type ResourceCardProps = {
 export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
   const mapLink = createMapLink(resource, origin);
   const openNow = isOpenNow(resource.horario);
+  const verificationDisplay = getResourceVerificationDisplay(resource.verification);
+  const verificationBadgeClassName =
+    verificationDisplay.tone === "success"
+      ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
+      : "bg-amber-50 text-amber-900 ring-amber-200";
 
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-soft">
@@ -49,6 +55,12 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
             Centro de referencia
           </span>
         ) : null}
+        <span
+          className={`rounded-full px-3 py-1 text-xs font-bold ring-1 ${verificationBadgeClassName}`}
+          title={verificationDisplay.detail}
+        >
+          {verificationDisplay.label}
+        </span>
       </div>
 
       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
@@ -72,6 +84,10 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
       <footer className="mt-4 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500">
         <p>Fuente: {resource.fuente}</p>
         <p>Ultima actualizacion: {resource.ultimaActualizacion}</p>
+        <p>
+          Verificacion: {verificationDisplay.detail}. Fuente: {resource.verification.source}
+        </p>
+        {resource.verification.notes ? <p>Notas de verificacion: {resource.verification.notes}</p> : null}
       </footer>
     </article>
   );
