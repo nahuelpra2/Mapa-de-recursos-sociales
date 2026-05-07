@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { FiltersState, Resource, SearchOrigin } from "../types/resource";
+import { createResource } from "../test/fixtures/resources";
 import { filterResources } from "./useFilteredResources";
 
 const defaultFilters: FiltersState = {
@@ -10,38 +11,8 @@ const defaultFilters: FiltersState = {
   accesoDirecto: false
 };
 
-function makeResource(overrides: Partial<Resource>): Resource {
-  return {
-    id: "resource",
-    nombre: "Recurso base",
-    tipo: "Otro",
-    direccion: "Direccion base",
-    barrio: "Barrio base",
-    lat: -34.6037,
-    lng: -58.3816,
-    telefono: "011 0000-0000",
-    horario: "Lunes a viernes de 9:00 a 17:00",
-    poblacion: ["Personas adultas"],
-    requiereDerivacion: false,
-    accesoDirecto: true,
-    observaciones: "Observacion base",
-    fuente: "Fixture de test",
-    ultimaActualizacion: "2026-05-01",
-    verification: {
-      status: "verified",
-      verifiedAt: "2026-05-01",
-      source: "Fixture de test"
-    },
-    maintenance: {
-      owner: "Equipo social",
-      reviewBy: "2026-12-31"
-    },
-    ...overrides
-  };
-}
-
 const resources: Resource[] = [
-  makeResource({
+  createResource({
     id: "day-center",
     nombre: "Centro Ñandú",
     tipo: "Centro diurno",
@@ -53,7 +24,7 @@ const resources: Resource[] = [
     observaciones: "Entrega alimentos calientes",
     accesoDirecto: true
   }),
-  makeResource({
+  createResource({
     id: "shelter",
     nombre: "Albergue Sur",
     tipo: "Refugio nocturno",
@@ -65,7 +36,7 @@ const resources: Resource[] = [
     requiereDerivacion: true,
     accesoDirecto: false
   }),
-  makeResource({
+  createResource({
     id: "care-center",
     nombre: "Beta Atencion",
     tipo: "Centro de atención",

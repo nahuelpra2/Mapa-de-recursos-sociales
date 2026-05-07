@@ -1,29 +1,15 @@
 import { describe, expect, it } from "vitest";
-import type { Resource } from "../types/resource";
+import { createResource } from "../test/fixtures/resources";
 import { createMapLink, getResourceCoordinates } from "./maps";
 
-const resource: Resource = {
+const resource = createResource({
   id: "test-resource",
   nombre: "Recurso de prueba",
   tipo: "Centro de atención",
   direccion: "Calle falsa 123",
   lat: -34.6037,
-  lng: -58.3816,
-  poblacion: ["Adultos"],
-  requiereDerivacion: false,
-  accesoDirecto: true,
-  fuente: "Test",
-  ultimaActualizacion: "2026-05-06",
-  verification: {
-    status: "verified",
-    verifiedAt: "2026-05-06",
-    source: "Test"
-  },
-  maintenance: {
-    owner: "Equipo de test",
-    reviewBy: "2026-06-06"
-  }
-};
+  lng: -58.3816
+});
 
 describe("map helpers", () => {
   it("extracts resource coordinates", () => {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import resourcesData from "./resources.json";
+import { createResource } from "../test/fixtures/resources";
 import { resources } from "./resources";
 import {
   ResourceDataValidationError,
@@ -8,7 +9,7 @@ import {
   validateResources
 } from "./resourceSchema";
 
-const validResource = {
+const validResource = createResource({
   id: "recurso-valido-001",
   nombre: "Recurso válido",
   tipo: "Refugio nocturno",
@@ -19,11 +20,8 @@ const validResource = {
   telefono: "0000 0000",
   horario: "24 horas",
   poblacion: ["Adultos"],
-  requiereDerivacion: false,
-  accesoDirecto: true,
   observaciones: "Dato de prueba",
   fuente: "Fuente de prueba",
-  ultimaActualizacion: "2026-05-01",
   verification: {
     status: "verified",
     verifiedAt: "2026-05-01",
@@ -33,9 +31,8 @@ const validResource = {
     owner: "Equipo de prueba",
     reviewBy: "2026-06-01",
     notes: "Revisión manual programada"
-  },
-  esCentroReferencia: true
-};
+  }
+});
 
 describe("resources runtime validation", () => {
   it("accepts the current resources JSON at the data boundary", () => {
