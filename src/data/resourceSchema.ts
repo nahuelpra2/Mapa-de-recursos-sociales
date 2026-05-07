@@ -33,6 +33,14 @@ export const resourceVerificationSchema = z.discriminatedUnion("status", [
     .strict()
 ]);
 
+export const resourceMaintenanceSchema = z
+  .object({
+    owner: requiredTextSchema,
+    reviewBy: isoDateSchema,
+    notes: optionalTextSchema
+  })
+  .strict();
+
 export const resourceSchema = z
   .object({
     id: requiredTextSchema,
@@ -51,6 +59,7 @@ export const resourceSchema = z
     fuente: requiredTextSchema,
     ultimaActualizacion: isoDateSchema,
     verification: resourceVerificationSchema,
+    maintenance: resourceMaintenanceSchema,
     esCentroReferencia: z.boolean().optional()
   })
   .strict();

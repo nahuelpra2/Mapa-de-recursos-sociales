@@ -7,19 +7,19 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 1. Relevar el recurso desde una fuente oficial o institucional.
 2. Confirmar por un segundo canal cuando el dato impacte una derivacion presencial.
 3. Abrir un issue con la plantilla "Alta o actualización de recurso social" para dejar trazabilidad operativa.
-4. Registrar `fuente`, `ultimaActualizacion` y `verification` en `src/data/resources.json`.
-5. Registrar responsable y proxima revision en una planilla o issue de mantenimiento hasta que el schema tenga campos dedicados.
+4. Registrar `fuente`, `ultimaActualizacion`, `verification` y `maintenance` en `src/data/resources.json`.
+5. Usar issues o planillas solo como bitacora complementaria; el owner vigente y la proxima revision deben quedar en el JSON.
 6. Ejecutar `npm run lint` y `npm test` antes de pedir review.
 
 ## Decisiones de este MVP
 
 | Tema | Decision |
 | --- | --- |
-| Alcance | El schema incluye metadata minima de verificacion humana; ownership y caducidad siguen fuera del JSON por ahora. |
+| Alcance | El schema incluye metadata minima de verificacion humana, ownership y caducidad manual por recurso. |
 | Datos actuales | `resources.json` sigue siendo ficticio y no sirve para derivaciones reales. |
-| Metadatos actuales | El schema exige `fuente`, `ultimaActualizacion` y `verification` por recurso. |
-| Ownership | La responsabilidad operativa vive fuera del JSON por ahora: issue, planilla o documento de mantenimiento. |
-| Caducidad | Todo recurso real debe tener una proxima fecha de reverificacion definida antes de publicarse. |
+| Metadatos actuales | El schema exige `fuente`, `ultimaActualizacion`, `verification` y `maintenance` por recurso. |
+| Ownership | `maintenance.owner` identifica la persona, equipo o institucion responsable de mantener el recurso. |
+| Caducidad | `maintenance.reviewBy` define la fecha limite para reverificacion manual; no confirma vigencia real ni disponibilidad. |
 | Seguridad | La app informa recursos, no confirma cupos, elegibilidad, urgencias ni disponibilidad en tiempo real. |
 
 ## Criterio minimo para publicar un recurso real
@@ -29,8 +29,8 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 | Fuente (`fuente`) | URL oficial, documento institucional, comunicacion formal o contacto institucional identificable. Evitar datos copiados sin trazabilidad. |
 | Ultima actualizacion (`ultimaActualizacion`) | Fecha ISO `YYYY-MM-DD` del ultimo cambio validado en el JSON. |
 | Verificacion (`verification`) | Estado `verified` o `needs_review`, fuente humana de verificacion y fecha `verifiedAt` cuando el estado es `verified`. |
-| Responsable | Persona, equipo o institucion que verifico el dato y puede responder por la revision. |
-| Caducidad | Fecha de proxima reverificacion o regla de cadencia. Sin caducidad, el recurso queda pendiente. |
+| Responsable (`maintenance.owner`) | Persona, equipo o institucion que verifico el dato y puede responder por la revision. |
+| Caducidad (`maintenance.reviewBy`) | Fecha de proxima reverificacion manual. Sin caducidad, el recurso queda pendiente. |
 | Canales criticos | Telefono, direccion, horario, modalidad de acceso y poblacion atendida deben validarse antes de publicar. |
 | Observaciones | Aclarar restricciones relevantes sin incluir datos personales ni informacion sensible. |
 
@@ -54,14 +54,14 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 - [ ] `ultimaActualizacion` usa formato `YYYY-MM-DD`.
 - [ ] `verification.status` refleja si el recurso fue verificado o queda pendiente.
 - [ ] Si `verification.status` es `verified`, `verification.verifiedAt` usa formato `YYYY-MM-DD`.
-- [ ] Hay responsable de verificacion registrado fuera del JSON.
-- [ ] Hay proxima fecha de reverificacion definida.
+- [ ] `maintenance.owner` identifica al responsable vigente.
+- [ ] `maintenance.reviewBy` define la proxima fecha de reverificacion.
 - [ ] No se agregaron datos personales, casos individuales ni informacion sensible.
 - [ ] Se ejecuto `npm test` para validar el JSON.
 
-## Plantilla operativa temporal
+## Plantilla operativa complementaria
 
-Usar esta plantilla en un issue, planilla o nota de mantenimiento mientras el schema no tenga campos dedicados para ownership y caducidad.
+Usar esta plantilla en un issue, planilla o nota de mantenimiento como bitacora del cambio. La version vigente de owner y caducidad debe quedar en `resources.json`.
 
 | Campo | Valor |
 | --- | --- |
@@ -82,9 +82,7 @@ Usar esta plantilla en un issue, planilla o nota de mantenimiento mientras el sc
 - No registrar nombres, documentos, telefonos personales, historias clinicas, situaciones individuales ni otros datos sensibles.
 - Si un recurso esta vencido o en duda, se debe ocultar, retirar o marcar como pendiente antes de usarlo para orientacion real.
 
-## Seguimiento recomendado
-
-Cuando el proyecto empiece a usar datos reales, evaluar una evolucion backward-compatible del schema con campos adicionales como ownership y caducidad:
+## Ejemplo de metadata minima
 
 ```json
 {
@@ -94,8 +92,11 @@ Cuando el proyecto empiece a usar datos reales, evaluar una evolucion backward-c
     "source": "Llamada institucional",
     "notes": "Confirmado por telefono oficial"
   },
-  "verificadoPor": "Equipo responsable o institucion",
-  "reverificarAntesDe": "2026-06-01"
+  "maintenance": {
+    "owner": "Equipo responsable o institucion",
+    "reviewBy": "2026-06-01",
+    "notes": "Reverificacion manual mensual por criticidad del recurso"
+  }
 }
 ```
 

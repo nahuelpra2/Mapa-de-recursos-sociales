@@ -29,6 +29,11 @@ const validResource = {
     verifiedAt: "2026-05-01",
     source: "Llamada de prueba"
   },
+  maintenance: {
+    owner: "Equipo de prueba",
+    reviewBy: "2026-06-01",
+    notes: "Revisión manual programada"
+  },
   esCentroReferencia: true
 };
 
@@ -90,6 +95,30 @@ describe("resources runtime validation", () => {
         {
           ...validResource,
           verification: { status: "needs_review", source: "" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+  });
+
+  it("accepts resources with maintenance ownership and manual review deadline", () => {
+    expect(validateResources([validResource])).toEqual([validResource]);
+  });
+
+  it("rejects invalid maintenance metadata", () => {
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          maintenance: { owner: "", reviewBy: "2026-06-01" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          maintenance: { owner: "Equipo de prueba", reviewBy: "01-06-2026" }
         }
       ])
     ).toThrow(ResourceDataValidationError);

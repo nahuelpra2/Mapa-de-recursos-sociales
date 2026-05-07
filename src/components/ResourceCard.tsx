@@ -88,6 +88,9 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
           Verificacion: {verificationDisplay.detail}. Fuente: {resource.verification.source}
         </p>
         {resource.verification.notes ? <p>Notas de verificacion: {resource.verification.notes}</p> : null}
+        <p>Responsable de mantenimiento: {resource.maintenance.owner}</p>
+        <p>Revisar antes de: {resource.maintenance.reviewBy}</p>
+        {resource.maintenance.notes ? <p>Notas de mantenimiento: {resource.maintenance.notes}</p> : null}
       </footer>
     </article>
   );

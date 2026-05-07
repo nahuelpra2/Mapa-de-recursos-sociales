@@ -20,6 +20,11 @@
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
     },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -42,6 +47,11 @@
       "status": "needs_review",
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
+    },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
     },
     "esCentroReferencia": true
   },
@@ -66,6 +76,11 @@
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
     },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+    },
     "esCentroReferencia": true
   },
   {
@@ -88,6 +103,11 @@
       "status": "needs_review",
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
+    },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
     },
     "esCentroReferencia": false
   },
@@ -112,6 +132,11 @@
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
     },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+    },
     "esCentroReferencia": false
   },
   {
@@ -134,6 +159,11 @@
       "status": "needs_review",
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
+    },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
     },
     "esCentroReferencia": true
   },
@@ -158,6 +188,11 @@
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
     },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+    },
     "esCentroReferencia": false
   },
   {
@@ -180,6 +215,11 @@
       "status": "needs_review",
       "source": "Datos ficticios de prueba; pendiente de verificación humana",
       "notes": "No usar para derivaciones reales."
+    },
+    "maintenance": {
+      "owner": "Equipo del proyecto - datos ficticios",
+      "reviewBy": "2026-06-01",
+      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
     },
     "esCentroReferencia": false
   }

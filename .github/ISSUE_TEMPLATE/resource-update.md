@@ -51,12 +51,13 @@ Debe coincidir con `verification.status` si el recurso pasa al JSON.
 - **Canal o fuente de verificación (`verification.source`):**
 - **Notas de verificación (`verification.notes`, opcional):**
 
-## Mantenimiento fuera del JSON
+## Mantenimiento
 
-Estos campos todavía no viven en `resources.json`; quedan registrados en el issue para seguimiento operativo.
+Debe coincidir con `maintenance` si el recurso pasa al JSON. El issue queda como bitácora del cambio.
 
-- **Responsable persona/equipo:**
-- **Próxima fecha de revisión:** YYYY-MM-DD
+- **Responsable persona/equipo (`maintenance.owner`):**
+- **Próxima fecha de revisión (`maintenance.reviewBy`):** YYYY-MM-DD
+- **Notas de mantenimiento (`maintenance.notes`, opcional):**
 
 ## Chequeos críticos antes de publicar
 
@@ -64,7 +65,7 @@ Estos campos todavía no viven en `resources.json`; quedan registrados en el iss
 - [ ] Confirmé que este recurso no se presenta como canal de emergencia ni garantiza cupos, disponibilidad, admisión o elegibilidad en tiempo real.
 - [ ] Confirmé que no hay datos ficticios o de ejemplo tratados como datos reales.
 - [ ] Confirmé que la fuente es oficial, institucional o verificable.
-- [ ] Confirmé que hay responsable de mantenimiento y próxima fecha de revisión fuera del JSON.
+- [ ] Confirmé que hay responsable de mantenimiento y próxima fecha de revisión en `resources.json`.
 
 ## Pendientes, riesgos o motivo de baja
 

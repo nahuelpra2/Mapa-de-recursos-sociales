@@ -96,11 +96,18 @@ Cada recurso usa esta estructura:
     "source": "Datos ficticios de prueba; pendiente de verificación humana",
     "notes": "No usar para derivaciones reales."
   },
+  "maintenance": {
+    "owner": "Equipo del proyecto - datos ficticios",
+    "reviewBy": "2026-06-01",
+    "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+  },
   "esCentroReferencia": true
 }
 ```
 
 `verification.status` puede ser `verified` o `needs_review`. Para recursos `verified`, `verification.verifiedAt` es obligatorio y debe usar formato `YYYY-MM-DD`.
+
+`maintenance.owner` identifica a la persona, equipo o institución responsable de mantener el recurso, y `maintenance.reviewBy` define la fecha límite de revisión manual en formato `YYYY-MM-DD`. La app muestra esa trazabilidad, pero no automatiza disponibilidad, cupos ni vigencia real del dato.
 
 Para que un recurso aparezca en el selector `Estoy trabajando en`, usar:
 

@@ -18,6 +18,10 @@ const resource: Resource = {
     status: "verified",
     verifiedAt: "2026-05-06",
     source: "Test"
+  },
+  maintenance: {
+    owner: "Equipo de test",
+    reviewBy: "2026-06-06"
   }
 };
 
