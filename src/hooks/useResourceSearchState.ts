@@ -5,9 +5,7 @@ import { hasValidCoordinates } from "../utils/coordinates";
 const defaultFilters: FiltersState = {
   tipo: "",
   poblacion: "",
-  abiertoAhora: false,
-  requiereDerivacion: false,
-  accesoDirecto: false
+  abiertoAhora: false
 };
 
 type UseResourceSearchStateArgs = {
@@ -62,7 +60,7 @@ export function useResourceSearchState({ location, referenceCenters }: UseResour
     ? origin.mode === "current-location"
       ? "Mostrando recursos cercanos a tu ubicacion actual"
       : `Mostrando recursos cercanos a ${origin.label}`
-    : "Selecciona tu ubicacion actual o un centro de referencia para ordenar por cercania";
+    : "Selecciona tu ubicacion actual o un recurso de referencia para ordenar por cercania";
 
   return {
     search,

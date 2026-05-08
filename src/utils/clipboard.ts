@@ -2,14 +2,6 @@ import type { Coordinates, Resource } from "../types/resource";
 import { createMapLink } from "./maps";
 
 export function buildResourceClipboardText(resource: Resource, origin?: Coordinates) {
-  const accessConditions = [
-    resource.requiereDerivacion ? "Requiere derivacion" : "No requiere derivacion informada",
-    resource.accesoDirecto ? "Acceso directo" : "Sin acceso directo informado",
-    resource.observaciones
-  ]
-    .filter(Boolean)
-    .join(". ");
-
   return [
     `Centro: ${resource.nombre}`,
     `Tipo: ${resource.tipo}`,
@@ -17,11 +9,13 @@ export function buildResourceClipboardText(resource: Resource, origin?: Coordina
     `Telefono: ${resource.telefono || "No informado"}`,
     `Horario: ${resource.horario || "No informado"}`,
     `Poblacion atendida: ${resource.poblacion.join(", ")}`,
-    `Condiciones de acceso: ${accessConditions}`,
+    resource.observaciones ? `Observaciones: ${resource.observaciones}` : undefined,
     `Como llegar: ${createMapLink(resource, origin)}`,
     `Fuente: ${resource.fuente}`,
     `Ultima actualizacion: ${resource.ultimaActualizacion}`
-  ].join("\n");
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 export async function copyResourceToClipboard(resource: Resource, origin?: Coordinates) {

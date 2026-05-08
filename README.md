@@ -86,8 +86,7 @@ Cada recurso usa esta estructura:
   "telefono": "0000 0001",
   "horario": "18:00 a 08:00",
   "poblacion": ["Hombres", "Adultos"],
-  "requiereDerivacion": true,
-  "accesoDirecto": false,
+  "esCentroReferencia": true,
   "observaciones": "Dato ficticio para pruebas.",
   "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
   "ultimaActualizacion": "2026-05-01",
@@ -100,8 +99,7 @@ Cada recurso usa esta estructura:
     "owner": "Equipo del proyecto - datos ficticios",
     "reviewBy": "2026-06-01",
     "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-  },
-  "esCentroReferencia": true
+  }
 }
 ```
 
@@ -109,11 +107,7 @@ Cada recurso usa esta estructura:
 
 `maintenance.owner` identifica a la persona, equipo o institución responsable de mantener el recurso, y `maintenance.reviewBy` define la fecha límite de revisión manual en formato `YYYY-MM-DD`. La app muestra esa trazabilidad, pero no automatiza disponibilidad, cupos ni vigencia real del dato.
 
-Para que un recurso aparezca en el selector `Estoy trabajando en`, usar:
-
-```json
-"esCentroReferencia": true
-```
+El selector `Estoy usando como referencia` usa solo recursos marcados con `esCentroReferencia: true` como puntos de origen para ordenar por cercania.
 
 Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSchema.ts` y también mediante `npm test`. Si el JSON no cumple el contrato, corregí `src/data/resources.json` antes de publicar cambios.
 
@@ -123,12 +117,11 @@ Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSc
 - Lista de recursos en tarjetas.
 - Ordenamiento por distancia cuando existe un punto de origen.
 - Botón `Usar mi ubicación` con geolocalización del navegador.
-- Selector `Estoy trabajando en` para usar un centro como origen.
+- Selector `Estoy usando como referencia` para usar un recurso como origen.
 - Búsqueda por nombre, dirección, barrio, tipo, teléfono, horario, población u observaciones.
 - Filtros por tipo de recurso.
 - Filtros por poblacion atendida.
 - Filtro `Abierto ahora` con lectura simple de horarios tipo `09:00 a 17:00` y horarios nocturnos como `18:00 a 08:00`.
-- Filtros por `Requiere derivacion` y `Acceso directo`.
 - Botón `Como llegar` con enlace externo a OpenStreetMap.
 - Botón `Copiar datos` para compartir la información práctica del recurso.
 - Aviso visible sobre confirmacion de informacion por canales oficiales.
@@ -139,7 +132,7 @@ Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSc
 - **Sin backend**: se priorizó velocidad de validación del flujo y simplicidad operativa.
 - **Datos locales en JSON**: suficiente para prototipado y pruebas de UX sin exponer datos sensibles.
 - **Leaflet + OpenStreetMap**: evita costos de APIs pagas y mantiene bajo el acoplamiento.
-- **Centro de referencia manual**: útil cuando la geolocalización del navegador no sirve bien en computadoras de trabajo.
+- **Origen manual por recurso**: útil cuando la geolocalización del navegador no sirve bien en computadoras de trabajo.
 
 ## Fuera de alcance por ahora
 

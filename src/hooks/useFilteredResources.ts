@@ -49,8 +49,6 @@ export function filterResources({ resources, search, filters, origin }: UseFilte
     .filter((resource) => !filters.tipo || resource.tipo === filters.tipo)
     .filter((resource) => !filters.poblacion || resource.poblacion.includes(filters.poblacion))
     .filter((resource) => !filters.abiertoAhora || isOpenNow(resource.horario))
-    .filter((resource) => !filters.requiereDerivacion || resource.requiereDerivacion)
-    .filter((resource) => !filters.accesoDirecto || resource.accesoDirecto)
     .map((resource) => ({
       ...resource,
       distanceKm: safeOrigin

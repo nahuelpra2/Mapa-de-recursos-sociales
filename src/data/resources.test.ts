@@ -52,6 +52,29 @@ describe("resources runtime validation", () => {
     expect(() => validateResources([withoutName])).toThrow(ResourceDataValidationError);
   });
 
+  it("accepts resources with a required reference-center flag and without legacy access flags", () => {
+    expect(validateResources([validResource])).toEqual([validResource]);
+  });
+
+  it("rejects resources missing the required reference-center flag", () => {
+    const withoutReferenceCenterFlag: Partial<typeof validResource> = { ...validResource };
+    delete withoutReferenceCenterFlag.esCentroReferencia;
+
+    expect(() => validateResources([withoutReferenceCenterFlag])).toThrow(ResourceDataValidationError);
+  });
+
+  it("rejects unsupported access metadata at the data boundary", () => {
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          legacyAccessFlag: true,
+          legacyDirectAccessFlag: false
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+  });
+
   it("accepts resources with human verification metadata", () => {
     expect(validateResources([validResource])).toEqual([validResource]);
     expect(
@@ -234,6 +257,21 @@ describe("resources dataset integrity", () => {
       expect(Number.isFinite(resource.lng)).toBe(true);
       expect(resource.lng).toBeGreaterThanOrEqual(-180);
       expect(resource.lng).toBeLessThanOrEqual(180);
+    }
+  });
+
+  it("keeps every bundled resource explicitly classified for reference-center usage", () => {
+    const referenceCenters = resources.filter((resource) => resource.esCentroReferencia);
+
+    expect(referenceCenters.map((resource) => resource.id)).toEqual([
+      "ejemplo-refugio-001",
+      "ejemplo-centro-diurno-002",
+      "ejemplo-puerta-abierta-003",
+      "ejemplo-diurno-006"
+    ]);
+
+    for (const resource of resources) {
+      expect(typeof resource.esCentroReferencia).toBe("boolean");
     }
   });
 

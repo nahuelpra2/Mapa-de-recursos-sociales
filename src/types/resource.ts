@@ -17,8 +17,6 @@ export type FiltersState = {
   tipo: ResourceType | "";
   poblacion: string;
   abiertoAhora: boolean;
-  requiereDerivacion: boolean;
-  accesoDirecto: boolean;
 };
 
 export type OriginMode = "current-location" | "reference-center";

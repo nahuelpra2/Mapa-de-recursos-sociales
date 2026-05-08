@@ -40,13 +40,6 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
         <InfoRow label="Horario" value={resource.horario || "No informado"} />
         <InfoRow label="Telefono" value={resource.telefono || "No informado"} />
         <InfoRow label="Poblacion" value={resource.poblacion.join(", ")} />
-        <InfoRow
-          label="Acceso"
-          value={[
-            resource.requiereDerivacion ? "Requiere derivacion" : "No requiere derivacion informada",
-            resource.accesoDirecto ? "Acceso directo" : "Sin acceso directo informado"
-          ].join(". ")}
-        />
         {resource.observaciones ? <InfoRow label="Observaciones" value={resource.observaciones} /> : null}
       </dl>
 

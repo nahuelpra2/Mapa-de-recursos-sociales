@@ -10,8 +10,7 @@
     "telefono": "0000 0001",
     "horario": "18:00 a 08:00",
     "poblacion": ["Hombres", "Adultos"],
-    "requiereDerivacion": true,
-    "accesoDirecto": false,
+    "esCentroReferencia": true,
     "observaciones": "Dato ficticio para pruebas. Confirmar siempre por canales oficiales.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -24,8 +23,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": true
+    }
   },
   {
     "id": "ejemplo-centro-diurno-002",
@@ -38,8 +36,7 @@
     "telefono": "0000 0002",
     "horario": "09:00 a 17:00",
     "poblacion": ["Mujeres", "Adultos"],
-    "requiereDerivacion": false,
-    "accesoDirecto": true,
+    "esCentroReferencia": true,
     "observaciones": "Dato ficticio para validar filtros y tarjetas.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -52,8 +49,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": true
+    }
   },
   {
     "id": "ejemplo-puerta-abierta-003",
@@ -66,8 +62,7 @@
     "telefono": "0000 0003",
     "horario": "08:00 a 20:00",
     "poblacion": ["Familias", "Otro"],
-    "requiereDerivacion": false,
-    "accesoDirecto": true,
+    "esCentroReferencia": true,
     "observaciones": "Dato ficticio. Se recomienda llamar antes de concurrir.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -80,8 +75,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": true
+    }
   },
   {
     "id": "ejemplo-atencion-004",
@@ -94,8 +88,7 @@
     "telefono": "0000 0004",
     "horario": "10:00 a 16:00",
     "poblacion": ["Personas mayores", "Personas con discapacidad"],
-    "requiereDerivacion": true,
-    "accesoDirecto": false,
+    "esCentroReferencia": false,
     "observaciones": "Dato ficticio para pruebas de poblacion atendida.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -108,8 +101,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": false
+    }
   },
   {
     "id": "ejemplo-refugio-005",
@@ -122,8 +114,7 @@
     "telefono": "0000 0005",
     "horario": "19:00 a 07:00",
     "poblacion": ["Mujeres", "Familias"],
-    "requiereDerivacion": true,
-    "accesoDirecto": false,
+    "esCentroReferencia": false,
     "observaciones": "Dato ficticio. No representa disponibilidad real.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -136,8 +127,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": false
+    }
   },
   {
     "id": "ejemplo-diurno-006",
@@ -150,8 +140,7 @@
     "telefono": "0000 0006",
     "horario": "24 horas",
     "poblacion": ["Hombres", "Mujeres", "Adultos"],
-    "requiereDerivacion": false,
-    "accesoDirecto": true,
+    "esCentroReferencia": true,
     "observaciones": "Dato ficticio para probar abierto ahora.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -164,8 +153,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": true
+    }
   },
   {
     "id": "ejemplo-otro-007",
@@ -178,8 +166,7 @@
     "telefono": "0000 0007",
     "horario": "12:00 a 18:00",
     "poblacion": ["Otro"],
-    "requiereDerivacion": false,
-    "accesoDirecto": true,
+    "esCentroReferencia": false,
     "observaciones": "Dato ficticio. Reemplazar por informacion publica validada.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -192,8 +179,7 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": false
+    }
   },
   {
     "id": "ejemplo-atencion-008",
@@ -206,8 +192,7 @@
     "telefono": "0000 0008",
     "horario": "08:30 a 15:30",
     "poblacion": ["Personas con discapacidad", "Personas mayores"],
-    "requiereDerivacion": false,
-    "accesoDirecto": true,
+    "esCentroReferencia": false,
     "observaciones": "Dato ficticio para probar accesibilidad y filtros.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
@@ -220,7 +205,6 @@
       "owner": "Equipo del proyecto - datos ficticios",
       "reviewBy": "2026-06-01",
       "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
-    },
-    "esCentroReferencia": false
+    }
   }
 ]

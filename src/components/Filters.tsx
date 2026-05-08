@@ -69,16 +69,6 @@ export function Filters({ filters, populationOptions, onChange, onClear }: Filte
           checked={filters.abiertoAhora}
           onChange={(checked) => onChange({ ...filters, abiertoAhora: checked })}
         />
-        <FilterCheckbox
-          label="Requiere derivacion"
-          checked={filters.requiereDerivacion}
-          onChange={(checked) => onChange({ ...filters, requiereDerivacion: checked })}
-        />
-        <FilterCheckbox
-          label="Acceso directo"
-          checked={filters.accesoDirecto}
-          onChange={(checked) => onChange({ ...filters, accesoDirecto: checked })}
-        />
       </div>
     </section>
   );

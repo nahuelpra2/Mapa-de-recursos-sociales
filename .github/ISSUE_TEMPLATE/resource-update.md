@@ -30,8 +30,7 @@ Completá solo lo que aplique. Si un dato está pendiente, escribí `pendiente`.
 - **Horario:**
 - **Modalidad de acceso:**
 - **Población atendida:**
-- **Requiere derivación:** sí / no / pendiente
-- **Permite acceso directo:** sí / no / pendiente
+- **Centro de referencia para ordenar por cercanía:** sí / no / pendiente
 - **Observaciones públicas relevantes:**
 
 ## Fuente del dato

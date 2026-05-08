@@ -7,7 +7,7 @@ describe("local resource repository", () => {
     expect(localResourceRepository.listResources()).toEqual(resources);
   });
 
-  it("returns only reference centers", () => {
+  it("returns only resources explicitly marked as reference centers", () => {
     expect(localResourceRepository.listReferenceCenters()).toEqual(
       resources.filter((resource) => resource.esCentroReferencia)
     );

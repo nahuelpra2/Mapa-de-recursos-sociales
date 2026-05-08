@@ -12,8 +12,7 @@ export function createResource(overrides: Partial<Resource> = {}): Resource {
     telefono: "011 0000-0000",
     horario: "Lunes a viernes de 9:00 a 17:00",
     poblacion: ["Personas adultas"],
-    requiereDerivacion: false,
-    accesoDirecto: true,
+    esCentroReferencia: true,
     observaciones: "Observacion fixture",
     fuente: "Fixture de test",
     ultimaActualizacion: "2026-05-01",
@@ -26,7 +25,6 @@ export function createResource(overrides: Partial<Resource> = {}): Resource {
       owner: "Equipo social",
       reviewBy: "2026-12-31"
     },
-    esCentroReferencia: true,
     ...overrides
   };
 }

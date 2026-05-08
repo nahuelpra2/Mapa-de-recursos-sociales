@@ -11,7 +11,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 1. Relevar el recurso desde una fuente oficial o institucional.
 2. Confirmar por un segundo canal cuando el dato impacte una derivacion presencial.
 3. Abrir un issue con la plantilla "Alta o actualización de recurso social" para dejar trazabilidad operativa.
-4. Registrar `fuente`, `ultimaActualizacion`, `verification` y `maintenance` en `src/data/resources.json`.
+4. Registrar `esCentroReferencia`, `fuente`, `ultimaActualizacion`, `verification` y `maintenance` en `src/data/resources.json`.
 5. Usar issues o planillas solo como bitacora complementaria; el owner vigente y la proxima revision deben quedar en el JSON.
 6. Ejecutar `npm run lint` y `npm test` antes de pedir review. No ejecutar build para este flujo.
 
@@ -31,6 +31,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 - [ ] El `id` es estable, descriptivo y unico.
 - [ ] Nombre, tipo, direccion, barrio, coordenadas, telefono y horario fueron copiados desde fuente verificable.
 - [ ] `fuente` explica de donde sale el dato sin exagerar precision.
+- [ ] `esCentroReferencia` indica explicitamente si el recurso debe aparecer como centro de referencia para ordenar por cercania.
 - [ ] `ultimaActualizacion`, `verification.verifiedAt` cuando aplique y `maintenance.reviewBy` usan `YYYY-MM-DD`.
 - [ ] `verification` expresa el estado real de verificacion humana.
 - [ ] `maintenance` deja claro quien revisa y cuando vence la proxima revision.
@@ -43,7 +44,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 | --- | --- |
 | Alcance | El schema incluye metadata minima de verificacion humana, ownership y caducidad manual por recurso. |
 | Datos actuales | `resources.json` sigue siendo ficticio y no sirve para derivaciones reales. |
-| Metadatos actuales | El schema exige `fuente`, `ultimaActualizacion`, `verification` y `maintenance` por recurso. |
+| Metadatos actuales | El schema exige `esCentroReferencia`, `fuente`, `ultimaActualizacion`, `verification` y `maintenance` por recurso. |
 | Ownership | `maintenance.owner` identifica la persona, equipo o institucion responsable de mantener el recurso. |
 | Caducidad | `maintenance.reviewBy` define la fecha limite para reverificacion manual; no confirma vigencia real ni disponibilidad. |
 | Seguridad | La app informa recursos, no confirma cupos, elegibilidad, urgencias ni disponibilidad en tiempo real. |
@@ -56,6 +57,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 | --- | --- |
 | Fuente (`fuente`) | URL oficial, documento institucional, comunicacion formal o contacto institucional identificable. Evitar datos copiados sin trazabilidad. |
 | Ultima actualizacion (`ultimaActualizacion`) | Fecha ISO `YYYY-MM-DD` del ultimo cambio validado en el JSON. |
+| Centro de referencia (`esCentroReferencia`) | Booleano explicito. Usar `true` solo si el recurso debe estar disponible como origen manual de cercania. |
 | Verificacion (`verification`) | Estado `verified` o `needs_review`, fuente humana de verificacion y fecha `verifiedAt` cuando el estado es `verified`. |
 | Responsable (`maintenance.owner`) | Persona, equipo o institucion que verifico el dato y puede responder por la revision. |
 | Caducidad (`maintenance.reviewBy`) | Fecha de proxima reverificacion manual. Sin caducidad, el recurso queda pendiente. |
@@ -77,7 +79,7 @@ La app puede incorporar datos reales solo si cada recurso tiene fuente verificab
 - [ ] El nombre, tipo, direccion, barrio y coordenadas coinciden con la fuente.
 - [ ] El telefono y el horario fueron confirmados por un canal vigente.
 - [ ] La poblacion atendida y el modo de acceso estan claros.
-- [ ] `requiereDerivacion` y `accesoDirecto` no se contradicen.
+- [ ] `esCentroReferencia` fue decidido explicitamente; no dejarlo implicito.
 - [ ] `fuente` explica de donde sale el dato.
 - [ ] `ultimaActualizacion` usa formato `YYYY-MM-DD`.
 - [ ] `verification.status` refleja si el recurso fue verificado o queda pendiente.

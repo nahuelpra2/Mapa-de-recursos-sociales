@@ -74,14 +74,12 @@ export const resourceSchema = z
     telefono: optionalTextSchema,
     horario: optionalTextSchema,
     poblacion: z.array(requiredTextSchema).min(1),
-    requiereDerivacion: z.boolean(),
-    accesoDirecto: z.boolean(),
+    esCentroReferencia: z.boolean(),
     observaciones: optionalTextSchema,
     fuente: requiredTextSchema,
     ultimaActualizacion: isoDateSchema,
     verification: resourceVerificationSchema,
-    maintenance: resourceMaintenanceSchema,
-    esCentroReferencia: z.boolean().optional()
+    maintenance: resourceMaintenanceSchema
   })
   .strict();
 

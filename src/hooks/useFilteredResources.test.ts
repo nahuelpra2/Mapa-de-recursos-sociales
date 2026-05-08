@@ -6,9 +6,7 @@ import { filterResources } from "./useFilteredResources";
 const defaultFilters: FiltersState = {
   tipo: "",
   poblacion: "",
-  abiertoAhora: false,
-  requiereDerivacion: false,
-  accesoDirecto: false
+  abiertoAhora: false
 };
 
 const resources: Resource[] = [
@@ -21,8 +19,7 @@ const resources: Resource[] = [
     lng: -58.3816,
     horario: "24 horas",
     poblacion: ["Personas adultas", "Familias"],
-    observaciones: "Entrega alimentos calientes",
-    accesoDirecto: true
+    observaciones: "Entrega alimentos calientes"
   }),
   createResource({
     id: "shelter",
@@ -32,9 +29,7 @@ const resources: Resource[] = [
     lat: -34.6137,
     lng: -58.3816,
     horario: undefined,
-    poblacion: ["Personas adultas"],
-    requiereDerivacion: true,
-    accesoDirecto: false
+    poblacion: ["Personas adultas"]
   }),
   createResource({
     id: "care-center",
@@ -45,8 +40,7 @@ const resources: Resource[] = [
     lng: -58.3816,
     horario: "Consultar horario",
     poblacion: ["Niñas, niños y adolescentes"],
-    observaciones: "Orientacion para adolescencias",
-    accesoDirecto: true
+    observaciones: "Orientacion para adolescencias"
   })
 ];
 
@@ -77,24 +71,16 @@ describe("resource filtering", () => {
     expect(result.map((resource) => resource.id)).toEqual(["care-center"]);
   });
 
-  it("combines search with access and referral filters", () => {
-    const directAccessResult = filter({
+  it("combines search with remaining public filters", () => {
+    const result = filter({
       search: "centro",
       filters: {
         ...defaultFilters,
-        accesoDirecto: true
+        poblacion: "Personas adultas"
       }
     });
 
-    const referralResult = filter({
-      filters: {
-        ...defaultFilters,
-        requiereDerivacion: true
-      }
-    });
-
-    expect(directAccessResult.map((resource) => resource.id)).toEqual(["care-center", "day-center"]);
-    expect(referralResult.map((resource) => resource.id)).toEqual(["shelter"]);
+    expect(result.map((resource) => resource.id)).toEqual(["day-center"]);
   });
 
   it("filters resources open now using explicit 24-hour schedules", () => {
