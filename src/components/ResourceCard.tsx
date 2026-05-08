@@ -2,7 +2,10 @@ import type { Coordinates, ResourceWithDistance } from "../types/resource";
 import { formatDistance } from "../utils/distance";
 import { createMapLink } from "../utils/maps";
 import { isOpenNow } from "../utils/openingHours";
-import { getResourceVerificationDisplay } from "../utils/resourceVerification";
+import {
+  getResourceMaintenanceReviewDisplay,
+  getResourceVerificationDisplay
+} from "../utils/resourceVerification";
 
 type ResourceCardProps = {
   resource: ResourceWithDistance;
@@ -14,6 +17,7 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
   const mapLink = createMapLink(resource, origin);
   const openNow = isOpenNow(resource.horario);
   const verificationDisplay = getResourceVerificationDisplay(resource.verification);
+  const maintenanceReviewDisplay = getResourceMaintenanceReviewDisplay(resource.maintenance);
   const verificationBadgeClassName =
     verificationDisplay.tone === "success"
       ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
@@ -61,7 +65,21 @@ export function ResourceCard({ resource, origin, onCopy }: ResourceCardProps) {
         >
           {verificationDisplay.label}
         </span>
+        {maintenanceReviewDisplay.requiresReview ? (
+          <span
+            className="rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-900 ring-1 ring-rose-200"
+            title={maintenanceReviewDisplay.detail}
+          >
+            {maintenanceReviewDisplay.label}
+          </span>
+        ) : null}
       </div>
+
+      {maintenanceReviewDisplay.requiresReview ? (
+        <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-950">
+          {maintenanceReviewDisplay.detail}
+        </div>
+      ) : null}
 
       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
         <a
