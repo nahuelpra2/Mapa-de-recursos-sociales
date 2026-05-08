@@ -1,14 +1,15 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Filters } from "./components/Filters";
-import { localResourceRepository } from "./data/localResourceRepository";
 import { Header } from "./components/Header";
 import { Notice } from "./components/Notice";
+import { PublicResourcesStatus } from "./components/PublicResourcesStatus";
 import { ReferenceCenterSelector } from "./components/ReferenceCenterSelector";
 import { ResourceList } from "./components/ResourceList";
 import { ResourceMap } from "./components/ResourceMap";
 import { SearchBar } from "./components/SearchBar";
 import { useFilteredResources } from "./hooks/useFilteredResources";
 import { useGeolocation } from "./hooks/useGeolocation";
+import { shouldShowPublicResourceResults, usePublicResources } from "./hooks/usePublicResources";
 import { useResourceSearchState } from "./hooks/useResourceSearchState";
 import type { ResourceWithDistance } from "./types/resource";
 import { copyResourceToClipboard } from "./utils/clipboard";
@@ -17,18 +18,13 @@ function App() {
   const [copyMessage, setCopyMessage] = useState<string | null>(null);
 
   const { location, status, error, requestLocation } = useGeolocation();
-
-  const resources = useMemo(() => localResourceRepository.listResources(), []);
-
-  const referenceCenters = useMemo(
-    () => localResourceRepository.listReferenceCenters(),
-    []
-  );
-
-  const populationOptions = useMemo(
-    () => localResourceRepository.listPopulationOptions(),
-    []
-  );
+  const {
+    status: resourceLoadStatus,
+    resources,
+    referenceCenters,
+    populationOptions,
+    error: resourceLoadError
+  } = usePublicResources();
 
   const {
     search,
@@ -49,6 +45,7 @@ function App() {
     filters,
     origin
   });
+  const showResourceResults = shouldShowPublicResourceResults(resourceLoadStatus);
 
   async function handleCopy(resource: ResourceWithDistance) {
     try {
@@ -91,6 +88,8 @@ function App() {
               </p>
             ) : null}
 
+            <PublicResourcesStatus status={resourceLoadStatus} error={resourceLoadError} />
+
             <ReferenceCenterSelector
               centers={referenceCenters}
               selectedCenterId={selectedReferenceCenterId}
@@ -107,7 +106,7 @@ function App() {
               <ResourceMap resources={filteredResources} origin={origin} />
             </div>
 
-            <ResourceList resources={filteredResources} origin={origin || undefined} onCopy={handleCopy} />
+            {showResourceResults ? <ResourceList resources={filteredResources} origin={origin || undefined} onCopy={handleCopy} /> : null}
           </div>
 
           <div className="hidden lg:sticky lg:top-6 lg:block">
