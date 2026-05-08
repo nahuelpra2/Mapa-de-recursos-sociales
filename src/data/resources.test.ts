@@ -97,6 +97,40 @@ describe("resources runtime validation", () => {
     ).toThrow(ResourceDataValidationError);
   });
 
+  it("rejects impossible calendar dates for last update metadata", () => {
+    expect(() =>
+      validateResources([{ ...validResource, ultimaActualizacion: "2026-02-30" }])
+    ).toThrow(ResourceDataValidationError);
+
+    expect(() =>
+      validateResources([{ ...validResource, ultimaActualizacion: "2026-13-01" }])
+    ).toThrow(ResourceDataValidationError);
+  });
+
+  it("rejects impossible calendar dates for verification metadata", () => {
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          verification: { ...validResource.verification, verifiedAt: "2026-02-30" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          verification: {
+            status: "needs_review",
+            verifiedAt: "2025-02-29",
+            source: "Dato de prueba pendiente de verificación humana"
+          }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+  });
+
   it("accepts resources with maintenance ownership and manual review deadline", () => {
     expect(validateResources([validResource])).toEqual([validResource]);
   });
@@ -118,6 +152,41 @@ describe("resources runtime validation", () => {
           maintenance: { owner: "Equipo de prueba", reviewBy: "01-06-2026" }
         }
       ])
+    ).toThrow(ResourceDataValidationError);
+  });
+
+  it("rejects impossible calendar dates for maintenance metadata", () => {
+    expect(() =>
+      validateResources([
+        {
+          ...validResource,
+          maintenance: { ...validResource.maintenance, reviewBy: "2026-02-30" }
+        }
+      ])
+    ).toThrow(ResourceDataValidationError);
+  });
+
+  it("accepts real leap days and rejects non-leap February 29 dates", () => {
+    expect(
+      validateResources([
+        {
+          ...validResource,
+          ultimaActualizacion: "2024-02-29",
+          verification: { ...validResource.verification, verifiedAt: "2024-02-29" },
+          maintenance: { ...validResource.maintenance, reviewBy: "2024-02-29" }
+        }
+      ])
+    ).toEqual([
+      {
+        ...validResource,
+        ultimaActualizacion: "2024-02-29",
+        verification: { ...validResource.verification, verifiedAt: "2024-02-29" },
+        maintenance: { ...validResource.maintenance, reviewBy: "2024-02-29" }
+      }
+    ]);
+
+    expect(() =>
+      validateResources([{ ...validResource, ultimaActualizacion: "2025-02-29" }])
     ).toThrow(ResourceDataValidationError);
   });
 

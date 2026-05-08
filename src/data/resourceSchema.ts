@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const RESOURCE_DATA_ERROR_PREFIX = "Invalid bundled resource data";
+const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 export const resourceTypeSchema = z.enum([
   "Refugio nocturno",
@@ -12,7 +13,27 @@ export const resourceTypeSchema = z.enum([
 
 const requiredTextSchema = z.string().min(1);
 const optionalTextSchema = z.string().min(1).optional();
-const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
+function isLeapYear(year: number): boolean {
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+}
+
+function isRealIsoCalendarDate(value: string): boolean {
+  if (!ISO_DATE_PATTERN.test(value)) return false;
+
+  const [yearPart, monthPart, dayPart] = value.split("-");
+  const year = Number(yearPart);
+  const month = Number(monthPart);
+  const day = Number(dayPart);
+  const daysByMonth = [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  return month >= 1 && month <= 12 && day >= 1 && day <= daysByMonth[month - 1];
+}
+
+const isoDateSchema = z
+  .string()
+  .regex(ISO_DATE_PATTERN)
+  .refine(isRealIsoCalendarDate, { message: "Invalid calendar date" });
 
 export const resourceVerificationSchema = z.discriminatedUnion("status", [
   z
