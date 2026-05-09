@@ -60,6 +60,7 @@ npm run build    # validacion TypeScript y build de produccion
 npm run preview  # vista previa del build
 npm run lint     # lint del proyecto
 npm test         # tests automatizados y validacion del JSON local
+npm run seed:resources -- --dry-run  # valida el mapeo local hacia Supabase sin conectar
 ```
 
 ## Cómo editar los recursos
@@ -110,6 +111,26 @@ Cada recurso usa esta estructura:
 El selector `Estoy usando como referencia` usa solo recursos marcados con `esCentroReferencia: true` como puntos de origen para ordenar por cercania.
 
 Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSchema.ts` y también mediante `npm test`. Si el JSON no cumple el contrato, corregí `src/data/resources.json` antes de publicar cambios.
+
+### Cargar recursos locales en Supabase
+
+El flujo de seed toma `src/data/resources.json`, lo transforma al contrato SQL de `public.resources` y hace `upsert` por `id`.
+
+1. Primero verificá el mapeo sin conectar:
+
+   ```bash
+   npm run seed:resources -- --dry-run
+   ```
+
+2. Para cargar contra Supabase, definí secretos **solo en tu shell local**:
+
+   ```bash
+   SUPABASE_URL="https://etynewwebietxdhazhsc.supabase.co" \
+   SUPABASE_SERVICE_ROLE_KEY="<service-role-local>" \
+   npm run seed:resources
+   ```
+
+No uses prefijos `VITE_*` para claves administrativas y no guardes `SUPABASE_SERVICE_ROLE_KEY` en `.env.local`, frontend ni archivos versionados.
 
 ## Funcionalidades del MVP
 
