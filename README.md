@@ -34,7 +34,7 @@ http://localhost:5173
 - Leaflet
 - React Leaflet
 - OpenStreetMap
-- Datos locales en JSON
+- Supabase Auth y base de datos pública vía cliente anon
 
 ## Cómo correr el proyecto localmente
 
@@ -132,6 +132,26 @@ El flujo de seed toma `src/data/resources.json`, lo transforma al contrato SQL d
 
 No uses prefijos `VITE_*` para claves administrativas y no guardes `SUPABASE_SERVICE_ROLE_KEY` en `.env.local`, frontend ni archivos versionados.
 
+## Administración
+
+La app expone una base segura para administración en:
+
+- `/admin/login`: ingreso con email y contraseña de Supabase Auth.
+- `/admin`: shell protegido para futuras tareas administrativas. En esta fase no incluye CRUD.
+
+El acceso al panel requiere **dos condiciones distintas**:
+
+1. Que exista una sesión válida de Supabase Auth.
+2. Que el usuario esté habilitado en la allow-list de administración mediante la frontera de base existente (`is_admin()` / `admin_users`).
+
+Crear o invitar administradores desde el frontend está fuera de alcance. La provisión debe hacerse externamente desde Supabase o tooling operativo seguro:
+
+1. Crear el usuario en Supabase Auth con signup público deshabilitado.
+2. Agregar su `user_id` a la tabla/lista `admin_users` según la política del proyecto.
+3. Verificar que `is_admin()` devuelva `true` para esa sesión antes de entregar acceso operativo.
+
+La configuración del navegador debe usar **solo** `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. Nunca agregues `service_role`, passwords de base de datos, tokens personales ni `.env.local` al repositorio.
+
 ## Funcionalidades del MVP
 
 - Mapa con marcadores usando OpenStreetMap y Leaflet.
@@ -147,19 +167,19 @@ No uses prefijos `VITE_*` para claves administrativas y no guardes `SUPABASE_SER
 - Botón `Copiar datos` para compartir la información práctica del recurso.
 - Aviso visible sobre confirmacion de informacion por canales oficiales.
 - Layout responsive: dos columnas en escritorio, una columna en celular.
+- Login admin con Supabase Auth y allow-list externa para acceso al shell `/admin`.
 
 ## Decisiones técnicas del MVP
 
-- **Sin backend**: se priorizó velocidad de validación del flujo y simplicidad operativa.
+- **Frontend público con Supabase**: el navegador usa solo credenciales anon; cualquier operación privilegiada queda fuera del cliente.
 - **Datos locales en JSON**: suficiente para prototipado y pruebas de UX sin exponer datos sensibles.
 - **Leaflet + OpenStreetMap**: evita costos de APIs pagas y mantiene bajo el acoplamiento.
 - **Origen manual por recurso**: útil cuando la geolocalización del navegador no sirve bien en computadoras de trabajo.
 
 ## Fuera de alcance por ahora
 
-- Login o cuentas de usuario.
-- Backend.
-- Panel de administración.
+- Registro público o creación de usuarios desde frontend.
+- CRUD de recursos en el panel de administración.
 - Cupos en tiempo real.
 - Historial de derivaciones.
 - Datos personales o sensibles.
@@ -172,6 +192,7 @@ No uses prefijos `VITE_*` para claves administrativas y no guardes `SUPABASE_SER
 ```txt
 src/
   components/
+    admin/
     Header.tsx
     SearchBar.tsx
     Filters.tsx
@@ -182,9 +203,15 @@ src/
     Notice.tsx
   data/
     resources.json
+  context/
+    AdminAuthContext.tsx
   hooks/
     useGeolocation.ts
     useFilteredResources.ts
+  pages/
+    AdminLoginPage.tsx
+    AdminShell.tsx
+    PublicResourcesPage.tsx
   types/
     resource.ts
   utils/
