@@ -38,9 +38,9 @@ Chain strategy: pending
 
 ## Phase 3: Admin List
 
-- [ ] 3.1 RED: test `src/hooks/useAdminResources.ts` list state transitions: loading, error, empty, success.
-- [ ] 3.2 GREEN: create `src/hooks/useAdminResources.ts` list orchestration and `src/pages/admin/AdminResourcesListPage.tsx` with create/edit links.
-- [ ] 3.3 Wire `src/App.tsx` nested admin routes and convert `src/pages/AdminShell.tsx` to layout/nav with `Outlet`.
+- [x] 3.1 RED: test `src/hooks/useAdminResources.ts` list state transitions: loading, error, empty, success.
+- [x] 3.2 GREEN: create `src/hooks/useAdminResources.ts` list orchestration and `src/pages/admin/AdminResourcesListPage.tsx` with create/edit links.
+- [x] 3.3 Wire `src/App.tsx` nested admin routes and convert `src/pages/AdminShell.tsx` to layout/nav with `Outlet`.
 
 ## Phase 4: Create / Edit
 

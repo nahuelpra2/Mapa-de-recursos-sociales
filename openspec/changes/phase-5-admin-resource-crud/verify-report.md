@@ -3,7 +3,7 @@
 **Change**: phase-5-admin-resource-crud  
 **Version**: N/A  
 **Mode**: Strict TDD  
-**Boundary**: Slice 1 only — route definitions, admin repository boundary/adapter, validation/mapping helpers, and related tests. Full list/create/edit UI is intentionally out of this verification boundary.
+**Boundary**: Slice 2 only, verified on top of Slice 1 — protected `/admin/resources` list route, `AdminShell` layout/nav, admin list page/state helpers, loading/error/empty/success behavior, and exclusions. Create/edit forms and mounted create/edit pages remain intentionally out of this slice.
 
 ---
 
@@ -12,14 +12,15 @@
 | Metric | Value |
 |--------|-------|
 | Tasks total | 16 |
-| Tasks complete | 8 |
-| Tasks incomplete | 8 |
-| Slice 1 expected tasks | 8 |
-| Slice 1 complete | 8 |
+| Tasks complete | 11 |
+| Tasks incomplete | 5 |
+| Slice 2 expected tasks | 5 |
+| Slice 2 complete | 5 |
 
-**Incomplete tasks outside Slice 1**: 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4, 5.2.
+**Slice 2 completed tasks**: 3.1, 3.2, 3.3, 5.1, 5.3.  
+**Incomplete tasks outside Slice 2**: 4.1, 4.2, 4.3, 4.4, 5.2.
 
-**Completeness verdict**: ✅ Slice 1 scope is complete. Remaining tasks are intentionally deferred to later stacked slices.
+**Completeness verdict**: ✅ Slice 2 scope is complete. Remaining tasks are the next stacked create/edit slice plus optional SDD docs cleanup.
 
 ---
 
@@ -27,25 +28,36 @@
 
 **Build**: ➖ Not run — prohibited by project/user instruction (`npm run build` not executed).
 
-**Targeted Tests**: ✅ 15 passed / 0 failed / 0 skipped
+**Targeted Slice 2 Tests**: ✅ 21 passed / 0 failed / 0 skipped
 
 ```text
-Command: npm test -- src/routes.test.ts src/data/adminResourceSchema.test.ts src/data/adminResourceRepository.test.ts
+Command: npm test -- src/hooks/useAdminResources.test.ts src/pages/admin/AdminResourcesListPage.test.ts src/pages/AdminShell.test.ts src/App.test.tsx src/routes.test.ts src/data/adminResourceRepository.test.ts
 
-Test Files  3 passed (3)
-Tests       15 passed (15)
-Duration    1.67s
+Test Files  6 passed (6)
+Tests       21 passed (21)
+Duration    1.12s
 Exit code   0
 ```
 
-**Full Test Suite**: ✅ 106 passed / 0 failed / 0 skipped
+**Cumulative Slice 1 + Slice 2 Tests**: ✅ 26 passed / 0 failed / 0 skipped
+
+```text
+Command: npm test -- src/routes.test.ts src/data/adminResourceSchema.test.ts src/data/adminResourceRepository.test.ts src/hooks/useAdminResources.test.ts src/pages/admin/AdminResourcesListPage.test.ts src/pages/AdminShell.test.ts src/App.test.tsx
+
+Test Files  7 passed (7)
+Tests       26 passed (26)
+Duration    1.23s
+Exit code   0
+```
+
+**Full Test Suite**: ✅ 117 passed / 0 failed / 0 skipped
 
 ```text
 Command: npm test
 
-Test Files  22 passed (22)
-Tests       106 passed (106)
-Duration    2.44s
+Test Files  26 passed (26)
+Tests       117 passed (117)
+Duration    2.51s
 Exit code   0
 ```
 
@@ -56,7 +68,7 @@ Command: npm run lint
 Exit code: 0
 ```
 
-**Coverage**: ➖ Not available / not run. No coverage script/tooling was configured in `package.json`, and verification stayed within allowed commands.
+**Coverage**: ➖ Not available / not run. Testing-capabilities cache says no configured coverage command/tool; verification stayed within allowed commands.
 
 ---
 
@@ -64,14 +76,14 @@ Exit code: 0
 
 | Check | Result | Details |
 |-------|--------|---------|
-| TDD Evidence reported | ✅ | `apply-progress.md` contains a TDD Cycle Evidence table. |
-| All Slice 1 tasks have tests | ✅ | 8/8 Slice 1 completed tasks reference tests or verification evidence. |
-| RED confirmed (tests exist) | ✅ | `src/routes.test.ts`, `src/data/adminResourceSchema.test.ts`, and `src/data/adminResourceRepository.test.ts` exist. |
-| GREEN confirmed (tests pass) | ✅ | Targeted slice tests passed: 15/15. |
-| Triangulation adequate | ✅ | Route in-scope/out-of-scope, schema valid/invalid/null/row, repository success/error/no-client paths are covered. |
-| Safety Net for modified files | ✅ | Existing route baseline reported before route changes; new files correctly marked N/A. |
+| TDD Evidence reported | ✅ | `apply-progress.md` contains a TDD Cycle Evidence table for completed Slice 1 + Slice 2 tasks. |
+| All Slice 2 tasks have tests | ✅ | Tasks 3.1, 3.2, 3.3, and 5.1 reference test files; 5.3 is verification evidence. |
+| RED confirmed (tests exist) | ✅ | Slice 2 test files exist: `useAdminResources.test.ts`, `AdminResourcesListPage.test.ts`, `AdminShell.test.ts`, `App.test.tsx`. |
+| GREEN confirmed (tests pass) | ✅ | Targeted Slice 2 verification passed: 21/21 tests. Cumulative completed-slice verification passed: 26/26 tests. |
+| Triangulation adequate | ✅ | Loading, error, empty, success, row/edit-link mapping, admin nav, route mounting helper, and route/nav exclusions are covered. |
+| Safety Net for modified files | ✅ | Apply-progress records baseline targeted tests before modifying auth-adjacent route/shell flow. |
 
-**TDD Compliance**: 6/6 checks passed for Slice 1.
+**TDD Compliance**: 6/6 checks passed for Slice 2.
 
 ---
 
@@ -79,31 +91,31 @@ Exit code: 0
 
 | Layer | Tests | Files | Tools |
 |-------|-------|-------|-------|
-| Unit | 15 | 3 | Vitest |
-| Integration | 0 | 0 | not used |
+| Unit | 26 | 7 | Vitest |
+| Integration | 0 | 0 | not installed (`@testing-library/*` unavailable) |
 | E2E | 0 | 0 | not in scope |
-| **Total** | **15** | **3** | |
+| **Total** | **26** | **7** | |
 
-**Note**: Unit-only coverage is appropriate for Slice 1 foundation. UI behavior needs higher-level or state-helper tests in later slices.
+**Note**: Route assertions are intentionally isolated in pure helpers because direct `App.tsx` render/import can pull Leaflet/window assumptions in node-only Vitest.
 
 ---
 
 ## Changed File Coverage
 
-Coverage analysis skipped — no configured coverage command/tool detected and allowed verification commands did not include installing or invoking coverage.
+Coverage analysis skipped — no configured coverage command/tool detected and allowed verification commands did not include coverage setup.
 
 ---
 
 ## Assertion Quality
 
-**Assertion quality**: ✅ All Slice 1 assertions verify observable behavior or adapter contract behavior. No tautologies, ghost loops, type-only standalone assertions, smoke-only tests, or CSS/internal-state assertions were found in Slice 1 test files.
+**Assertion quality**: ✅ All inspected Slice 2 assertions verify observable route/nav/state/presentation behavior. No tautologies, ghost loops, type-only standalone assertions, smoke-only DOM assertions, CSS/internal-state assertions, or banned empty-only assertions were found.
 
 ---
 
 ## Quality Metrics
 
 **Linter**: ✅ No errors  
-**Type Checker**: ➖ Not run separately — `npm run build`/`tsc` was prohibited by instruction.
+**Type Checker**: ➖ Not run separately — `npm run build`/`tsc -b` is tied to the prohibited build command and no direct type-check script exists.
 
 ---
 
@@ -111,26 +123,26 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 
 | Requirement | Scenario | Test | Result |
 |-------------|----------|------|--------|
-| Protected Admin Resource Access | Authorized admin opens resources | `src/routes.test.ts > configures only the Phase 5 admin resource list, create, and edit routes` | ⚠️ PARTIAL — route constants exist/protected; actual mounted UI is later slice. |
-| Protected Admin Resource Access | Unauthorized user opens resources | `src/routes.test.ts > configures only...` plus existing `RequireAdmin` tests | ⚠️ PARTIAL — route metadata is protected; actual resource-route mounting/content denial is later slice. |
-| Resource List States | Resources load successfully | `src/data/adminResourceRepository.test.ts > lists all admin resources through Supabase without local fallback` | ⚠️ PARTIAL — repository behavior passes; UI list state is later slice. |
-| Resource List States | List cannot load | `src/data/adminResourceRepository.test.ts > surfaces Supabase failures safely instead of falling back to local data` | ⚠️ PARTIAL — safe repository error passes; UI error state is later slice. |
-| Resource List States | No resources exist | none in Slice 1 | ➖ OUT OF SLICE — list UI/state task 3.1 deferred. |
-| Create Resource | Valid resource is created | `src/data/adminResourceRepository.test.ts > creates resources with validated active payloads` | ⚠️ PARTIAL — persistence adapter passes; UI success feedback/navigation is later slice. |
-| Create Resource | Invalid create input | `src/data/adminResourceSchema.test.ts > rejects drafts missing required SQL-backed fields before persistence` | ⚠️ PARTIAL — validation passes; field-safe UI feedback is later slice. |
-| Edit Resource | Existing resource is updated | `src/data/adminResourceRepository.test.ts > updates resources by id with validated active payloads` | ⚠️ PARTIAL — persistence adapter passes; UI feedback/navigation is later slice. |
-| Edit Resource | Edit target cannot load | `src/data/adminResourceRepository.test.ts > loads one resource by id and returns null for Supabase not-found responses` | ⚠️ PARTIAL — repository not-found mapping passes; route UI state is later slice. |
-| Safe Persistence and Scope Limits | Supabase write is rejected | `src/data/adminResourceRepository.test.ts > surfaces Supabase failures safely...` | ✅ COMPLIANT for Slice 1 repository boundary. |
-| Safe Persistence and Scope Limits | Delete action is expected | `src/routes.test.ts > does not configure out-of-scope admin delete, bulk, geocoding, upload, user, invite, or role routes` | ✅ COMPLIANT for Slice 1 routes. |
-| Admin Route Boundary | Unauthenticated visitor opens admin | Existing `RequireAdmin`/auth decision tests | ➖ OUT OF SLICE — unchanged Phase 4 behavior. |
-| Admin Route Boundary | Admin opens admin route | Existing admin shell route/tests | ➖ OUT OF SLICE — unchanged Phase 4 behavior. |
-| Admin Route Boundary | Admin opens resource route | `src/routes.test.ts > configures only...` | ⚠️ PARTIAL — constants available; `App.tsx` route mounting is deferred by Slice 1 boundary. |
-| Admin Route Boundary | Admin opens login route | Existing `AdminAuthContext.test.ts` / `adminAuthDecisions` tests | ➖ OUT OF SLICE — unchanged Phase 4 behavior. |
-| Admin Route Boundary | Authenticated non-admin opens admin route | Existing `RequireAdmin.test.ts` | ➖ OUT OF SLICE — unchanged Phase 4 behavior. |
-| Routing Scope Limits | In-scope admin resource URL is requested | `src/routes.test.ts > configures only...` | ✅ COMPLIANT for route inventory/base definitions. |
-| Routing Scope Limits | Out-of-scope admin URL is requested | `src/routes.test.ts > does not configure out-of-scope...` | ✅ COMPLIANT. |
+| Protected Admin Resource Access | Authorized admin opens resources | `src/App.test.tsx > mounts the resource list below the existing admin boundary`; static `src/App.tsx` inspection | ✅ COMPLIANT for Slice 2 — `/admin/resources` is mounted as a child of the `RequireAdmin`-wrapped `/admin` route. |
+| Protected Admin Resource Access | Unauthorized user opens resources | Existing `src/components/admin/RequireAdmin.test.ts` plus static `src/App.tsx` inspection | ⚠️ PARTIAL — `RequireAdmin` denial behavior is tested and wraps the route; no DOM/router integration test was added due tooling boundary. |
+| Resource List States | Resources load successfully | `src/hooks/useAdminResources.test.ts > builds a success state...`; `src/pages/admin/AdminResourcesListPage.test.ts > maps successful resources...` | ✅ COMPLIANT — rows include name, type, address, updated timestamp, and edit href. |
+| Resource List States | List cannot load | `src/hooks/useAdminResources.test.ts > shows a recoverable non-sensitive error...`; `AdminResourcesListPage.test.ts > describes loading, error, and empty states...` | ✅ COMPLIANT — safe generic error copy is shown; sensitive cause is not exposed. |
+| Resource List States | No resources exist | `src/hooks/useAdminResources.test.ts > keeps empty resources explicit...`; `AdminResourcesListPage.test.ts > describes loading, error, and empty states...` | ✅ COMPLIANT — empty state includes create action href. |
+| Create Resource | Valid resource is created | `src/data/adminResourceRepository.test.ts > creates resources with validated active payloads` | ➖ OUT OF SLICE 2 UI — repository boundary already passes from Slice 1; create form/page intentionally deferred. |
+| Create Resource | Invalid create input | `src/data/adminResourceSchema.test.ts > rejects drafts missing required SQL-backed fields...` | ➖ OUT OF SLICE 2 UI — validation boundary already passes from Slice 1; field-safe form feedback deferred. |
+| Edit Resource | Existing resource is updated | `src/data/adminResourceRepository.test.ts > updates resources by id...` | ➖ OUT OF SLICE 2 UI — repository boundary already passes from Slice 1; edit form/page intentionally deferred. |
+| Edit Resource | Edit target cannot load | `src/data/adminResourceRepository.test.ts > loads one resource by id and returns null...` | ➖ OUT OF SLICE 2 UI — not-found UI deferred to create/edit slice. |
+| Safe Persistence and Scope Limits | Supabase write is rejected | `src/data/adminResourceRepository.test.ts > surfaces Supabase failures safely...` | ➖ OUT OF SLICE 2 UI — repository failure behavior remains passing from Slice 1; create/edit UI error handling deferred. |
+| Safe Persistence and Scope Limits | Delete action is expected | `src/routes.test.ts > does not configure out-of-scope...`; `src/pages/AdminShell.test.ts > does not expose out-of-scope...`; `AdminResourcesListPage.test.ts > maps successful resources...` | ✅ COMPLIANT — delete/archive/deactivate/bulk/user-management routes/nav/actions are absent. |
+| Admin Route Boundary | Unauthenticated visitor opens admin | Existing `RequireAdmin.test.ts > redirects anonymous users...` | ✅ COMPLIANT for unchanged boundary; `/admin/resources` is under that boundary. |
+| Admin Route Boundary | Admin opens admin route | Existing `RequireAdmin.test.ts > allows only authorized admin sessions through`; `src/App.tsx` index route inspection | ✅ COMPLIANT for unchanged admin route. |
+| Admin Route Boundary | Admin opens resource route | `src/App.test.tsx > mounts the resource list below the existing admin boundary` | ⚠️ PARTIAL — list route is mounted; create/edit constants exist but create/edit pages are intentionally not mounted in Slice 2. |
+| Admin Route Boundary | Admin opens login route | Existing auth behavior; no Slice 2 changes | ➖ OUT OF SLICE 2 — unchanged Phase 4 behavior. |
+| Admin Route Boundary | Authenticated non-admin opens admin route | Existing `RequireAdmin.test.ts > shows access denied...` | ✅ COMPLIANT for unchanged boundary; resource route is nested under it. |
+| Routing Scope Limits | In-scope admin resource URL is requested | `src/routes.test.ts > configures only...`; `src/App.test.tsx > keeps create and edit routes declared but outside...` | ⚠️ PARTIAL — list route is available now; create/edit URLs are route constants for next slice but not mounted yet by Slice 2 boundary. |
+| Routing Scope Limits | Out-of-scope admin URL is requested | `src/routes.test.ts > does not configure out-of-scope...`; `src/pages/AdminShell.test.ts > does not expose out-of-scope...` | ✅ COMPLIANT. |
 
-**Compliance summary**: Slice 1 behavioral evidence is compliant for its repository/schema/route-inventory boundary. Full UI route mounting and page behavior remain partial/out-of-scope for later slices, not blockers for this slice.
+**Compliance summary**: 10/18 scenarios compliant for the current cumulative implementation, 5/18 intentionally out of Slice 2 UI scope, and 3/18 partial due no DOM/router integration and deferred create/edit route mounting. For Slice 2's expected boundary specifically, no blocking compliance gaps were found.
 
 ---
 
@@ -138,13 +150,13 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 
 | Requirement | Status | Notes |
 |------------|--------|-------|
-| Route inventory/base definitions | ✅ Implemented | `src/routes.ts` defines `/admin/resources`, `/admin/resources/new`, `/admin/resources/:id/edit`, all with `protected: true`. |
-| Route scope exclusions | ✅ Implemented | Tests assert no delete/archive/deactivate/bulk/geocoding/upload/users/invite/roles route paths. |
-| Admin repository contract | ✅ Implemented | `src/domain/resources/adminResourceRepository.ts` defines `listAll`, `getById`, `create`, `update`. |
-| Supabase anon repository, no local fallback | ✅ Implemented | `src/data/adminResourceRepository.ts` imports browser `supabase`; no bundled resource fallback or service-role path found. |
-| Validation and mapping helpers | ✅ Implemented | `src/data/adminResourceSchema.ts` validates drafts, maps blank optional text to `null`, maps SQL rows to admin resources, and pins payload `estado: "activo"`. |
-| Full list/create/edit UI | ➖ Out of Slice 1 | No `App.tsx` resource route mounting, pages, hooks, or forms expected in this slice. |
-| Delete/soft-delete behavior | ✅ Absent | No delete/soft-delete route/action added in Slice 1. |
+| `/admin/resources` mounted under existing protected admin route | ✅ Implemented | `src/App.tsx` nests `getRelativeAdminResourcesPath()` under `/admin` whose element is `<RequireAdmin><AdminShell /></RequireAdmin>`. |
+| AdminShell layout/nav | ✅ Implemented | `src/pages/AdminShell.tsx` renders layout, logout, nav, and `Outlet`; `adminShellNavigation.ts` exposes only Inicio/Recursos. |
+| Admin resource list page | ✅ Implemented | `AdminResourcesListPage.tsx` uses `useAdminResources()` and `resolveAdminResourceListPresentation()`. |
+| Loading/error/empty/success list states | ✅ Implemented | `useAdminResources.ts` and presentation helper cover loading, safe error, empty, and success rows. |
+| Create/edit forms/pages | ✅ Absent by boundary | No `AdminResourceForm.tsx`, `AdminResourceCreatePage.tsx`, or `AdminResourceEditPage.tsx` exists. Links point to declared future constants only. |
+| Delete/soft-delete/archive/deactivate/bulk actions | ✅ Absent | Grep and route/nav/list tests found no implemented admin delete/archive/deactivate/bulk actions. |
+| Secrets/local fallback | ✅ Not introduced | Admin adapter still uses anon Supabase client; Slice 2 UI uses repository boundary and no secret-bearing paths. |
 
 ---
 
@@ -152,25 +164,27 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 
 | Decision | Followed? | Notes |
 |----------|-----------|-------|
-| Routes use `/admin/resources`, `/new`, `/:id/edit` under admin boundary | ⚠️ Partial | Route constants are protected; actual React Router mounting under `RequireAdmin` is deferred. This matches Slice 1 boundary but not final design yet. |
-| Admin UI boundary via `AdminShell`/`Outlet` | ➖ Out of Slice 1 | No UI shell conversion expected yet. |
-| Separate admin repository | ✅ Yes | New domain contract and data adapter created instead of extending public fallback repository. |
-| Validation beside existing resource schema | ✅ Yes | `adminResourceSchema.ts` reuses `resourceSchema` and adds admin row/payload mapping. |
-| Security: browser anon Supabase client only | ✅ Yes | Uses `src/lib/supabaseClient.ts` (`VITE_SUPABASE_ANON_KEY`); no frontend secret/service-role path found. |
+| Routes under `RequireAdmin` | ✅ Yes for Slice 2 list | `/admin/resources` is mounted as a child of the existing protected admin route. Create/edit mounting deferred by explicit Slice 2 boundary. |
+| Admin UI boundary with `AdminShell` + `Outlet` | ✅ Yes | Shell now provides shared layout/nav and child outlet. |
+| Separate admin repository | ✅ Yes | Slice 2 consumes Slice 1 admin repository through `useAdminResources`; public fallback repository not used. |
+| Validation helpers beside existing schema | ✅ Yes | No Slice 2 regression; cumulative tests still pass. |
+| Security: anon Supabase/RLS, no secrets | ✅ Yes | No service-role/API/admin provisioning path added. |
+| Vitest-first pure testing | ✅ Yes | UI route/nav/list behavior is tested through pure helpers because DOM tooling is unavailable. |
 
 ---
 
 ## Issues Found
 
-**CRITICAL** (must fix before Slice 1 commit): None.
+**CRITICAL** (must fix before Slice 2 commit): None.
 
 **WARNING** (should fix/track):
-- Full spec scenarios for mounted resource screens and UI states remain partial by design. They must be completed in later slices before final Phase 5 archive.
-- `openspec/config.yaml` is absent, so Strict TDD mode was resolved from the orchestrator instruction instead of project config.
+- `openspec/config.yaml` is absent, so Strict TDD mode was resolved from the orchestrator instruction and Engram testing-capabilities cache.
 - `tasks.md` still records `Chain strategy: pending`, while the apply/verify prompt resolved the active boundary as `stacked-to-main`.
+- Create/edit URLs are declared and linked from the list state, but create/edit pages are intentionally not mounted in Slice 2. This is acceptable for this slice, but must be completed before final Phase 5 archive.
+- Route behavior is proven through pure route configuration helpers plus static `App.tsx` inspection, not a full router integration render, due Leaflet/window assumptions and no Testing Library.
 
 **SUGGESTION** (nice to have):
-- In a later slice, add route-mounting tests around `App.tsx` or route config once UI pages/stubs exist, so `/admin/resources*` is proven under `RequireAdmin` at runtime.
+- Add a dedicated DOM/router integration test if/when Testing Library or a jsdom setup is introduced, so `RequireAdmin` + nested resource routes are validated end-to-end without relying on pure helper inspection.
 
 ---
 
@@ -178,10 +192,11 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 
 | Command | Result |
 |---------|--------|
-| `git status --short` | Showed modified `src/routes.*`, untracked OpenSpec change folder, and new admin repository/schema files. |
-| `git diff -- ...` | Inspected tracked route diff; untracked files were inspected directly. |
-| `npm test -- src/routes.test.ts src/data/adminResourceSchema.test.ts src/data/adminResourceRepository.test.ts` | ✅ 3 files, 15 tests passed, exit 0. |
-| `npm test` | ✅ 22 files, 106 tests passed, exit 0. |
+| `git status --short` | Showed Slice 2 modified/untracked source and OpenSpec files; no commit/push performed. |
+| `git diff --stat` | Showed tracked diff summary; untracked files were inspected directly. |
+| `npm test -- src/hooks/useAdminResources.test.ts src/pages/admin/AdminResourcesListPage.test.ts src/pages/AdminShell.test.ts src/App.test.tsx src/routes.test.ts src/data/adminResourceRepository.test.ts` | ✅ 6 files, 21 tests passed, exit 0. |
+| `npm test -- src/routes.test.ts src/data/adminResourceSchema.test.ts src/data/adminResourceRepository.test.ts src/hooks/useAdminResources.test.ts src/pages/admin/AdminResourcesListPage.test.ts src/pages/AdminShell.test.ts src/App.test.tsx` | ✅ 7 files, 26 tests passed, exit 0. |
+| `npm test` | ✅ 26 files, 117 tests passed, exit 0. |
 | `npm run lint` | ✅ Passed, exit 0. |
 
 `npm run build` was not run.
@@ -196,23 +211,33 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 - `openspec/changes/phase-5-admin-resource-crud/design.md`
 - `openspec/changes/phase-5-admin-resource-crud/tasks.md`
 - `openspec/changes/phase-5-admin-resource-crud/apply-progress.md`
+- `openspec/changes/phase-5-admin-resource-crud/verify-report.md` (prior Slice 1 report merged/replaced)
+- `src/App.tsx`
+- `src/appRouteConfiguration.ts`
+- `src/App.test.tsx`
+- `src/pages/AdminShell.tsx`
+- `src/pages/adminShellNavigation.ts`
+- `src/pages/AdminShell.test.ts`
+- `src/hooks/useAdminResources.ts`
+- `src/hooks/useAdminResources.test.ts`
+- `src/pages/admin/AdminResourcesListPage.tsx`
+- `src/pages/admin/adminResourceListPresentation.ts`
+- `src/pages/admin/AdminResourcesListPage.test.ts`
 - `src/routes.ts`
 - `src/routes.test.ts`
-- `src/data/adminResourceSchema.ts`
-- `src/data/adminResourceSchema.test.ts`
-- `src/domain/resources/adminResourceRepository.ts`
+- `src/components/admin/RequireAdmin.tsx`
+- `src/components/admin/RequireAdmin.test.ts`
 - `src/data/adminResourceRepository.ts`
 - `src/data/adminResourceRepository.test.ts`
-- `src/data/resourceSchema.ts`
-- `src/lib/supabaseClient.ts`
-- `src/App.tsx` (via search evidence)
+- `src/data/adminResourceSchema.test.ts`
+- `src/test/fixtures/adminResources.ts`
 - `package.json`
 
 ---
 
-## Slice 1 Commit Readiness
+## Slice 2 Commit Readiness
 
-✅ Slice 1 is ready for commit from a verification perspective. Do not archive full Phase 5 yet; later stacked slices must complete UI route mounting, list states, create/edit forms, and final scope documentation.
+✅ Slice 2 is ready for commit from a verification perspective. Do not archive full Phase 5 yet; the next stacked slice must implement create/edit helpers/forms/pages and complete final scope/docs cleanup.
 
 ---
 
@@ -220,4 +245,4 @@ Coverage analysis skipped — no configured coverage command/tool detected and a
 
 **PASS WITH WARNINGS**
 
-Slice 1 meets its autonomous foundation boundary with passing targeted tests, passing full test suite, passing lint, no build run, no delete/soft-delete implementation, no local fallback, and no secret-bearing repository path. Warnings are about deferred full Phase 5/UI behavior and artifact metadata consistency, not Slice 1 blockers.
+Slice 2 meets its autonomous admin list boundary with passing targeted tests, passing cumulative slice tests, passing full suite, passing lint, no build run, no create/edit form implementation, no delete/soft-delete/bulk behavior, and no secret/local-fallback path introduced. Warnings are tracking items for config metadata, stacked-strategy artifact consistency, deferred create/edit mounting, and test-layer limitations.
