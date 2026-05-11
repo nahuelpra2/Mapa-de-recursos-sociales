@@ -160,3 +160,23 @@ export function mapAdminResourceRow(row: AdminResourceRow): AdminResource {
     updatedAt: row.updated_at
   };
 }
+
+export function toAdminResourceDraft(resource: AdminResource): AdminResourceDraft {
+  return validateAdminResourceDraft({
+    nombre: resource.nombre,
+    tipo: resource.tipo,
+    direccion: resource.direccion,
+    barrio: resource.barrio,
+    lat: resource.lat,
+    lng: resource.lng,
+    telefono: resource.telefono,
+    horario: resource.horario,
+    poblacion: resource.poblacion,
+    esCentroReferencia: resource.esCentroReferencia,
+    observaciones: resource.observaciones,
+    fuente: resource.fuente,
+    ultimaActualizacion: resource.ultimaActualizacion,
+    verification: resource.verification,
+    maintenance: resource.maintenance
+  });
+}

@@ -3,9 +3,11 @@ import { RequireAdmin } from "./components/admin/RequireAdmin";
 import { AdminAuthProvider } from "./context/AdminAuthContext";
 import { AdminLoginPage } from "./pages/AdminLoginPage";
 import { AdminShell } from "./pages/AdminShell";
+import { AdminResourceCreatePage } from "./pages/admin/AdminResourceCreatePage";
+import { AdminResourceEditPage } from "./pages/admin/AdminResourceEditPage";
 import { AdminResourcesListPage } from "./pages/admin/AdminResourcesListPage";
 import { PublicResourcesPage } from "./pages/PublicResourcesPage";
-import { getRelativeAdminResourcesPath } from "./appRouteConfiguration";
+import { getRelativeAdminResourceEditPath, getRelativeAdminResourceNewPath, getRelativeAdminResourcesPath } from "./appRouteConfiguration";
 import { appRoutes } from "./routes";
 
 function AdminIndexPage() {
@@ -29,6 +31,8 @@ function App() {
           >
             <Route index element={<AdminIndexPage />} />
             <Route path={getRelativeAdminResourcesPath()} element={<AdminResourcesListPage />} />
+            <Route path={getRelativeAdminResourceNewPath()} element={<AdminResourceCreatePage />} />
+            <Route path={getRelativeAdminResourceEditPath()} element={<AdminResourceEditPage />} />
           </Route>
           <Route path="*" element={<Navigate to={appRoutes.public.path} replace />} />
         </Routes>

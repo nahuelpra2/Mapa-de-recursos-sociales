@@ -44,13 +44,13 @@ Chain strategy: pending
 
 ## Phase 4: Create / Edit
 
-- [ ] 4.1 RED: test create/edit validation and submit success/failure helpers in `src/hooks/useAdminResources.ts`.
-- [ ] 4.2 GREEN: create `src/components/admin/AdminResourceForm.tsx` controlled form with field-safe errors.
-- [ ] 4.3 Create `src/pages/admin/AdminResourceCreatePage.tsx` using validation before repository `create`.
-- [ ] 4.4 Create `src/pages/admin/AdminResourceEditPage.tsx` using `getById`, not-found/error states, and repository `update`.
+- [x] 4.1 RED: test create/edit validation and submit success/failure helpers in `src/hooks/useAdminResources.ts`.
+- [x] 4.2 GREEN: create `src/components/admin/AdminResourceForm.tsx` controlled form with field-safe errors.
+- [x] 4.3 Create `src/pages/admin/AdminResourceCreatePage.tsx` using validation before repository `create`.
+- [x] 4.4 Create `src/pages/admin/AdminResourceEditPage.tsx` using `getById`, not-found/error states, and repository `update`.
 
 ## Phase 5: Exclusions / Verification / Docs
 
 - [x] 5.1 Add tests/assertions that delete, soft-delete, archive, deactivate, bulk, geocoding, upload, and user-management actions/routes are absent.
-- [ ] 5.2 Update SDD docs only if scope notes changed; do not add migrations or public UX redesign.
+- [x] 5.2 Scope notes reviewed: no scope change was introduced by Slice 3, so no SDD docs update, migrations, or public UX redesign were needed.
 - [x] 5.3 Allowed verification: `npm test`, targeted `npx vitest run <file>`, and `npm run lint`; do NOT run `npm run build`.
