@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createAdminResource } from "../../test/fixtures/adminResources";
 import { appRoutes } from "../../routes";
-import { resolveAdminResourceListPresentation } from "./adminResourceListPresentation";
+import { formatAdminResourceUpdatedAt, resolveAdminResourceListPresentation } from "./adminResourceListPresentation";
 
 describe("admin resource list presentation", () => {
   it("describes loading, error, and empty states with safe copy and a create action", () => {
@@ -52,10 +52,14 @@ describe("admin resource list presentation", () => {
           name: "Comedor comunitario",
           type: "Alimentos",
           address: "Calle 123",
-          updatedAt: "2026-05-10T12:00:00Z",
+          updatedAt: "10/05/2026 09:00",
           editHref: "/admin/resources/resource-1/edit"
         }
       ]
     });
+  });
+
+  it("formats Supabase UTC timestamps as local Montevideo time", () => {
+    expect(formatAdminResourceUpdatedAt("2026-05-11T14:40:34.151296+00:00")).toBe("11/05/2026 11:40");
   });
 });

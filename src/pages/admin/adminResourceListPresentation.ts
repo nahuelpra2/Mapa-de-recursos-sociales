@@ -22,13 +22,32 @@ function getAdminResourceEditHref(id: string): string {
   return appRoutes.adminResourceEdit.path.replace(":id", encodeURIComponent(id));
 }
 
+export function formatAdminResourceUpdatedAt(value: string): string {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) return value;
+
+  const parts = new Intl.DateTimeFormat("es-UY", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "America/Montevideo"
+  }).formatToParts(date);
+  const getPart = (type: Intl.DateTimeFormatPartTypes): string => parts.find((part) => part.type === type)?.value ?? "";
+
+  return `${getPart("day")}/${getPart("month")}/${getPart("year")} ${getPart("hour")}:${getPart("minute")}`;
+}
+
 function toAdminResourceListRow(resource: AdminResource): AdminResourceListRow {
   return {
     id: resource.id,
     name: resource.nombre,
     type: resource.tipo,
     address: resource.direccion,
-    updatedAt: resource.updatedAt,
+    updatedAt: formatAdminResourceUpdatedAt(resource.updatedAt),
     editHref: getAdminResourceEditHref(resource.id)
   };
 }
