@@ -18,9 +18,11 @@ L.Icon.Default.mergeOptions({
 type ResourceMapProps = {
   resources: ResourceWithDistance[];
   origin: SearchOrigin | null;
+  selectedResourceId?: string | null;
+  onSelectResource?: (resourceId: string) => void;
 };
 
-export function ResourceMap({ resources, origin }: ResourceMapProps) {
+export function ResourceMap({ resources, origin, selectedResourceId, onSelectResource }: ResourceMapProps) {
   const safeOrigin = hasValidCoordinates(origin) ? origin : null;
   const validResources = resources.filter((resource) => hasValidCoordinates(resource));
   const center: [number, number] = safeOrigin ? [safeOrigin.lat, safeOrigin.lng] : defaultCenter;
@@ -45,7 +47,12 @@ export function ResourceMap({ resources, origin }: ResourceMapProps) {
         ) : null}
 
         {validResources.map((resource) => (
-          <Marker key={resource.id} position={[resource.lat, resource.lng]}>
+          <Marker
+            key={resource.id}
+            position={[resource.lat, resource.lng]}
+            zIndexOffset={resource.id === selectedResourceId ? 1000 : 0}
+            eventHandlers={onSelectResource ? { click: () => onSelectResource(resource.id) } : undefined}
+          >
             <Popup>
               <div className="space-y-1 text-sm">
                 <strong>{resource.nombre}</strong>
@@ -53,6 +60,11 @@ export function ResourceMap({ resources, origin }: ResourceMapProps) {
                 <p>{resource.direccion}</p>
                 <p>{resource.horario || "Horario no informado"}</p>
                 <p>{resource.telefono || "Telefono no informado"}</p>
+                {onSelectResource ? (
+                  <button type="button" className="font-semibold text-sky-700" onClick={() => onSelectResource(resource.id)}>
+                    Ver detalle
+                  </button>
+                ) : null}
                 <a href={createMapLink(resource, safeOrigin || undefined)} target="_blank" rel="noreferrer">
                   Como llegar
                 </a>

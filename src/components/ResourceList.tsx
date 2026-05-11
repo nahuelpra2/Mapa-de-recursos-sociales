@@ -4,10 +4,12 @@ import { ResourceCard } from "./ResourceCard";
 type ResourceListProps = {
   resources: ResourceWithDistance[];
   origin?: Coordinates;
+  selectedResourceId: string | null;
+  onSelectResource: (resourceId: string) => void;
   onCopy: (resource: ResourceWithDistance) => void;
 };
 
-export function ResourceList({ resources, origin, onCopy }: ResourceListProps) {
+export function ResourceList({ resources, origin, selectedResourceId, onSelectResource, onCopy }: ResourceListProps) {
   return (
     <section aria-labelledby="resource-list-title" className="space-y-4">
       <div className="flex items-center justify-between gap-3">
@@ -26,7 +28,14 @@ export function ResourceList({ resources, origin, onCopy }: ResourceListProps) {
       ) : (
         <div className="space-y-4">
           {resources.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} origin={origin} onCopy={onCopy} />
+            <ResourceCard
+              key={resource.id}
+              resource={resource}
+              origin={origin}
+              isExpanded={resource.id === selectedResourceId}
+              onToggle={() => onSelectResource(resource.id)}
+              onCopy={onCopy}
+            />
           ))}
         </div>
       )}

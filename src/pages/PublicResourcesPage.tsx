@@ -11,11 +11,13 @@ import { useFilteredResources } from "../hooks/useFilteredResources";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { shouldShowPublicResourceResults, usePublicResources } from "../hooks/usePublicResources";
 import { useResourceSearchState } from "../hooks/useResourceSearchState";
+import { resolveNextSelectedResourceId } from "../hooks/useSelectedResource";
 import type { ResourceWithDistance } from "../types/resource";
 import { copyResourceToClipboard } from "../utils/clipboard";
 
 export function PublicResourcesPage() {
   const [copyMessage, setCopyMessage] = useState<string | null>(null);
+  const [selectedResourceId, setSelectedResourceId] = useState<string | null>(null);
 
   const { location, status, error, requestLocation } = useGeolocation();
   const {
@@ -63,6 +65,10 @@ export function PublicResourcesPage() {
     requestLocation();
   }
 
+  function handleSelectResource(resourceId: string) {
+    setSelectedResourceId((currentResourceId) => resolveNextSelectedResourceId(currentResourceId, resourceId));
+  }
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-4 md:px-6 md:py-6">
@@ -103,14 +109,32 @@ export function PublicResourcesPage() {
             </p>
 
             <div className="lg:hidden">
-              <ResourceMap resources={filteredResources} origin={origin} />
+              <ResourceMap
+                resources={filteredResources}
+                origin={origin}
+                selectedResourceId={selectedResourceId}
+                onSelectResource={handleSelectResource}
+              />
             </div>
 
-            {showResourceResults ? <ResourceList resources={filteredResources} origin={origin || undefined} onCopy={handleCopy} /> : null}
+            {showResourceResults ? (
+              <ResourceList
+                resources={filteredResources}
+                origin={origin || undefined}
+                selectedResourceId={selectedResourceId}
+                onSelectResource={handleSelectResource}
+                onCopy={handleCopy}
+              />
+            ) : null}
           </div>
 
           <div className="hidden lg:sticky lg:top-6 lg:block">
-            <ResourceMap resources={filteredResources} origin={origin} />
+            <ResourceMap
+              resources={filteredResources}
+              origin={origin}
+              selectedResourceId={selectedResourceId}
+              onSelectResource={handleSelectResource}
+            />
           </div>
         </div>
       </div>
