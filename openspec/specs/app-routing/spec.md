@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define public/admin route boundaries for Phase 4 while preserving the current public resource experience.
+Define public/admin route boundaries for Phase 5 while preserving the current public resource experience.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ The system MUST serve the existing public resource map, list, and filters at `/`
 
 ### Requirement: Admin Route Boundary
 
-The system MUST expose `/admin/login` for admin sign-in and `/admin` as a protected admin route. Admin routes SHOULD be structured with React Router-compatible route boundaries for later admin subroutes.
+The system MUST expose `/admin/login` for admin sign-in, `/admin` as a protected admin route, and `/admin/resources` plus create/edit subroutes as protected admin resource routes. Admin routes SHOULD remain React Router-compatible for later admin subroutes.
 
 #### Scenario: Unauthenticated visitor opens admin
 
@@ -39,6 +39,12 @@ The system MUST expose `/admin/login` for admin sign-in and `/admin` as a protec
 - WHEN the user navigates to `/admin/login`
 - THEN they SHOULD be redirected away from login to `/admin`
 
+#### Scenario: Admin opens resource route
+
+- GIVEN an active session authorized as admin
+- WHEN the user navigates to `/admin/resources`, `/admin/resources/new`, or `/admin/resources/:id/edit`
+- THEN the matching protected resource management screen is shown
+
 #### Scenario: Authenticated non-admin opens admin route
 
 - GIVEN an active session that is not admin-authorized
@@ -48,10 +54,10 @@ The system MUST expose `/admin/login` for admin sign-in and `/admin` as a protec
 
 ### Requirement: Routing Scope Limits
 
-The system MUST NOT add resource CRUD routes, frontend admin creation/invitation routes, or role hierarchy screens in Phase 4. The system SHOULD NOT add E2E or Testing Library setup unless design later proves it necessary.
+The system MUST allow Phase 5 admin resource list, create, and edit routes. The system MUST NOT add delete, soft-delete, archive, deactivate, bulk action, admin provisioning, invitation, role hierarchy, public UX redesign, E2E, or Testing Library setup in this phase.
 
 #### Scenario: Out-of-scope admin URL is requested
 
-- GIVEN a Phase 4 build
+- GIVEN a Phase 5 build
 - WHEN a user expects CRUD, invitation, or role-management pages
 - THEN those features are unavailable
