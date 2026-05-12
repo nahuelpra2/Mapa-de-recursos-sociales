@@ -2,19 +2,38 @@ import { appRoutes } from "../../routes";
 import type { AdminResource } from "../../data/adminResourceSchema";
 import type { AdminResourcesListState } from "../../hooks/useAdminResources";
 
+export type AdminResourceListLifecycleStatus = "idle" | "confirming-delete" | "success" | "error";
+
+export type AdminResourceListLifecycleState = {
+  status: AdminResourceListLifecycleStatus;
+  pendingDeleteId: string | null;
+  message: string | null;
+};
+
 type AdminResourceListRow = {
   id: string;
   name: string;
   type: string;
   address: string;
+  statusLabel: string;
   updatedAt: string;
   editHref: string;
+  archive: {
+    label: string;
+    disabled: boolean;
+  };
+  delete: {
+    label: string;
+  };
 };
 
 export type AdminResourceListPresentation = {
   title: string;
   message: string;
   createHref: string;
+  lifecycleMessage?: string | null;
+  lifecycleTone?: "warning" | "success" | "error" | null;
+  pendingDeleteId?: string | null;
   rows: AdminResourceListRow[];
 };
 
@@ -47,12 +66,39 @@ function toAdminResourceListRow(resource: AdminResource): AdminResourceListRow {
     name: resource.nombre,
     type: resource.tipo,
     address: resource.direccion,
+    statusLabel: resource.estado === "activo" ? "Activo" : "Inactivo",
     updatedAt: formatAdminResourceUpdatedAt(resource.updatedAt),
-    editHref: getAdminResourceEditHref(resource.id)
+    editHref: getAdminResourceEditHref(resource.id),
+    archive: {
+      label: resource.estado === "activo" ? "Archivar" : "Archivado",
+      disabled: resource.estado !== "activo"
+    },
+    delete: {
+      label: "Eliminar definitivamente"
+    }
   };
 }
 
-export function resolveAdminResourceListPresentation(state: AdminResourcesListState): AdminResourceListPresentation {
+function resolveLifecycleTone(state: AdminResourceListLifecycleState): "warning" | "success" | "error" | null {
+  if (state.status === "confirming-delete") return "warning";
+  if (state.status === "success") return "success";
+  if (state.status === "error") return "error";
+
+  return null;
+}
+
+function resolveLifecycleMessage(state: AdminResourceListLifecycleState): string | null {
+  if (state.status === "confirming-delete") {
+    return state.message ?? "Eliminar definitivamente es irreversible. Confirmá para continuar.";
+  }
+
+  return state.message;
+}
+
+export function resolveAdminResourceListPresentation(
+  state: AdminResourcesListState,
+  lifecycleState: AdminResourceListLifecycleState = { status: "idle", pendingDeleteId: null, message: null }
+): AdminResourceListPresentation {
   const base = {
     createHref: appRoutes.adminResourceNew.path,
     rows: state.resources.map(toAdminResourceListRow)
@@ -87,6 +133,9 @@ export function resolveAdminResourceListPresentation(state: AdminResourcesListSt
   return {
     ...base,
     title: "Recursos",
-    message: `${state.resources.length} ${state.resources.length === 1 ? "recurso disponible" : "recursos disponibles"} para editar.`
+    message: `${state.resources.length} ${state.resources.length === 1 ? "recurso disponible" : "recursos disponibles"} para editar, archivar o eliminar definitivamente.`,
+    lifecycleMessage: resolveLifecycleMessage(lifecycleState),
+    lifecycleTone: resolveLifecycleTone(lifecycleState),
+    pendingDeleteId: lifecycleState.pendingDeleteId
   };
 }
