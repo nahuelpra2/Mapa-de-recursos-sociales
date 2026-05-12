@@ -7,6 +7,8 @@ import { appRoutes } from "../routes";
 const ADMIN_RESOURCE_LOAD_ERROR = "No se pudieron cargar los recursos. Intentá nuevamente o verificá permisos de administrador.";
 const ADMIN_RESOURCE_WRITE_ERROR = "No se pudo guardar el recurso. Intentá nuevamente o verificá permisos de administrador.";
 const ADMIN_RESOURCE_NOT_FOUND_ERROR = "No encontramos el recurso solicitado. Puede haber sido modificado o no tenés permisos para verlo.";
+const ADMIN_RESOURCE_LIFECYCLE_ERROR = "No se pudo cambiar el estado del recurso. Intentá nuevamente o verificá permisos de administrador.";
+const ADMIN_RESOURCE_DELETE_CONFIRMATION_ERROR = "La eliminación es irreversible. Confirmá para continuar.";
 
 export type AdminResourcesListStatus = "loading" | "error" | "empty" | "success";
 
@@ -155,6 +157,64 @@ export function resolveAdminResourceEditLoadError(): AdminResourceEditLoadState 
     draft: null,
     error: "No se pudo cargar el recurso. Intentá nuevamente o verificá permisos de administrador."
   };
+}
+
+export type AdminResourceLifecycleAction = "archive" | "delete";
+
+export type AdminResourceLifecycleSubmitStatus = "confirmation-required" | "success" | "error";
+
+export type AdminResourceLifecycleSubmitResult = {
+  status: AdminResourceLifecycleSubmitStatus;
+  resource: AdminResource | null;
+  formError: string | null;
+  requiresConfirmation: boolean;
+};
+
+type SubmitAdminResourceLifecycleActionOptions = {
+  action: AdminResourceLifecycleAction;
+  id: string;
+  confirmed?: boolean;
+  repository: Pick<AdminResourceRepository, "archive" | "delete">;
+};
+
+export async function submitAdminResourceLifecycleAction({
+  action,
+  id,
+  confirmed = true,
+  repository
+}: SubmitAdminResourceLifecycleActionOptions): Promise<AdminResourceLifecycleSubmitResult> {
+  if (action === "delete" && !confirmed) {
+    return {
+      status: "confirmation-required",
+      resource: null,
+      formError: ADMIN_RESOURCE_DELETE_CONFIRMATION_ERROR,
+      requiresConfirmation: true
+    };
+  }
+
+  try {
+    let resource: AdminResource | null = null;
+
+    if (action === "archive") {
+      resource = await repository.archive(id);
+    } else {
+      await repository.delete(id);
+    }
+
+    return {
+      status: "success",
+      resource,
+      formError: null,
+      requiresConfirmation: false
+    };
+  } catch {
+    return {
+      status: "error",
+      resource: null,
+      formError: ADMIN_RESOURCE_LIFECYCLE_ERROR,
+      requiresConfirmation: false
+    };
+  }
 }
 
 export function createAdminResourceDraft(): AdminResourceDraft {

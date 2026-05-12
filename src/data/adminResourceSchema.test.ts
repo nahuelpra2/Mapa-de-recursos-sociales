@@ -3,6 +3,7 @@ import { createResource } from "../test/fixtures/resources";
 import {
   adminResourceDraftSchema,
   mapAdminResourceRow,
+  toAdminResourceArchivePayload,
   toAdminResourcePayload,
   validateAdminResourceDraft,
   type AdminResourceDraft,
@@ -60,6 +61,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     maintenance_review_by: "2026-06-11",
     maintenance_notes: "Revisar cupos",
     estado: "activo",
+    deleted_at: null,
     created_at: "2026-05-11T10:00:00Z",
     updated_at: "2026-05-11T10:30:00Z",
     ...overrides
@@ -125,6 +127,7 @@ describe("admin resource schema helpers", () => {
       ...createResource(validDraft),
       id: "admin-resource-1",
       estado: "activo",
+      deletedAt: null,
       createdAt: "2026-05-11T10:00:00Z",
       updatedAt: "2026-05-11T10:30:00Z"
     });
@@ -145,19 +148,50 @@ describe("admin resource schema helpers", () => {
         })
       )
     ).toEqual({
-      ...createResource({
-        ...validDraft,
-        id: "admin-resource-1",
-        barrio: undefined,
-        telefono: undefined,
-        horario: undefined,
-        observaciones: undefined,
-        verification: { status: "needs_review", source: "Llamada de control", notes: undefined },
-        maintenance: { ...validDraft.maintenance, notes: undefined }
-      }),
+        ...createResource({
+          ...validDraft,
+          id: "admin-resource-1",
+          barrio: undefined,
+          telefono: undefined,
+          horario: undefined,
+          observaciones: undefined,
+          verification: {
+            status: "needs_review",
+            verifiedAt: undefined,
+            source: "Llamada de control",
+            notes: undefined
+          },
+          maintenance: { ...validDraft.maintenance, notes: undefined }
+        }),
       estado: "activo",
+      deletedAt: null,
       createdAt: "2026-05-11T10:00:00Z",
       updatedAt: "2026-05-11T10:30:00Z"
+    });
+  });
+
+  it("maps inactive SQL admin rows and deletion timestamps into lifecycle metadata", () => {
+    expect(
+      mapAdminResourceRow(
+        createRow({
+          estado: "inactivo",
+          deleted_at: "2026-05-12T12:00:00Z"
+        })
+      )
+    ).toEqual({
+      ...createResource(validDraft),
+      id: "admin-resource-1",
+      estado: "inactivo",
+      deletedAt: "2026-05-12T12:00:00Z",
+      createdAt: "2026-05-11T10:00:00Z",
+      updatedAt: "2026-05-11T10:30:00Z"
+    });
+  });
+
+  it("builds archive payloads that mark the row inactive and preserve deletion timestamps", () => {
+    expect(toAdminResourceArchivePayload("2026-05-12T12:00:00Z")).toEqual({
+      estado: "inactivo",
+      deleted_at: "2026-05-12T12:00:00Z"
     });
   });
 });

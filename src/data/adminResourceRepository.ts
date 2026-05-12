@@ -2,9 +2,11 @@ import { supabase } from "../lib/supabaseClient";
 import type { AdminResourceRepository } from "../domain/resources/adminResourceRepository";
 import {
   mapAdminResourceRow,
+  toAdminResourceArchivePayload,
   toAdminResourcePayload,
   type AdminResource,
   type AdminResourceDraft,
+  type AdminResourceArchivePayload,
   type AdminResourcePayload,
   type AdminResourceRow
 } from "./adminResourceSchema";
@@ -24,19 +26,25 @@ type AdminResourceUpdateQuery = {
   eq: (column: string, value: string) => AdminResourceMutationQuery;
 };
 
+type AdminResourceDeleteQuery = {
+  eq: (column: string, value: string) => SupabaseResult<null>;
+};
+
 export type AdminResourceClient = {
   from: (table: "resources") => {
     select: (columns: "*") => AdminResourceSelectQuery;
     insert: (payload: AdminResourcePayload[]) => AdminResourceMutationQuery;
-    update: (payload: AdminResourcePayload) => AdminResourceUpdateQuery;
+    update: (payload: AdminResourcePayload | AdminResourceArchivePayload) => AdminResourceUpdateQuery;
+    delete: () => AdminResourceDeleteQuery;
   };
 };
 
 type AdminResourceRepositoryOptions = {
   client?: AdminResourceClient | null;
+  now?: () => string;
 };
 
-type Operation = "cargar recursos" | "cargar recurso" | "crear recurso" | "actualizar recurso";
+type Operation = "cargar recursos" | "cargar recurso" | "crear recurso" | "actualizar recurso" | "archivar recurso" | "eliminar recurso";
 
 export class AdminResourcePersistenceError extends Error {
   readonly cause?: unknown;
@@ -64,8 +72,13 @@ function ensureData<T>(operation: Operation, data: T | null, error: unknown): T 
   return data;
 }
 
+function ensureSuccess(operation: Operation, error: unknown): void {
+  if (error) throw new AdminResourcePersistenceError(operation, error);
+}
+
 export function createAdminResourceRepository({
-  client = supabase as AdminResourceClient | null
+  client = supabase as AdminResourceClient | null,
+  now = () => new Date().toISOString()
 }: AdminResourceRepositoryOptions = {}): AdminResourceRepository {
   return {
     async listAll(): Promise<AdminResource[]> {
@@ -98,6 +111,21 @@ export function createAdminResourceRepository({
       const { data, error } = await adminClient.from("resources").update(payload).eq("id", id).select("*").single();
 
       return mapAdminResourceRow(ensureData("actualizar recurso", data, error));
+    },
+
+    async archive(id: string): Promise<AdminResource> {
+      const adminClient = ensureClient(client, "archivar recurso");
+      const payload = toAdminResourceArchivePayload(now());
+      const { data, error } = await adminClient.from("resources").update(payload).eq("id", id).select("*").single();
+
+      return mapAdminResourceRow(ensureData("archivar recurso", data, error));
+    },
+
+    async delete(id: string): Promise<void> {
+      const adminClient = ensureClient(client, "eliminar recurso");
+      const { error } = await adminClient.from("resources").delete().eq("id", id);
+
+      ensureSuccess("eliminar recurso", error);
     }
   };
 }

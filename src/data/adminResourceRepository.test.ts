@@ -55,6 +55,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     maintenance_review_by: "2026-06-11",
     maintenance_notes: null,
     estado: "activo",
+    deleted_at: null,
     created_at: "2026-05-11T10:00:00Z",
     updated_at: "2026-05-11T10:30:00Z",
     ...overrides
@@ -117,6 +118,48 @@ describe("admin resource repository", () => {
     );
     expect(update).toHaveBeenCalledWith(expect.objectContaining({ nombre: "Centro editado", estado: "activo" }));
     expect(eq).toHaveBeenCalledWith("id", "updated");
+  });
+
+  it("archives resources with inactive payloads and returns the mapped archived row", async () => {
+    const archivedAt = "2026-05-12T12:00:00Z";
+    const single = vi.fn().mockResolvedValue({ data: createRow({ id: "archived", estado: "inactivo", deleted_at: archivedAt }), error: null });
+    const select = vi.fn(() => ({ single }));
+    const eq = vi.fn(() => ({ select }));
+    const update = vi.fn(() => ({ eq }));
+    const from = vi.fn(() => ({ update }));
+    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient, now: () => archivedAt });
+
+    await expect(repository.archive("archived")).resolves.toEqual(expect.objectContaining({ id: "archived", estado: "inactivo", deletedAt: archivedAt }));
+    expect(update).toHaveBeenCalledWith({ estado: "inactivo", deleted_at: archivedAt });
+    expect(eq).toHaveBeenCalledWith("id", "archived");
+  });
+
+  it("hard deletes resources through Supabase delete by id", async () => {
+    const eq = vi.fn().mockResolvedValue({ data: null, error: null });
+    const deleteQuery = vi.fn(() => ({ eq }));
+    const from = vi.fn(() => ({ delete: deleteQuery }));
+    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+
+    await expect(repository.delete("resource-1")).resolves.toBeUndefined();
+    expect(from).toHaveBeenCalledWith("resources");
+    expect(deleteQuery).toHaveBeenCalledTimes(1);
+    expect(eq).toHaveBeenCalledWith("id", "resource-1");
+  });
+
+  it("surfaces archive and delete failures safely instead of leaking RLS details", async () => {
+    const archivedSingle = vi.fn().mockResolvedValue({ data: null, error: { message: "RLS: archive denied" } });
+    const archivedSelect = vi.fn(() => ({ single: archivedSingle }));
+    const archivedEq = vi.fn(() => ({ select: archivedSelect }));
+    const archivedUpdate = vi.fn(() => ({ eq: archivedEq }));
+    const deletedEq = vi.fn().mockResolvedValue({ data: null, error: { message: "RLS: delete denied" } });
+    const deleteQuery = vi.fn(() => ({ eq: deletedEq }));
+    const from = vi.fn(() => ({ update: archivedUpdate, delete: deleteQuery }));
+    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient, now: () => "2026-05-12T12:00:00Z" });
+
+    await expect(repository.archive("resource-1")).rejects.toThrow("No se pudo archivar recurso");
+    await expect(repository.delete("resource-1")).rejects.toThrow("No se pudo eliminar recurso");
+    await expect(repository.archive("resource-1")).rejects.not.toThrow("archive denied");
+    await expect(repository.delete("resource-1")).rejects.not.toThrow("delete denied");
   });
 
   it("surfaces Supabase failures safely instead of falling back to local data", async () => {

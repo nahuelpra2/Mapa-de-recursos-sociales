@@ -5,6 +5,7 @@ import {
   resolveAdminResourcesError,
   resolveAdminResourcesSuccess,
   resolveAdminResourceEditLoad,
+  submitAdminResourceLifecycleAction,
   shouldShowAdminResourceRows,
   submitAdminResourceDraft
 } from "./useAdminResources";
@@ -129,6 +130,57 @@ describe("admin resource create/edit submit helpers", () => {
       status: "not-found",
       draft: null,
       error: "No encontramos el recurso solicitado. Puede haber sido modificado o no tenés permisos para verlo."
+    });
+  });
+
+  it("blocks delete persistence until explicit confirmation is provided", async () => {
+    const deleteResource = vi.fn();
+
+    await expect(
+      submitAdminResourceLifecycleAction({
+        action: "delete",
+        id: "resource-1",
+        confirmed: false,
+        repository: { archive: vi.fn(), delete: deleteResource }
+      })
+    ).resolves.toEqual({
+      status: "confirmation-required",
+      resource: null,
+      formError: "La eliminación es irreversible. Confirmá para continuar.",
+      requiresConfirmation: true
+    });
+    expect(deleteResource).not.toHaveBeenCalled();
+  });
+
+  it("surfaces archive and delete failures through safe non-sensitive lifecycle errors", async () => {
+    const archive = vi.fn().mockRejectedValueOnce(new Error("RLS archive trace"));
+    const deleteResource = vi.fn().mockRejectedValueOnce(new Error("RLS delete trace"));
+
+    await expect(
+      submitAdminResourceLifecycleAction({
+        action: "archive",
+        id: "resource-1",
+        repository: { archive, delete: deleteResource }
+      })
+    ).resolves.toEqual({
+      status: "error",
+      resource: null,
+      formError: "No se pudo cambiar el estado del recurso. Intentá nuevamente o verificá permisos de administrador.",
+      requiresConfirmation: false
+    });
+
+    await expect(
+      submitAdminResourceLifecycleAction({
+        action: "delete",
+        id: "resource-1",
+        confirmed: true,
+        repository: { archive, delete: deleteResource }
+      })
+    ).resolves.toEqual({
+      status: "error",
+      resource: null,
+      formError: "No se pudo cambiar el estado del recurso. Intentá nuevamente o verificá permisos de administrador.",
+      requiresConfirmation: false
     });
   });
 });

@@ -4,10 +4,11 @@ import type { Resource } from "../types/resource";
 
 type NullableText = string | null;
 
-export type AdminResourceStatus = "activo";
+export type AdminResourceStatus = "activo" | "inactivo";
 
 export type AdminResource = Resource & {
   estado: AdminResourceStatus;
+  deletedAt: NullableText;
   createdAt: string;
   updatedAt: string;
 };
@@ -35,6 +36,7 @@ export type AdminResourceRow = {
   maintenance_review_by: string;
   maintenance_notes: NullableText;
   estado: AdminResourceStatus;
+  deleted_at: NullableText;
   created_at: string;
   updated_at: string;
 };
@@ -61,6 +63,11 @@ export type AdminResourcePayload = {
   maintenance_review_by: string;
   maintenance_notes: NullableText;
   estado: AdminResourceStatus;
+};
+
+export type AdminResourceArchivePayload = {
+  estado: "inactivo";
+  deleted_at: string;
 };
 
 const optionalBlankTextSchema = z.preprocess(
@@ -124,6 +131,13 @@ export function toAdminResourcePayload(input: AdminResourceDraft): AdminResource
   };
 }
 
+export function toAdminResourceArchivePayload(deletedAt: string): AdminResourceArchivePayload {
+  return {
+    estado: "inactivo",
+    deleted_at: deletedAt
+  };
+}
+
 export function mapAdminResourceRow(row: AdminResourceRow): AdminResource {
   const resource = resourceSchema.parse({
     id: row.id,
@@ -156,6 +170,7 @@ export function mapAdminResourceRow(row: AdminResourceRow): AdminResource {
   return {
     ...resource,
     estado: row.estado,
+    deletedAt: row.deleted_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at
   };
