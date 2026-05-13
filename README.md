@@ -60,6 +60,7 @@ npm run build    # validacion TypeScript y build de produccion
 npm run preview  # vista previa del build
 npm run lint     # lint del proyecto
 npm test         # tests automatizados y validacion del JSON local
+npm run geocode:resources -- --dry-run --limit 5  # prueba geocodificacion IDE sin escribir archivo
 npm run seed:resources -- --dry-run  # valida el mapeo local hacia Supabase sin conectar
 ```
 
@@ -111,6 +112,22 @@ Cada recurso usa esta estructura:
 El selector `Estoy usando como referencia` usa solo recursos marcados con `esCentroReferencia: true` como puntos de origen para ordenar por cercania.
 
 Los recursos se validan en tiempo de carga con el schema de `src/data/resourceSchema.ts` y también mediante `npm test`. Si el JSON no cumple el contrato, corregí `src/data/resources.json` antes de publicar cambios.
+
+### Geocodificar recursos pendientes
+
+El archivo `src/data/resources-pending-geocoding.json` conserva datos extraidos del PDF con `lat` y `lng` en `null`. Para consultar coordenadas contra el servicio público de IDE Uruguay:
+
+```bash
+npm run geocode:resources -- --dry-run --limit 5
+```
+
+Cuando el resultado sea razonable, generá el archivo geocodificado:
+
+```bash
+npm run geocode:resources
+```
+
+Esto escribe `src/data/resources-geocoded.json` con estado de geocodificación por recurso. Revisá manualmente todo recurso con `geocoding.status` distinto de `matched` antes de preparar la carga final a Supabase.
 
 ### Cargar recursos locales en Supabase
 
