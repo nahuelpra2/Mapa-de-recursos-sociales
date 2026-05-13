@@ -24,16 +24,8 @@ const validDraft: AdminResourceDraft = {
   observaciones: "Ingreso por puerta lateral",
   fuente: "Equipo territorial",
   ultimaActualizacion: "2026-05-11",
-  verification: {
-    status: "verified",
-    verifiedAt: "2026-05-11",
-    source: "Llamada de control",
-    notes: "Confirmado"
-  },
   maintenance: {
-    owner: "Equipo social",
-    reviewBy: "2026-06-11",
-    notes: "Revisar cupos"
+    reviewBy: "2026-06-11"
   }
 };
 
@@ -53,13 +45,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     observaciones: "Ingreso por puerta lateral",
     fuente: "Equipo territorial",
     ultima_actualizacion: "2026-05-11",
-    verification_status: "verified",
-    verification_verified_at: "2026-05-11",
-    verification_source: "Llamada de control",
-    verification_notes: "Confirmado",
-    maintenance_owner: "Equipo social",
     maintenance_review_by: "2026-06-11",
-    maintenance_notes: "Revisar cupos",
     estado: "activo",
     deleted_at: null,
     created_at: "2026-05-11T10:00:00Z",
@@ -74,14 +60,14 @@ describe("admin resource schema helpers", () => {
   });
 
   it("rejects drafts missing required SQL-backed fields before persistence", () => {
-    const invalidDraft = { ...validDraft, fuente: "", poblacion: [], maintenance: { ...validDraft.maintenance, owner: "" } };
+    const invalidDraft = { ...validDraft, fuente: "", poblacion: [], maintenance: { reviewBy: "" } };
 
     const result = adminResourceDraftSchema.safeParse(invalidDraft);
 
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues.map((issue) => issue.path.join("."))).toEqual(
-        expect.arrayContaining(["fuente", "poblacion", "maintenance.owner"])
+        expect.arrayContaining(["fuente", "poblacion", "maintenance.reviewBy"])
       );
     }
   });
@@ -93,9 +79,7 @@ describe("admin resource schema helpers", () => {
         barrio: "  ",
         telefono: "",
         horario: "   ",
-        observaciones: "",
-        verification: { ...validDraft.verification, notes: "" },
-        maintenance: { ...validDraft.maintenance, notes: "" }
+        observaciones: ""
       })
     ).toEqual({
       nombre: "Centro admin",
@@ -111,13 +95,7 @@ describe("admin resource schema helpers", () => {
       observaciones: null,
       fuente: "Equipo territorial",
       ultima_actualizacion: "2026-05-11",
-      verification_status: "verified",
-      verification_verified_at: "2026-05-11",
-      verification_source: "Llamada de control",
-      verification_notes: null,
-      maintenance_owner: "Equipo social",
       maintenance_review_by: "2026-06-11",
-      maintenance_notes: null,
       estado: "activo"
     });
   });
@@ -140,11 +118,7 @@ describe("admin resource schema helpers", () => {
           barrio: null,
           telefono: null,
           horario: null,
-          observaciones: null,
-          verification_status: "needs_review",
-          verification_verified_at: null,
-          verification_notes: null,
-          maintenance_notes: null
+          observaciones: null
         })
       )
     ).toEqual({
@@ -155,13 +129,7 @@ describe("admin resource schema helpers", () => {
           telefono: undefined,
           horario: undefined,
           observaciones: undefined,
-          verification: {
-            status: "needs_review",
-            verifiedAt: undefined,
-            source: "Llamada de control",
-            notes: undefined
-          },
-          maintenance: { ...validDraft.maintenance, notes: undefined }
+          maintenance: validDraft.maintenance
         }),
       estado: "activo",
       deletedAt: null,

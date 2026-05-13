@@ -2,7 +2,7 @@ import type { Coordinates, ResourceWithDistance } from "../types/resource";
 import { formatDistance } from "../utils/distance";
 import { createMapLink } from "../utils/maps";
 import { isOpenNow } from "../utils/openingHours";
-import { getResourceMaintenanceReviewDisplay, getResourceVerificationDisplay } from "../utils/resourceVerification";
+import { getResourceMaintenanceReviewDisplay } from "../utils/resourceVerification";
 
 type ResourceCardProps = {
   resource: ResourceWithDistance;
@@ -15,12 +15,7 @@ type ResourceCardProps = {
 export function ResourceCard({ resource, origin, isExpanded, onToggle, onCopy }: ResourceCardProps) {
   const mapLink = createMapLink(resource, origin);
   const openNow = isOpenNow(resource.horario);
-  const verificationDisplay = getResourceVerificationDisplay(resource.verification);
   const maintenanceReviewDisplay = getResourceMaintenanceReviewDisplay(resource.maintenance);
-  const verificationBadgeClassName =
-    verificationDisplay.tone === "success"
-      ? "bg-emerald-50 text-emerald-800 ring-emerald-200"
-      : "bg-amber-50 text-amber-900 ring-amber-200";
 
   return (
     <article
@@ -47,9 +42,6 @@ export function ResourceCard({ resource, origin, isExpanded, onToggle, onCopy }:
             Centro de referencia
           </span>
         ) : null}
-        <span className={`rounded-full px-3 py-1 text-xs font-bold ring-1 ${verificationBadgeClassName}`} title={verificationDisplay.detail}>
-          {verificationDisplay.label}
-        </span>
         {maintenanceReviewDisplay.requiresReview ? (
           <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-900 ring-1 ring-rose-200" title={maintenanceReviewDisplay.detail}>
             {maintenanceReviewDisplay.label}
@@ -113,13 +105,7 @@ export function ResourceCard({ resource, origin, isExpanded, onToggle, onCopy }:
         <footer className="mt-4 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500">
           <p>Fuente: {resource.fuente}</p>
           <p>Ultima actualizacion: {resource.ultimaActualizacion}</p>
-          <p>
-            Verificacion: {verificationDisplay.detail}. Fuente: {resource.verification.source}
-          </p>
-          {resource.verification.notes ? <p>Notas de verificacion: {resource.verification.notes}</p> : null}
-          <p>Responsable de mantenimiento: {resource.maintenance.owner}</p>
           <p>Revisar antes de: {resource.maintenance.reviewBy}</p>
-          {resource.maintenance.notes ? <p>Notas de mantenimiento: {resource.maintenance.notes}</p> : null}
         </footer>
       ) : null}
     </article>

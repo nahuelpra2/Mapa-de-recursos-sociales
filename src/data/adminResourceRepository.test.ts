@@ -20,13 +20,7 @@ const validDraft: AdminResourceDraft = {
   observaciones: "Ingreso por puerta lateral",
   fuente: "Equipo territorial",
   ultimaActualizacion: "2026-05-11",
-  verification: {
-    status: "verified",
-    verifiedAt: "2026-05-11",
-    source: "Llamada de control"
-  },
   maintenance: {
-    owner: "Equipo social",
     reviewBy: "2026-06-11"
   }
 };
@@ -47,13 +41,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     observaciones: "Ingreso por puerta lateral",
     fuente: "Equipo territorial",
     ultima_actualizacion: "2026-05-11",
-    verification_status: "verified",
-    verification_verified_at: "2026-05-11",
-    verification_source: "Llamada de control",
-    verification_notes: null,
-    maintenance_owner: "Equipo social",
     maintenance_review_by: "2026-06-11",
-    maintenance_notes: null,
     estado: "activo",
     deleted_at: null,
     created_at: "2026-05-11T10:00:00Z",

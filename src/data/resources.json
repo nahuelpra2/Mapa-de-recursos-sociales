@@ -9,20 +9,16 @@
     "lng": -56.185,
     "telefono": "0000 0001",
     "horario": "18:00 a 08:00",
-    "poblacion": ["Hombres", "Adultos"],
+    "poblacion": [
+      "Hombres",
+      "Adultos"
+    ],
     "esCentroReferencia": true,
     "observaciones": "Dato ficticio para pruebas. Confirmar siempre por canales oficiales.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
@@ -35,20 +31,16 @@
     "lng": -56.176,
     "telefono": "0000 0002",
     "horario": "09:00 a 17:00",
-    "poblacion": ["Mujeres", "Adultos"],
+    "poblacion": [
+      "Mujeres",
+      "Adultos"
+    ],
     "esCentroReferencia": true,
     "observaciones": "Dato ficticio para validar filtros y tarjetas.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
@@ -61,46 +53,38 @@
     "lng": -56.191,
     "telefono": "0000 0003",
     "horario": "08:00 a 20:00",
-    "poblacion": ["Familias", "Otro"],
+    "poblacion": [
+      "Familias",
+      "Otro"
+    ],
     "esCentroReferencia": true,
     "observaciones": "Dato ficticio. Se recomienda llamar antes de concurrir.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
     "id": "ejemplo-atencion-004",
     "nombre": "Centro de Atencion Ejemplo Este",
-    "tipo": "Centro de atenci\u00f3n",
+    "tipo": "Centro de atención",
     "direccion": "Camino Simulado 1010",
     "barrio": "Tres Cruces",
     "lat": -34.893,
     "lng": -56.166,
     "telefono": "0000 0004",
     "horario": "10:00 a 16:00",
-    "poblacion": ["Personas mayores", "Personas con discapacidad"],
+    "poblacion": [
+      "Personas mayores",
+      "Personas con discapacidad"
+    ],
     "esCentroReferencia": false,
     "observaciones": "Dato ficticio para pruebas de poblacion atendida.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
@@ -113,20 +97,16 @@
     "lng": -56.165,
     "telefono": "0000 0005",
     "horario": "19:00 a 07:00",
-    "poblacion": ["Mujeres", "Familias"],
+    "poblacion": [
+      "Mujeres",
+      "Familias"
+    ],
     "esCentroReferencia": false,
     "observaciones": "Dato ficticio. No representa disponibilidad real.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
@@ -139,20 +119,17 @@
     "lng": -56.177,
     "telefono": "0000 0006",
     "horario": "24 horas",
-    "poblacion": ["Hombres", "Mujeres", "Adultos"],
+    "poblacion": [
+      "Hombres",
+      "Mujeres",
+      "Adultos"
+    ],
     "esCentroReferencia": true,
     "observaciones": "Dato ficticio para probar abierto ahora.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
@@ -165,46 +142,37 @@
     "lng": -56.206,
     "telefono": "0000 0007",
     "horario": "12:00 a 18:00",
-    "poblacion": ["Otro"],
+    "poblacion": [
+      "Otro"
+    ],
     "esCentroReferencia": false,
     "observaciones": "Dato ficticio. Reemplazar por informacion publica validada.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   },
   {
     "id": "ejemplo-atencion-008",
     "nombre": "Centro de Atencion Ejemplo Inclusivo",
-    "tipo": "Centro de atenci\u00f3n",
+    "tipo": "Centro de atención",
     "direccion": "Calle Accesible 4040",
     "barrio": "Pocitos",
     "lat": -34.912,
     "lng": -56.151,
     "telefono": "0000 0008",
     "horario": "08:30 a 15:30",
-    "poblacion": ["Personas con discapacidad", "Personas mayores"],
+    "poblacion": [
+      "Personas con discapacidad",
+      "Personas mayores"
+    ],
     "esCentroReferencia": false,
     "observaciones": "Dato ficticio para probar accesibilidad y filtros.",
     "fuente": "Datos ficticios de prueba - no usar para derivaciones reales",
     "ultimaActualizacion": "2026-05-01",
-    "verification": {
-      "status": "needs_review",
-      "source": "Datos ficticios de prueba; pendiente de verificación humana",
-      "notes": "No usar para derivaciones reales."
-    },
     "maintenance": {
-      "owner": "Equipo del proyecto - datos ficticios",
-      "reviewBy": "2026-06-01",
-      "notes": "Reemplazar por responsable real y fecha de reverificación antes de publicar datos reales."
+      "reviewBy": "2026-06-01"
     }
   }
 ]

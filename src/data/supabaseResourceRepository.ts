@@ -22,13 +22,7 @@ export type SupabaseResourceRow = {
   observaciones: NullableText;
   fuente: string;
   ultima_actualizacion: string;
-  verification_status: string;
-  verification_verified_at: NullableText;
-  verification_source: string;
-  verification_notes: NullableText;
-  maintenance_owner: string;
   maintenance_review_by: string;
-  maintenance_notes: NullableText;
 };
 
 type SupabaseResourceQuery = {
@@ -66,16 +60,8 @@ export function mapSupabaseResourceRow(row: SupabaseResourceRow): Resource {
     observaciones: optionalText(row.observaciones),
     fuente: row.fuente,
     ultimaActualizacion: row.ultima_actualizacion,
-    verification: {
-      status: row.verification_status,
-      verifiedAt: optionalText(row.verification_verified_at),
-      source: row.verification_source,
-      notes: optionalText(row.verification_notes)
-    },
     maintenance: {
-      owner: row.maintenance_owner,
-      reviewBy: row.maintenance_review_by,
-      notes: optionalText(row.maintenance_notes)
+      reviewBy: row.maintenance_review_by
     }
   });
 }

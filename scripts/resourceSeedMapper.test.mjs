@@ -26,16 +26,8 @@ const resource = {
   observaciones: "Dato de prueba",
   fuente: "Fixture de test",
   ultimaActualizacion: "2026-05-01",
-  verification: {
-    status: "verified",
-    verifiedAt: "2026-05-01",
-    source: "Fixture de test",
-    notes: "Verificado"
-  },
   maintenance: {
-    owner: "Equipo social",
-    reviewBy: "2026-06-01",
-    notes: "Revisión mensual"
+    reviewBy: "2026-06-01"
   }
 };
 
@@ -65,13 +57,7 @@ describe("resource seed mapper", () => {
       observaciones: "Dato de prueba",
       fuente: "Fixture de test",
       ultima_actualizacion: "2026-05-01",
-      verification_status: "verified",
-      verification_verified_at: "2026-05-01",
-      verification_source: "Fixture de test",
-      verification_notes: "Verificado",
-      maintenance_owner: "Equipo social",
       maintenance_review_by: "2026-06-01",
-      maintenance_notes: "Revisión mensual",
       estado: "activo",
       deleted_at: null
     });
@@ -80,25 +66,14 @@ describe("resource seed mapper", () => {
   it("uses null for optional SQL columns that are absent locally", () => {
     const resourceWithoutOptionalText = omitOptionalTextFields(resource);
     const withoutOptionalNestedText = {
-      ...resourceWithoutOptionalText,
-      verification: {
-        status: "needs_review",
-        source: "Pendiente de verificación humana"
-      },
-      maintenance: {
-        owner: "Equipo social",
-        reviewBy: "2026-06-01"
-      }
+      ...resourceWithoutOptionalText
     };
 
     expect(mapResourceToSupabaseSeedRow(withoutOptionalNestedText)).toMatchObject({
       barrio: null,
       telefono: null,
       horario: null,
-      observaciones: null,
-      verification_verified_at: null,
-      verification_notes: null,
-      maintenance_notes: null
+      observaciones: null
     });
   });
 
@@ -118,13 +93,7 @@ describe("resource seed mapper", () => {
       observaciones: "Sección original: COLMENA - Nocturno Hombres. Contacto informado: avesdepaso111@gmail.com.",
       fuente: "Dataset local geocodificado desde recursos-geocoded.json",
       ultima_actualizacion: "2026-05-13",
-      verification_status: "needs_review",
-      verification_verified_at: null,
-      verification_source: "Importación local pendiente de verificación humana",
-      verification_notes: "Geocoding matched via direcciones.ide.uy; validar datos operativos antes de publicar.",
-      maintenance_owner: "Equipo del proyecto - datos reales",
       maintenance_review_by: "2026-06-13",
-      maintenance_notes: "Revisar fuente, horarios, población atendida y contacto antes de usar para derivaciones.",
       estado: "activo",
       deleted_at: null
     });
@@ -143,8 +112,7 @@ describe("resource seed mapper", () => {
 
     expect(rows).toHaveLength(64);
     expect(rows.every((row) => allowedTypes.has(row.tipo))).toBe(true);
-    expect(rows.every((row) => row.verification_status === "needs_review")).toBe(true);
-    expect(rows.every((row) => row.maintenance_owner.length > 0)).toBe(true);
+    expect(rows.every((row) => row.maintenance_review_by === "2026-06-13")).toBe(true);
     expect(rows.every((row) => /^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(row.id))).toBe(true);
     expect(new Set(rows.map((row) => row.id)).size).toBe(rows.length);
   });

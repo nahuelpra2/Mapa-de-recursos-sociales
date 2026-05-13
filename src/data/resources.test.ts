@@ -22,15 +22,8 @@ const validResource = createResource({
   poblacion: ["Adultos"],
   observaciones: "Dato de prueba",
   fuente: "Fuente de prueba",
-  verification: {
-    status: "verified",
-    verifiedAt: "2026-05-01",
-    source: "Llamada de prueba"
-  },
   maintenance: {
-    owner: "Equipo de prueba",
-    reviewBy: "2026-06-01",
-    notes: "Revisión manual programada"
+    reviewBy: "2026-06-01"
   }
 });
 
@@ -75,51 +68,6 @@ describe("resources runtime validation", () => {
     ).toThrow(ResourceDataValidationError);
   });
 
-  it("accepts resources with human verification metadata", () => {
-    expect(validateResources([validResource])).toEqual([validResource]);
-    expect(
-      validateResources([
-        {
-          ...validResource,
-          verification: {
-            status: "needs_review",
-            source: "Dato de prueba pendiente de verificación humana",
-            notes: "No usar para derivaciones reales"
-          }
-        }
-      ])
-    ).toEqual([
-      {
-        ...validResource,
-        verification: {
-          status: "needs_review",
-          source: "Dato de prueba pendiente de verificación humana",
-          notes: "No usar para derivaciones reales"
-        }
-      }
-    ]);
-  });
-
-  it("rejects invalid verification metadata", () => {
-    expect(() =>
-      validateResources([
-        {
-          ...validResource,
-          verification: { status: "verified", source: "Llamada de prueba" }
-        }
-      ])
-    ).toThrow(ResourceDataValidationError);
-
-    expect(() =>
-      validateResources([
-        {
-          ...validResource,
-          verification: { status: "needs_review", source: "" }
-        }
-      ])
-    ).toThrow(ResourceDataValidationError);
-  });
-
   it("rejects impossible calendar dates for last update metadata", () => {
     expect(() =>
       validateResources([{ ...validResource, ultimaActualizacion: "2026-02-30" }])
@@ -130,31 +78,7 @@ describe("resources runtime validation", () => {
     ).toThrow(ResourceDataValidationError);
   });
 
-  it("rejects impossible calendar dates for verification metadata", () => {
-    expect(() =>
-      validateResources([
-        {
-          ...validResource,
-          verification: { ...validResource.verification, verifiedAt: "2026-02-30" }
-        }
-      ])
-    ).toThrow(ResourceDataValidationError);
-
-    expect(() =>
-      validateResources([
-        {
-          ...validResource,
-          verification: {
-            status: "needs_review",
-            verifiedAt: "2025-02-29",
-            source: "Dato de prueba pendiente de verificación humana"
-          }
-        }
-      ])
-    ).toThrow(ResourceDataValidationError);
-  });
-
-  it("accepts resources with maintenance ownership and manual review deadline", () => {
+  it("accepts resources with maintenance review deadlines", () => {
     expect(validateResources([validResource])).toEqual([validResource]);
   });
 
@@ -163,16 +87,7 @@ describe("resources runtime validation", () => {
       validateResources([
         {
           ...validResource,
-          maintenance: { owner: "", reviewBy: "2026-06-01" }
-        }
-      ])
-    ).toThrow(ResourceDataValidationError);
-
-    expect(() =>
-      validateResources([
-        {
-          ...validResource,
-          maintenance: { owner: "Equipo de prueba", reviewBy: "01-06-2026" }
+          maintenance: { reviewBy: "01-06-2026" }
         }
       ])
     ).toThrow(ResourceDataValidationError);
@@ -195,7 +110,6 @@ describe("resources runtime validation", () => {
         {
           ...validResource,
           ultimaActualizacion: "2024-02-29",
-          verification: { ...validResource.verification, verifiedAt: "2024-02-29" },
           maintenance: { ...validResource.maintenance, reviewBy: "2024-02-29" }
         }
       ])
@@ -203,7 +117,6 @@ describe("resources runtime validation", () => {
       {
         ...validResource,
         ultimaActualizacion: "2024-02-29",
-        verification: { ...validResource.verification, verifiedAt: "2024-02-29" },
         maintenance: { ...validResource.maintenance, reviewBy: "2024-02-29" }
       }
     ]);
@@ -275,19 +188,8 @@ describe("resources dataset integrity", () => {
     }
   });
 
-  it("keeps manual verification metadata present and consistent", () => {
-    for (const resource of resources) {
-      expect(resource.verification.source.trim()).not.toBe("");
-
-      if (resource.verification.status === "verified") {
-        expect(resource.verification.verifiedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      }
-    }
-  });
-
   it("keeps maintenance metadata present and consistent", () => {
     for (const resource of resources) {
-      expect(resource.maintenance.owner.trim()).not.toBe("");
       expect(resource.maintenance.reviewBy).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });

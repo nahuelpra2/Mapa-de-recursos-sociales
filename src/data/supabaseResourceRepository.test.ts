@@ -29,13 +29,7 @@ function createRow(overrides: Partial<SupabaseResourceRow> = {}): SupabaseResour
     observaciones: "Dato remoto validado",
     fuente: "Supabase test",
     ultima_actualizacion: "2026-05-08",
-    verification_status: "verified",
-    verification_verified_at: "2026-05-08",
-    verification_source: "Equipo territorial",
-    verification_notes: "Verificado por teléfono",
-    maintenance_owner: "Equipo social",
     maintenance_review_by: "2026-06-08",
-    maintenance_notes: "Revisar mensualmente",
     ...overrides
   };
 }
@@ -66,16 +60,8 @@ describe("Supabase resource repository", () => {
         observaciones: "Dato remoto validado",
         fuente: "Supabase test",
         ultimaActualizacion: "2026-05-08",
-        verification: {
-          status: "verified",
-          verifiedAt: "2026-05-08",
-          source: "Equipo territorial",
-          notes: "Verificado por teléfono"
-        },
         maintenance: {
-          owner: "Equipo social",
-          reviewBy: "2026-06-08",
-          notes: "Revisar mensualmente"
+          reviewBy: "2026-06-08"
         }
       })
     );
@@ -89,10 +75,6 @@ describe("Supabase resource repository", () => {
           telefono: null,
           horario: null,
           observaciones: null,
-          verification_status: "needs_review",
-          verification_verified_at: null,
-          verification_notes: null,
-          maintenance_notes: null
         })
       )
     ).toEqual(
@@ -111,15 +93,8 @@ describe("Supabase resource repository", () => {
         observaciones: undefined,
         fuente: "Supabase test",
         ultimaActualizacion: "2026-05-08",
-        verification: {
-          status: "needs_review",
-          source: "Equipo territorial",
-          notes: undefined
-        },
         maintenance: {
-          owner: "Equipo social",
-          reviewBy: "2026-06-08",
-          notes: undefined
+          reviewBy: "2026-06-08"
         }
       })
     );

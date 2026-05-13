@@ -232,15 +232,8 @@ export function createAdminResourceDraft(): AdminResourceDraft {
     observaciones: undefined,
     fuente: "",
     ultimaActualizacion: "2026-05-11",
-    verification: {
-      status: "needs_review",
-      source: "",
-      notes: undefined
-    },
     maintenance: {
-      owner: "",
-      reviewBy: "2026-05-11",
-      notes: undefined
+      reviewBy: "2026-05-11"
     }
   };
 }

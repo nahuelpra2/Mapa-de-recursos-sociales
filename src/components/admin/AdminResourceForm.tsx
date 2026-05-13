@@ -32,10 +32,6 @@ function setDraftValue(draft: AdminResourceDraft, name: AdminResourceFormFieldNa
   if (name === "lat" || name === "lng") return { ...draft, [name]: Number(value) };
   if (name === "poblacion") return { ...draft, poblacion: splitPopulation(String(value)) };
   if (name === "esCentroReferencia") return { ...draft, esCentroReferencia: Boolean(value) };
-  if (name.startsWith("verification.")) {
-    const key = name.replace("verification.", "") as keyof AdminResourceDraft["verification"];
-    return { ...draft, verification: { ...draft.verification, [key]: String(value) } };
-  }
   if (name.startsWith("maintenance.")) {
     const key = name.replace("maintenance.", "") as keyof AdminResourceDraft["maintenance"];
     return { ...draft, maintenance: { ...draft.maintenance, [key]: String(value) } };
@@ -47,10 +43,6 @@ function setDraftValue(draft: AdminResourceDraft, name: AdminResourceFormFieldNa
 function getDraftValue(draft: AdminResourceDraft, name: AdminResourceFormFieldName): string | boolean | number {
   if (name === "poblacion") return populationValue(draft.poblacion);
   if (name === "esCentroReferencia") return draft.esCentroReferencia;
-  if (name.startsWith("verification.")) {
-    const key = name.replace("verification.", "") as keyof AdminResourceDraft["verification"];
-    return optionalValue(draft.verification[key]);
-  }
   if (name.startsWith("maintenance.")) {
     const key = name.replace("maintenance.", "") as keyof AdminResourceDraft["maintenance"];
     return optionalValue(draft.maintenance[key]);
@@ -94,11 +86,6 @@ export function AdminResourceForm({ mode, draft, fieldErrors, formError, isSubmi
                       <option>Puerta abierta</option>
                       <option>Centro de atención</option>
                       <option>Otro</option>
-                    </select>
-                  ) : field.input === "select" ? (
-                    <select className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))}>
-                      <option value="needs_review">Necesita revisión</option>
-                      <option value="verified">Verificado</option>
                     </select>
                   ) : (
                     <input className={commonClass} type={field.input} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))} />

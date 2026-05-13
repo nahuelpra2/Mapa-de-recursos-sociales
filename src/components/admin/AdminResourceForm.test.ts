@@ -9,7 +9,7 @@ describe("admin resource form presentation", () => {
       disabled: false,
       fieldsets: expect.arrayContaining([
         expect.objectContaining({ legend: "Datos básicos", fields: expect.arrayContaining([expect.objectContaining({ name: "nombre", label: "Nombre", required: true })]) }),
-        expect.objectContaining({ legend: "Verificación", fields: expect.arrayContaining([expect.objectContaining({ name: "verification.source", label: "Fuente de verificación", required: true })]) })
+        expect.objectContaining({ legend: "Mantenimiento", fields: expect.arrayContaining([expect.objectContaining({ name: "maintenance.reviewBy", label: "Revisar antes de", required: true })]) })
       ]),
       outOfScopeActions: []
     });

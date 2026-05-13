@@ -35,30 +35,9 @@ const isoDateSchema = z
   .regex(ISO_DATE_PATTERN)
   .refine(isRealIsoCalendarDate, { message: "Invalid calendar date" });
 
-export const resourceVerificationSchema = z.discriminatedUnion("status", [
-  z
-    .object({
-      status: z.literal("verified"),
-      verifiedAt: isoDateSchema,
-      source: requiredTextSchema,
-      notes: optionalTextSchema
-    })
-    .strict(),
-  z
-    .object({
-      status: z.literal("needs_review"),
-      verifiedAt: isoDateSchema.optional(),
-      source: requiredTextSchema,
-      notes: optionalTextSchema
-    })
-    .strict()
-]);
-
 export const resourceMaintenanceSchema = z
   .object({
-    owner: requiredTextSchema,
-    reviewBy: isoDateSchema,
-    notes: optionalTextSchema
+    reviewBy: isoDateSchema
   })
   .strict();
 
@@ -78,7 +57,6 @@ export const resourceSchema = z
     observaciones: optionalTextSchema,
     fuente: requiredTextSchema,
     ultimaActualizacion: isoDateSchema,
-    verification: resourceVerificationSchema,
     maintenance: resourceMaintenanceSchema
   })
   .strict();

@@ -23,16 +23,8 @@ export function createAdminResourceDraft(overrides: Partial<AdminResourceDraft> 
     observaciones: "Ingreso por puerta lateral",
     fuente: "Equipo territorial",
     ultimaActualizacion: "2026-05-11",
-    verification: {
-      status: "verified",
-      verifiedAt: "2026-05-11",
-      source: "Llamada de control",
-      notes: "Confirmado"
-    },
     maintenance: {
-      owner: "Equipo social",
-      reviewBy: "2026-06-11",
-      notes: "Revisar cupos"
+      reviewBy: "2026-06-11"
     },
     ...overrides
   };

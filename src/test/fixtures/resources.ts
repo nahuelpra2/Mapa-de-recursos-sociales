@@ -16,13 +16,7 @@ export function createResource(overrides: Partial<Resource> = {}): Resource {
     observaciones: "Observacion fixture",
     fuente: "Fixture de test",
     ultimaActualizacion: "2026-05-01",
-    verification: {
-      status: "verified",
-      verifiedAt: "2026-05-01",
-      source: "Fixture de test"
-    },
     maintenance: {
-      owner: "Equipo social",
       reviewBy: "2026-12-31"
     },
     ...overrides

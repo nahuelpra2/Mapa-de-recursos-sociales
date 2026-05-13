@@ -62,7 +62,7 @@ describe("admin resource create/edit submit helpers", () => {
     await expect(
       submitAdminResourceDraft({
         mode: "create",
-        draft: createAdminResourceDraft({ nombre: "", poblacion: [], maintenance: { owner: "", reviewBy: "", notes: undefined } }),
+        draft: createAdminResourceDraft({ nombre: "", poblacion: [], maintenance: { reviewBy: "" } }),
         repository: { create, update: vi.fn() }
       })
     ).resolves.toEqual({
@@ -73,7 +73,6 @@ describe("admin resource create/edit submit helpers", () => {
       fieldErrors: expect.objectContaining({
         nombre: "Campo obligatorio.",
         poblacion: "Agregá al menos una población.",
-        "maintenance.owner": "Campo obligatorio.",
         "maintenance.reviewBy": "Campo obligatorio."
       })
     });

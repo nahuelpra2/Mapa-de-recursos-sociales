@@ -14,13 +14,7 @@ export type AdminResourceFormFieldName =
   | "poblacion"
   | "fuente"
   | "ultimaActualizacion"
-  | "verification.status"
-  | "verification.verifiedAt"
-  | "verification.source"
-  | "verification.notes"
-  | "maintenance.owner"
   | "maintenance.reviewBy"
-  | "maintenance.notes"
   | "observaciones"
   | "esCentroReferencia";
 
@@ -75,20 +69,9 @@ const FIELDSETS: AdminResourceFormFieldsetDefinition[] = [
     ]
   },
   {
-    legend: "Verificación",
-    fields: [
-      { name: "verification.status", label: "Estado de verificación", required: true, input: "select" },
-      { name: "verification.verifiedAt", label: "Fecha de verificación", required: false, input: "date" },
-      { name: "verification.source", label: "Fuente de verificación", required: true, input: "text" },
-      { name: "verification.notes", label: "Notas de verificación", required: false, input: "textarea" }
-    ]
-  },
-  {
     legend: "Mantenimiento",
     fields: [
-      { name: "maintenance.owner", label: "Responsable", required: true, input: "text" },
-      { name: "maintenance.reviewBy", label: "Revisar antes de", required: true, input: "date" },
-      { name: "maintenance.notes", label: "Notas de mantenimiento", required: false, input: "textarea" }
+      { name: "maintenance.reviewBy", label: "Revisar antes de", required: true, input: "date" }
     ]
   }
 ];

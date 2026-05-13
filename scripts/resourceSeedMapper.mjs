@@ -57,7 +57,7 @@ function createResourceSeedId(resource, index) {
 }
 
 function isSupabaseContractResource(resource) {
-  return Boolean(resource?.id && resource?.nombre && resource?.verification && resource?.maintenance);
+  return Boolean(resource?.id && resource?.nombre && resource?.maintenance);
 }
 
 function isGeocodedResource(resource) {
@@ -80,13 +80,7 @@ function mapGeocodedResourceToSupabaseSeedRow(resource, index) {
     observaciones: formatRawResourceNotes(resource),
     fuente: "Dataset local geocodificado desde recursos-geocoded.json",
     ultima_actualizacion: DEFAULT_REAL_DATA_IMPORT_DATE,
-    verification_status: "needs_review",
-    verification_verified_at: null,
-    verification_source: "Importación local pendiente de verificación humana",
-    verification_notes: `Geocoding ${resource.geocoding.status} via ${resource.geocoding.source}; validar datos operativos antes de publicar.`,
-    maintenance_owner: "Equipo del proyecto - datos reales",
     maintenance_review_by: DEFAULT_REAL_DATA_REVIEW_BY,
-    maintenance_notes: "Revisar fuente, horarios, población atendida y contacto antes de usar para derivaciones.",
     estado: "activo",
     deleted_at: null
   };
@@ -112,13 +106,7 @@ export function mapResourceToSupabaseSeedRow(resource, index) {
     observaciones: optionalTextToSql(resource.observaciones),
     fuente: resource.fuente,
     ultima_actualizacion: resource.ultimaActualizacion,
-    verification_status: resource.verification.status,
-    verification_verified_at: optionalTextToSql(resource.verification.verifiedAt),
-    verification_source: resource.verification.source,
-    verification_notes: optionalTextToSql(resource.verification.notes),
-    maintenance_owner: resource.maintenance.owner,
     maintenance_review_by: resource.maintenance.reviewBy,
-    maintenance_notes: optionalTextToSql(resource.maintenance.notes),
     estado: "activo",
     deleted_at: null
   };

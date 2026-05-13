@@ -28,13 +28,7 @@ export type AdminResourceRow = {
   observaciones: NullableText;
   fuente: string;
   ultima_actualizacion: string;
-  verification_status: string;
-  verification_verified_at: NullableText;
-  verification_source: string;
-  verification_notes: NullableText;
-  maintenance_owner: string;
   maintenance_review_by: string;
-  maintenance_notes: NullableText;
   estado: AdminResourceStatus;
   deleted_at: NullableText;
   created_at: string;
@@ -55,13 +49,7 @@ export type AdminResourcePayload = {
   observaciones: NullableText;
   fuente: string;
   ultima_actualizacion: string;
-  verification_status: string;
-  verification_verified_at: NullableText;
-  verification_source: string;
-  verification_notes: NullableText;
-  maintenance_owner: string;
   maintenance_review_by: string;
-  maintenance_notes: NullableText;
   estado: AdminResourceStatus;
 };
 
@@ -80,11 +68,7 @@ export const adminResourceDraftSchema = resourceSchema.omit({ id: true }).extend
   telefono: optionalBlankTextSchema,
   horario: optionalBlankTextSchema,
   observaciones: optionalBlankTextSchema,
-  verification: z.discriminatedUnion("status", [
-    resourceSchema.shape.verification.options[0].extend({ notes: optionalBlankTextSchema }),
-    resourceSchema.shape.verification.options[1].extend({ notes: optionalBlankTextSchema })
-  ]),
-  maintenance: resourceSchema.shape.maintenance.extend({ notes: optionalBlankTextSchema })
+  maintenance: resourceSchema.shape.maintenance
 }).strict();
 
 export type AdminResourceDraft = z.infer<typeof adminResourceDraftSchema>;
@@ -120,13 +104,7 @@ export function toAdminResourcePayload(input: AdminResourceDraft): AdminResource
     observaciones: optionalTextToSql(draft.observaciones),
     fuente: draft.fuente,
     ultima_actualizacion: draft.ultimaActualizacion,
-    verification_status: draft.verification.status,
-    verification_verified_at: optionalTextToSql(draft.verification.verifiedAt),
-    verification_source: draft.verification.source,
-    verification_notes: optionalTextToSql(draft.verification.notes),
-    maintenance_owner: draft.maintenance.owner,
     maintenance_review_by: draft.maintenance.reviewBy,
-    maintenance_notes: optionalTextToSql(draft.maintenance.notes),
     estado: "activo"
   };
 }
@@ -154,16 +132,8 @@ export function mapAdminResourceRow(row: AdminResourceRow): AdminResource {
     observaciones: optionalTextFromSql(row.observaciones),
     fuente: row.fuente,
     ultimaActualizacion: row.ultima_actualizacion,
-    verification: {
-      status: row.verification_status,
-      verifiedAt: optionalTextFromSql(row.verification_verified_at),
-      source: row.verification_source,
-      notes: optionalTextFromSql(row.verification_notes)
-    },
     maintenance: {
-      owner: row.maintenance_owner,
-      reviewBy: row.maintenance_review_by,
-      notes: optionalTextFromSql(row.maintenance_notes)
+      reviewBy: row.maintenance_review_by
     }
   });
 
@@ -191,7 +161,6 @@ export function toAdminResourceDraft(resource: AdminResource): AdminResourceDraf
     observaciones: resource.observaciones,
     fuente: resource.fuente,
     ultimaActualizacion: resource.ultimaActualizacion,
-    verification: resource.verification,
     maintenance: resource.maintenance
   });
 }
