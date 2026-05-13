@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import {
   formatMissingSeedEnvMessage,
   mapResourceToSupabaseSeedRow,
   mapResourcesToSupabaseSeedRows
 } from "./resourceSeedMapper.mjs";
+
+const geocodedResources = JSON.parse(
+  readFileSync(resolve(process.cwd(), "src", "data", "resources-geocoded.json"), "utf8")
+);
 
 const resource = {
   id: "recurso-test-001",
@@ -94,6 +100,52 @@ describe("resource seed mapper", () => {
       verification_notes: null,
       maintenance_notes: null
     });
+  });
+
+  it("maps geocoded real resources to the Supabase seed row contract", () => {
+    expect(mapResourceToSupabaseSeedRow(geocodedResources[0], 0)).toEqual({
+      id: "recurso-real-aves-de-paso-111-caigua-1337-001",
+      nombre: "AVES DE PASO 111- Caiguá 1337",
+      tipo: "Refugio nocturno",
+      direccion: "Caiguá 1337 esq. Millán",
+      barrio: "Atahualpa",
+      lat: -34.86436485495565,
+      lng: -56.19370188521929,
+      telefono: null,
+      horario: "Horario nocturno; confirmar antes de concurrir",
+      poblacion: ["Hombres", "Adultos"],
+      es_centro_referencia: false,
+      observaciones: "Sección original: COLMENA - Nocturno Hombres. Contacto informado: avesdepaso111@gmail.com.",
+      fuente: "Dataset local geocodificado desde recursos-geocoded.json",
+      ultima_actualizacion: "2026-05-13",
+      verification_status: "needs_review",
+      verification_verified_at: null,
+      verification_source: "Importación local pendiente de verificación humana",
+      verification_notes: "Geocoding matched via direcciones.ide.uy; validar datos operativos antes de publicar.",
+      maintenance_owner: "Equipo del proyecto - datos reales",
+      maintenance_review_by: "2026-06-13",
+      maintenance_notes: "Revisar fuente, horarios, población atendida y contacto antes de usar para derivaciones.",
+      estado: "activo",
+      deleted_at: null
+    });
+  });
+
+  it("keeps every geocoded real resource inside the allowed Supabase enum contract", () => {
+    const allowedTypes = new Set([
+      "Refugio nocturno",
+      "Centro diurno",
+      "Puerta abierta",
+      "Centro de atención",
+      "Otro"
+    ]);
+
+    const rows = mapResourcesToSupabaseSeedRows(geocodedResources);
+
+    expect(rows).toHaveLength(64);
+    expect(rows.every((row) => allowedTypes.has(row.tipo))).toBe(true);
+    expect(rows.every((row) => row.verification_status === "needs_review")).toBe(true);
+    expect(rows.every((row) => row.maintenance_owner.length > 0)).toBe(true);
+    expect(new Set(rows.map((row) => row.id)).size).toBe(rows.length);
   });
 
   it("preserves deterministic JSON order for repeatable upserts", () => {
