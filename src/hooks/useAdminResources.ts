@@ -253,8 +253,8 @@ export function useAdminResources({ repository = adminResourceRepository }: UseA
       .then((resources) => {
         if (active) setState(resolveAdminResourcesSuccess(resources));
       })
-      .catch((error: unknown) => {
-        if (active) setState((previous) => resolveAdminResourcesError(previous, error));
+      .catch(() => {
+        if (active) setState((previous) => resolveAdminResourcesError(previous));
       });
 
     return () => {

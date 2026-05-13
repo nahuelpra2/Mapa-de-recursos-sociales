@@ -38,14 +38,14 @@ describe("admin resource list presentation", () => {
     const active = createAdminResource({
       id: "resource-1",
       nombre: "Comedor comunitario",
-      tipo: "Alimentos",
+      tipo: "Centro de atención",
       direccion: "Calle 123",
       updatedAt: "2026-05-10T12:00:00Z"
     });
     const inactive = createAdminResource({
       id: "resource-2",
       nombre: "Refugio norte",
-      tipo: "Alojamiento",
+      tipo: "Refugio nocturno",
       direccion: "Ruta 8",
       estado: "inactivo",
       deletedAt: "2026-05-12T12:00:00Z",
@@ -68,7 +68,7 @@ describe("admin resource list presentation", () => {
         {
           id: "resource-1",
           name: "Comedor comunitario",
-          type: "Alimentos",
+          type: "Centro de atención",
           address: "Calle 123",
           updatedAt: "10/05/2026 09:00",
           statusLabel: "Activo",
@@ -79,7 +79,7 @@ describe("admin resource list presentation", () => {
         {
           id: "resource-2",
           name: "Refugio norte",
-          type: "Alojamiento",
+          type: "Refugio nocturno",
           address: "Ruta 8",
           updatedAt: "12/05/2026 09:00",
           statusLabel: "Inactivo",

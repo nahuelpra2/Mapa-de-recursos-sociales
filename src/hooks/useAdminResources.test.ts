@@ -20,8 +20,8 @@ describe("admin resource list state", () => {
   });
 
   it("builds a success state with enough resource data to choose edit", () => {
-    const foodBank = createAdminResource({ id: "food-bank", nombre: "Banco de alimentos", tipo: "Alimentos" });
-    const shelter = createAdminResource({ id: "shelter", nombre: "Refugio norte", tipo: "Alojamiento" });
+    const foodBank = createAdminResource({ id: "food-bank", nombre: "Banco de alimentos", tipo: "Centro de atención" });
+    const shelter = createAdminResource({ id: "shelter", nombre: "Refugio norte", tipo: "Refugio nocturno" });
 
     expect(resolveAdminResourcesSuccess([foodBank, shelter])).toEqual({
       status: "success",
@@ -41,7 +41,7 @@ describe("admin resource list state", () => {
   it("shows a recoverable non-sensitive error and preserves previous resources when reload fails", () => {
     const previous = resolveAdminResourcesSuccess([createAdminResource({ id: "known-resource" })]);
 
-    expect(resolveAdminResourcesError(previous, new Error("JWT claim admin_users missing"))).toEqual({
+    expect(resolveAdminResourcesError(previous)).toEqual({
       ...previous,
       status: "error",
       error: "No se pudieron cargar los recursos. Intentá nuevamente o verificá permisos de administrador."

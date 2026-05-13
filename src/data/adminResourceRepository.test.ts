@@ -55,7 +55,7 @@ describe("admin resource repository", () => {
     const order = vi.fn().mockResolvedValue({ data: [createRow({ id: "resource-2", nombre: "B" }), createRow()], error: null });
     const select = vi.fn(() => ({ order }));
     const from = vi.fn(() => ({ select }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.listAll()).resolves.toEqual([
       expect.objectContaining({ id: "resource-2", nombre: "B", estado: "activo" }),
@@ -74,7 +74,7 @@ describe("admin resource repository", () => {
     const eq = vi.fn(() => ({ single }));
     const select = vi.fn(() => ({ eq }));
     const from = vi.fn(() => ({ select }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.getById("resource-1")).resolves.toEqual(expect.objectContaining({ id: "resource-1" }));
     await expect(repository.getById("missing")).resolves.toBeNull();
@@ -87,7 +87,7 @@ describe("admin resource repository", () => {
     const select = vi.fn(() => ({ single }));
     const insert = vi.fn(() => ({ select }));
     const from = vi.fn(() => ({ insert }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.create(validDraft)).resolves.toEqual(expect.objectContaining({ id: "created" }));
     expect(insert).toHaveBeenCalledWith([expect.objectContaining({ nombre: "Centro admin", estado: "activo" })]);
@@ -99,7 +99,7 @@ describe("admin resource repository", () => {
     const eq = vi.fn(() => ({ select }));
     const update = vi.fn(() => ({ eq }));
     const from = vi.fn(() => ({ update }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.update("updated", { ...validDraft, nombre: "Centro editado" })).resolves.toEqual(
       expect.objectContaining({ id: "updated", nombre: "Centro editado" })
@@ -115,7 +115,7 @@ describe("admin resource repository", () => {
     const eq = vi.fn(() => ({ select }));
     const update = vi.fn(() => ({ eq }));
     const from = vi.fn(() => ({ update }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient, now: () => archivedAt });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient, now: () => archivedAt });
 
     await expect(repository.archive("archived")).resolves.toEqual(expect.objectContaining({ id: "archived", estado: "inactivo", deletedAt: archivedAt }));
     expect(update).toHaveBeenCalledWith({ estado: "inactivo", deleted_at: archivedAt });
@@ -126,7 +126,7 @@ describe("admin resource repository", () => {
     const eq = vi.fn().mockResolvedValue({ data: null, error: null });
     const deleteQuery = vi.fn(() => ({ eq }));
     const from = vi.fn(() => ({ delete: deleteQuery }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.delete("resource-1")).resolves.toBeUndefined();
     expect(from).toHaveBeenCalledWith("resources");
@@ -142,7 +142,7 @@ describe("admin resource repository", () => {
     const deletedEq = vi.fn().mockResolvedValue({ data: null, error: { message: "RLS: delete denied" } });
     const deleteQuery = vi.fn(() => ({ eq: deletedEq }));
     const from = vi.fn(() => ({ update: archivedUpdate, delete: deleteQuery }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient, now: () => "2026-05-12T12:00:00Z" });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient, now: () => "2026-05-12T12:00:00Z" });
 
     await expect(repository.archive("resource-1")).rejects.toThrow("No se pudo archivar recurso");
     await expect(repository.delete("resource-1")).rejects.toThrow("No se pudo eliminar recurso");
@@ -154,7 +154,7 @@ describe("admin resource repository", () => {
     const order = vi.fn().mockResolvedValue({ data: null, error: { message: "RLS: sensitive internal detail" } });
     const select = vi.fn(() => ({ order }));
     const from = vi.fn(() => ({ select }));
-    const repository = createAdminResourceRepository({ client: { from } as AdminResourceClient });
+    const repository = createAdminResourceRepository({ client: { from } as unknown as AdminResourceClient });
 
     await expect(repository.listAll()).rejects.toThrow(AdminResourcePersistenceError);
     await expect(repository.listAll()).rejects.toThrow("No se pudo cargar recursos");
