@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 function optionalTextToSql(value) {
   const normalizedValue = typeof value === "string" ? value.trim() : value;
 
@@ -6,14 +8,17 @@ function optionalTextToSql(value) {
 
 const DEFAULT_REAL_DATA_IMPORT_DATE = "2026-05-13";
 const DEFAULT_REAL_DATA_REVIEW_BY = "2026-06-13";
+const RESOURCE_UUID_NAMESPACE = "mapa-recursos-sociales/resources/v1";
 
-function slugify(value) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+function createDeterministicUuid(value) {
+  const hash = createHash("sha1").update(`${RESOURCE_UUID_NAMESPACE}:${value}`).digest();
+
+  hash[6] = (hash[6] & 0x0f) | 0x50;
+  hash[8] = (hash[8] & 0x3f) | 0x80;
+
+  const hex = hash.subarray(0, 16).toString("hex");
+
+  return [hex.slice(0, 8), hex.slice(8, 12), hex.slice(12, 16), hex.slice(16, 20), hex.slice(20)].join("-");
 }
 
 function inferResourceType(section) {
@@ -42,10 +47,13 @@ function formatRawResourceNotes(resource) {
   return notes.join(" ");
 }
 
-function createRawResourceId(resource, index) {
+function createResourceSeedId(resource, index) {
   const suffix = typeof index === "number" ? `-${String(index + 1).padStart(3, "0")}` : "";
+  const stableKey = isGeocodedResource(resource)
+    ? `${resource.centro}|${resource.direccion}|${resource.seccion}${suffix}`
+    : `${resource.id}${suffix}`;
 
-  return `recurso-real-${slugify(resource.centro)}${suffix}`;
+  return createDeterministicUuid(stableKey);
 }
 
 function isSupabaseContractResource(resource) {
@@ -58,7 +66,7 @@ function isGeocodedResource(resource) {
 
 function mapGeocodedResourceToSupabaseSeedRow(resource, index) {
   return {
-    id: createRawResourceId(resource, index),
+    id: createResourceSeedId(resource, index),
     nombre: resource.centro,
     tipo: inferResourceType(resource.seccion),
     direccion: resource.direccion,
@@ -90,7 +98,7 @@ export function mapResourceToSupabaseSeedRow(resource, index) {
   }
 
   return {
-    id: resource.id,
+    id: createResourceSeedId(resource, index),
     nombre: resource.nombre,
     tipo: resource.tipo,
     direccion: resource.direccion,

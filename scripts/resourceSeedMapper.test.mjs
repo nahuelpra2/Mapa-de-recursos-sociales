@@ -51,7 +51,7 @@ function omitOptionalTextFields(value) {
 describe("resource seed mapper", () => {
   it("maps the local Resource shape to the public.resources seed row shape", () => {
     expect(mapResourceToSupabaseSeedRow(resource)).toEqual({
-      id: "recurso-test-001",
+      id: "c1e448b0-038b-58f5-81c1-61cc9d104229",
       nombre: "Recurso de prueba",
       tipo: "Centro de atención",
       direccion: "Calle Test 123",
@@ -104,7 +104,7 @@ describe("resource seed mapper", () => {
 
   it("maps geocoded real resources to the Supabase seed row contract", () => {
     expect(mapResourceToSupabaseSeedRow(geocodedResources[0], 0)).toEqual({
-      id: "recurso-real-aves-de-paso-111-caigua-1337-001",
+      id: "7c8c16ab-4187-5b88-aa1c-8d247c3d39bd",
       nombre: "AVES DE PASO 111- Caiguá 1337",
       tipo: "Refugio nocturno",
       direccion: "Caiguá 1337 esq. Millán",
@@ -145,16 +145,17 @@ describe("resource seed mapper", () => {
     expect(rows.every((row) => allowedTypes.has(row.tipo))).toBe(true);
     expect(rows.every((row) => row.verification_status === "needs_review")).toBe(true);
     expect(rows.every((row) => row.maintenance_owner.length > 0)).toBe(true);
+    expect(rows.every((row) => /^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(row.id))).toBe(true);
     expect(new Set(rows.map((row) => row.id)).size).toBe(rows.length);
   });
 
-  it("preserves deterministic JSON order for repeatable upserts", () => {
+  it("preserves deterministic UUID order for repeatable upserts", () => {
     expect(
       mapResourcesToSupabaseSeedRows([
         { ...resource, id: "b", nombre: "B" },
         { ...resource, id: "a", nombre: "A" }
       ]).map((row) => row.id)
-    ).toEqual(["b", "a"]);
+    ).toEqual(["d26dfed8-1572-53f6-b7f1-e39ea24e7d51", "bebfc2e0-8d12-5a44-a921-1fdf99b9d607"]);
   });
 
   it("documents local-only Supabase seed environment variables without VITE prefixes", () => {
