@@ -1,12 +1,22 @@
 import { describe, expect, it, vi } from "vitest";
 import { checkIsAdmin, restoreAdminSession, signInAdmin, signOutAdmin } from "./adminAuth";
+import type { AdminAuthClient } from "./adminAuth";
+
+type AdminAuthMockClient = AdminAuthClient & {
+  auth: {
+    signInWithPassword: ReturnType<typeof vi.fn>;
+    getSession: ReturnType<typeof vi.fn>;
+    signOut: ReturnType<typeof vi.fn>;
+  };
+  rpc: ReturnType<typeof vi.fn>;
+};
 
 function createClient(overrides: Partial<{
   signInWithPassword: ReturnType<typeof vi.fn>;
   getSession: ReturnType<typeof vi.fn>;
   signOut: ReturnType<typeof vi.fn>;
   rpc: ReturnType<typeof vi.fn>;
-}> = {}) {
+}> = {}): AdminAuthMockClient {
   return {
     auth: {
       signInWithPassword: overrides.signInWithPassword ?? vi.fn(),
@@ -14,7 +24,7 @@ function createClient(overrides: Partial<{
       signOut: overrides.signOut ?? vi.fn()
     },
     rpc: overrides.rpc ?? vi.fn()
-  };
+  } as AdminAuthMockClient;
 }
 
 const adminSession = { user: { id: "admin-user" }, access_token: "token" };
