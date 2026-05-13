@@ -1,0 +1,578 @@
+[
+  {
+    "seccion": "COLMENA - Nocturno Hombres",
+    "centro": "AVES DE PASO 111- Caiguá 1337",
+    "direccion": "Caiguá 1337 esq. Millán",
+    "barrio": "Atahualpa",
+    "contacto": "avesdepaso111@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Hombres",
+    "centro": "CIIE – Lanús 5672",
+    "direccion": "Lanús 5672 esq. Garzón",
+    "barrio": "Colón",
+    "contacto": "centrociie111@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Hombres",
+    "centro": "CIIE – Mac Coll 1922",
+    "direccion": "Mac Coll 1922 esq. Zorrilla",
+    "barrio": "Colón",
+    "contacto": "centrociie112@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Hombres",
+    "centro": "SUMANDO OPCIONES – Carlos María Ramírez 590",
+    "direccion": "Carlos María Ramírez 590 esq. Real",
+    "barrio": "La Teja",
+    "contacto": "sumandoopciones111@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Hombres",
+    "centro": "SUMANDO OPCIONES – Pilar Costa 179",
+    "direccion": "Pilar Costa 179 esq. Carlos de la Vega",
+    "barrio": "Paso Molino",
+    "contacto": "sumandoopciones112@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Mixto",
+    "centro": "AVES DE PASO 131 – Z. Michelini 1186",
+    "direccion": "Z. Michelini 1186 BIS esq. Canelones",
+    "barrio": "Sur – Centro",
+    "contacto": "avesdepaso131@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Mixto",
+    "centro": "AVES DE PASO 132 – Millán 3386",
+    "direccion": "Millán 3386 esq. Cisplatina",
+    "barrio": "Atahualpa",
+    "contacto": "avesdepaso132@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Mixto",
+    "centro": "CIIE 131 – Hudson 5418",
+    "direccion": "Hudson 5418 esq. Yuty",
+    "barrio": "Colón",
+    "contacto": "centrociie131@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "COLMENA - Nocturno Mixto",
+    "centro": "SUMANDO OPCIONES 131 – Agraciada 2825",
+    "direccion": "Agraciada 2825 esq. Tapes",
+    "barrio": "Arroyo Seco",
+    "contacto": "sumandoopciones131@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "ECOFAMILIA - 25 de MAYO",
+    "direccion": "25 de mayo 0288",
+    "barrio": "Ciudad Vieja",
+    "contacto": "ecofamilia25demayo@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "ECOFAMILIA - Maciel",
+    "direccion": "Maciel 1531",
+    "barrio": "Aduana",
+    "contacto": "ecofamiliamaciel@gmail.com /",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "ECOFAMILIA - Piedras",
+    "direccion": "Piedras 572 esq. Juan Carlos Gómez",
+    "barrio": "Ciudad Vieja",
+    "contacto": "educadxsmacielecofamilia@gmail.com ecofamiliapiedras572@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "ECOFAMILIA - Ramón del Valle",
+    "direccion": "Ramón del Valle Inclán 2527",
+    "barrio": "Reus",
+    "contacto": "ecofamilia.inclan@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "OTRAS MANOS - La Paz 2077/79",
+    "direccion": "La Paz 2077/79",
+    "barrio": "Tres Cruces",
+    "contacto": "otrasmanoslapaz@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "OTRAS MANOS - Paysandú",
+    "direccion": "Paysandú 929 esq. Convención",
+    "barrio": "Ciudad Vieja",
+    "contacto": "otrasmanos142@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "OTRAS MANOS - San Fructuoso 1019",
+    "direccion": "San Fructuoso 1019 esq. Agraciada",
+    "barrio": "Aguada",
+    "contacto": "otrasmanoshornero@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SEA - 8 de Octubre 4593",
+    "direccion": "8 de octubre 4593",
+    "barrio": "Maroñas",
+    "contacto": "sea8deoctubre@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SEA - Barbato 1472",
+    "direccion": "Germán Barbato 1472",
+    "barrio": "Centro",
+    "contacto": "seagermanbarbato@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SEA - La Paz 1550",
+    "direccion": "La Paz 1550",
+    "barrio": "Centro",
+    "contacto": "sealapazhombres@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SEA - Miguelete 2341",
+    "direccion": "Miguelete 2341 esq. Cabildo",
+    "barrio": "Tres Cruces",
+    "contacto": "seacabildoposada@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SER SOLIDARIO - Juan José de Amezaga 1914",
+    "direccion": "Juan José de Amezaga 1914",
+    "barrio": "Villa Muñoz",
+    "contacto": "",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SER SOLIDARIO - L. A. de Herrera 3132",
+    "direccion": "L.A de Herrera 3132",
+    "barrio": "Jacinto Vera",
+    "contacto": "sersolidarioherrera@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SER SOLIDARIO - Uruguay 1486 (NUEVO)",
+    "direccion": "Uruguay 1486 esq. Vázquez",
+    "barrio": "Centro",
+    "contacto": "sersolidariovazquez@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SER SOLIDARIO - Matilde Pacheco 3789",
+    "direccion": "Matilde Pacheco 3789",
+    "barrio": "Piedras Blancas",
+    "contacto": "sersolidariomatildepacheco@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "SEA - Casavalle 4405 Bis",
+    "direccion": "Casavalle 4405 Bis",
+    "barrio": "Casavalle",
+    "contacto": "casavalleinstr@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "BETHANIA - Uruguayana 3422",
+    "direccion": "Uruguayana 3422",
+    "barrio": "Bella Vista",
+    "contacto": "bethaniauruguayana@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "BETHANIA - Nicaragua 1688",
+    "direccion": "Nicaragua 1688",
+    "barrio": "Centro",
+    "contacto": "nicaraguabethania@gmail.com;",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Hombres",
+    "centro": "BETHANIA - Tres Ombúes",
+    "direccion": "Pedro Giralt y Alagoas (Centro Cívico Tres Ombúes)",
+    "barrio": "Tres Ombues",
+    "contacto": "",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "ECOFAMILIA - Uruguay 1237",
+    "direccion": "Uruguay 1237",
+    "barrio": "Centro",
+    "contacto": "ecofamiliauruguay@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "SER SOLIDARIO - Gral. Flores 3596",
+    "direccion": "Gral. Flores 3596",
+    "barrio": "Perez Castellanos - Cerrito",
+    "contacto": "sersolidariogralflores@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "SER SOLIDARIO - León Pérez 3467",
+    "direccion": "León Pérez 3467",
+    "barrio": "Cerrito",
+    "contacto": "sersolidariocerrito@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "SER SOLIDARIO - Uruguay 1224",
+    "direccion": "Uruguay 1224",
+    "barrio": "Centro",
+    "contacto": "sersolidario.uruguayy@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "BETHANIA - Batlle y Ordoñez 2365",
+    "direccion": "Batlle y Ordoñez 2365",
+    "barrio": "La Blanqueada",
+    "contacto": "Bethaniapropios@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "BETHANIA - Durazno 1328",
+    "direccion": "Durazno 1328",
+    "barrio": "Barrio Sur",
+    "contacto": "ctbethaniadurazno@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "BETHANIA - Enriqueta Compte y Riqué 1287",
+    "direccion": "Enriqueta Compte y Riquè 1287",
+    "barrio": "Aguada",
+    "contacto": "bethaniaenriqueta@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mixto",
+    "centro": "OTRAS MANOS - Jiménez de Aréchaga 3112",
+    "direccion": "Jiménez de Aréchaga 3112",
+    "barrio": "Barrio Vista Linda",
+    "contacto": "otrasmanosjimenezdearechaga@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mujeres",
+    "centro": "SEA - Martín García 1218",
+    "direccion": "Martín García 1218",
+    "barrio": "Aguada",
+    "contacto": "seamartingarcia@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Nocturno Mujeres",
+    "centro": "Centinelas - Orosman Moratorio 4840",
+    "direccion": "Orosman Moratorio 4840 esq Murillo",
+    "barrio": "Cruz de Carrasco",
+    "contacto": "Centinlasenaccion@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Pozos del Rey 1378",
+    "direccion": "Pozos del Rey 1378",
+    "barrio": "Centro",
+    "contacto": "otrasmanospozos@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - República de Corea 3351",
+    "direccion": "República de Corea 3351 esq. Busquets",
+    "barrio": "Mercado Modelo",
+    "contacto": "republicadecoreaotrasmanos@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Presidente Berro 2560",
+    "direccion": "Presidente Berro 2560",
+    "barrio": "Cordón",
+    "contacto": "otrasmanosberro@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Soriano 989",
+    "direccion": "Soriano 989",
+    "barrio": "Centro",
+    "contacto": "huertootrasmanos@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Requena 1325",
+    "direccion": "Requena 1325",
+    "barrio": "Cordón",
+    "contacto": "otrasmanosrequena@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Moltke 1325",
+    "direccion": "Moltke 1408",
+    "barrio": "Peñarol",
+    "contacto": "otrasmanosmoltke@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Victor Haedo 2245",
+    "direccion": "Victor Haedo 2245",
+    "barrio": "Cordón",
+    "contacto": "victorhaedo2245om@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Isla de Flores 1323",
+    "direccion": "Isla de Flores 1323",
+    "barrio": "Barrio Sur",
+    "contacto": "otrasmanosisladeflores@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Azotea de Lima 4298",
+    "direccion": "Azotea de Lima 4298",
+    "barrio": "Piedras Blancas",
+    "contacto": "centroazoteadelima@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "SER SOLIDARIO - Miguelete 1462",
+    "direccion": "Miguelete 1462",
+    "barrio": "Cordón",
+    "contacto": "sersolidariomiguelete@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Magallanes 1025",
+    "direccion": "Magallanes 1025",
+    "barrio": "Centro",
+    "contacto": "otrasmanossanjose@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Comodoro Coe 3663",
+    "direccion": "Comodoro Coe 3663",
+    "barrio": "Buceo",
+    "contacto": "otrasmanoscomodorocoe@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "BAIPORÁ - Rondeau 1494 PB",
+    "direccion": "Rondeau 1494",
+    "barrio": "Centro",
+    "contacto": "rondeauplaninvierno@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Petrarca 880",
+    "direccion": "Petrarca 880",
+    "barrio": "",
+    "contacto": "petrarcaotrasmanos@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Agraciada 3136",
+    "direccion": "Agraciada 3136",
+    "barrio": "Bella Vista",
+    "contacto": "agraciada3136om@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "MADRES DEL CERRO - Luis Troccoli",
+    "direccion": "Av Dr Santin Carlos Rossi 4602 / Estadio Monumental Luis Trocoli en el Cerro.",
+    "barrio": "Cerro",
+    "contacto": "fundacionmadresdelcerro.trocoli@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "OTRAS MANOS - Larrobla 946",
+    "direccion": "Larrobla 946",
+    "barrio": "Bella Vista",
+    "contacto": "otrasmanoslarrobla@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "SER SOLIDARIO - 18 de Julio 1515",
+    "direccion": "18 de julio 1515",
+    "barrio": "Centro",
+    "contacto": "sersolidario181515@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "ECOFAMILIA - Artagaveytia 2435",
+    "direccion": "Artagaveytia 2435 esq. Gral. José María Luna",
+    "barrio": "Aguada",
+    "contacto": "arianapaezberrutti@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "BETHANIA - Emilio Frugoni 1369",
+    "direccion": "Emilio Frugoni 1369",
+    "barrio": "Cordón",
+    "contacto": "",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Área Metropolitana",
+    "centro": "ECOFAMILIA - Ana Monterroso 2194",
+    "direccion": "Ana Monterroso 2194",
+    "barrio": "Cordón",
+    "contacto": "arianapaezberrutti@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Puertas Abiertas",
+    "centro": "CODOF - Tres Cruces",
+    "direccion": "Requena 1831 esq. La Paz",
+    "barrio": "Tres Cruces",
+    "contacto": "puertasabiertascodof@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Puertas Abiertas",
+    "centro": "PADRES OBLATOS - Casabó",
+    "direccion": "Sierra Leona 3863",
+    "barrio": "Casabó",
+    "contacto": "puertasabiertascasabo@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Puertas Abiertas",
+    "centro": "HERMANA MARTA - Las Acacias",
+    "direccion": "Manuel Meléndez 4447 esq Cayambe",
+    "barrio": "Las Acacias",
+    "contacto": "puertasabiertashnamarta@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Puertas Abiertas",
+    "centro": "VOZ Y VIDA - Ciudad Vieja",
+    "direccion": "Uruguay 814 esq. Florida",
+    "barrio": "Ciudad Vieja",
+    "contacto": "puertasabiertasvozyvida@gmail.com",
+    "lat": null,
+    "lng": null
+  },
+  {
+    "seccion": "Plan Nacional Invierno - Puertas Abiertas",
+    "centro": "BIEN ALTO - Centro",
+    "direccion": "Soriano 989",
+    "barrio": "Centro",
+    "contacto": "elvientoquetodoempuja.bienalto@gmail.com",
+    "lat": null,
+    "lng": null
+  }
+]
