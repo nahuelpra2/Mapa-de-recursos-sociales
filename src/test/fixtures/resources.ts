@@ -1,10 +1,12 @@
 import type { Resource } from "../../types/resource";
+import { RESOURCE_MODALIDADES } from "../../data/resourceSchema";
 
 export function createResource(overrides: Partial<Resource> = {}): Resource {
   return {
     id: "resource-fixture",
     nombre: "Recurso fixture",
     tipo: "Centro de atención",
+    modalidad: RESOURCE_MODALIDADES[0],
     direccion: "Calle Fixture 123",
     barrio: "Barrio fixture",
     lat: -34.6037,

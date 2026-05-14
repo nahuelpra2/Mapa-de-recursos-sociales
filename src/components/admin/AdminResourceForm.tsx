@@ -1,5 +1,6 @@
 import type { FormEvent } from "react";
 import type { AdminResourceDraft } from "../../data/adminResourceSchema";
+import { RESOURCE_MODALIDADES } from "../../data/resourceSchema";
 import type { AdminResourceFieldErrors } from "../../hooks/useAdminResources";
 import { getAdminResourceFormPresentation, type AdminResourceFormFieldName, type AdminResourceFormMode } from "./adminResourceFormModel";
 
@@ -75,21 +76,30 @@ export function AdminResourceForm({ mode, draft, fieldErrors, formError, isSubmi
               return (
                 <label key={field.name} className="flex flex-col gap-2 text-sm text-slate-200">
                   <span>{field.required ? `${field.label} *` : field.label}</span>
-                  {field.input === "textarea" ? (
-                    <textarea className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))} />
-                  ) : field.input === "checkbox" ? (
-                    <input className="h-5 w-5" type="checkbox" checked={Boolean(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.checked))} />
-                  ) : field.input === "select" && field.name === "tipo" ? (
-                    <select className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))}>
-                      <option>Refugio nocturno</option>
-                      <option>Centro diurno</option>
-                      <option>Puerta abierta</option>
-                      <option>Centro de atención</option>
-                      <option>Otro</option>
-                    </select>
-                  ) : (
-                    <input className={commonClass} type={field.input} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))} />
-                  )}
+                    {field.input === "textarea" ? (
+                      <textarea className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))} />
+                    ) : field.input === "checkbox" ? (
+                      <input className="h-5 w-5" type="checkbox" checked={Boolean(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.checked))} />
+                    ) : field.input === "select" && field.name === "tipo" ? (
+                      <select className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))}>
+                        <option>Refugio nocturno</option>
+                        <option>Centro diurno</option>
+                        <option>Puerta abierta</option>
+                        <option>Centro de atención</option>
+                        <option>Otro</option>
+                      </select>
+                    ) : field.input === "select" && field.name === "modalidad" ? (
+                      <select className={commonClass} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))}>
+                        <option value="">Seleccioná una modalidad</option>
+                        {RESOURCE_MODALIDADES.map((modalidad) => (
+                          <option key={modalidad} value={modalidad}>
+                            {modalidad}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input className={commonClass} type={field.input} value={String(value)} disabled={presentation.disabled} onChange={(event) => onChange(setDraftValue(draft, field.name, event.target.value))} />
+                    )}
                   {field.error ? <span className="text-xs text-red-200">{field.error}</span> : null}
                 </label>
               );

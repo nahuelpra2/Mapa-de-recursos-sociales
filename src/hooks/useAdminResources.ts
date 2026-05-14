@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminResourceRepository } from "../data/adminResourceRepository";
+import { RESOURCE_MODALIDADES } from "../data/resourceSchema";
 import { adminResourceDraftSchema, toAdminResourceDraft, type AdminResource, type AdminResourceDraft } from "../data/adminResourceSchema";
 import type { AdminResourceRepository } from "../domain/resources/adminResourceRepository";
 import { appRoutes } from "../routes";
@@ -221,6 +222,7 @@ export function createAdminResourceDraft(): AdminResourceDraft {
   return {
     nombre: "",
     tipo: "Otro",
+    modalidad: RESOURCE_MODALIDADES[0],
     direccion: "",
     barrio: undefined,
     lat: 0,

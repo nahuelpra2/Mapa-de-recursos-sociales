@@ -5,6 +5,7 @@ export type AdminResourceFormMode = "create" | "edit";
 export type AdminResourceFormFieldName =
   | "nombre"
   | "tipo"
+  | "modalidad"
   | "direccion"
   | "barrio"
   | "lat"
@@ -50,6 +51,7 @@ const FIELDSETS: AdminResourceFormFieldsetDefinition[] = [
     fields: [
       { name: "nombre", label: "Nombre", required: true, input: "text" },
       { name: "tipo", label: "Tipo", required: true, input: "select" },
+      { name: "modalidad", label: "Modalidad", required: true, input: "select" },
       { name: "direccion", label: "Dirección", required: true, input: "text" },
       { name: "barrio", label: "Barrio", required: false, input: "text" },
       { name: "lat", label: "Latitud", required: true, input: "number" },
