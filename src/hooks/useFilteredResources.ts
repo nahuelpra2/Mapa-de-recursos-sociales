@@ -27,6 +27,7 @@ function matchesSearch(resource: Resource, search: string) {
     [
       resource.nombre,
       resource.tipo,
+      resource.modalidad,
       resource.direccion,
       resource.barrio,
       resource.telefono,
@@ -47,6 +48,7 @@ export function filterResources({ resources, search, filters, origin }: UseFilte
   return resources
     .filter((resource) => matchesSearch(resource, search))
     .filter((resource) => !filters.tipo || resource.tipo === filters.tipo)
+    .filter((resource) => !filters.modalidad || resource.modalidad === filters.modalidad)
     .filter((resource) => !filters.poblacion || resource.poblacion.includes(filters.poblacion))
     .filter((resource) => !filters.abiertoAhora || isOpenNow(resource.horario))
     .map((resource) => ({

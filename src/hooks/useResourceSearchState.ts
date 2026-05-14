@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import type { Coordinates, FiltersState, Resource, SearchOrigin } from "../types/resource";
 import { hasValidCoordinates } from "../utils/coordinates";
 
-const defaultFilters: FiltersState = {
+export const defaultFilters: FiltersState = {
   tipo: "",
+  modalidad: "",
   poblacion: "",
   abiertoAhora: false
 };

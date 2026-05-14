@@ -1,6 +1,7 @@
-import type { ResourceFromSchema, ResourceTypeFromSchema } from "../data/resourceSchema";
+import type { ResourceFromSchema, ResourceModalidadFromSchema, ResourceTypeFromSchema } from "../data/resourceSchema";
 
 export type ResourceType = ResourceTypeFromSchema;
+export type ResourceModalidad = ResourceModalidadFromSchema;
 
 export type Coordinates = {
   lat: number;
@@ -15,6 +16,7 @@ export type ResourceWithDistance = Resource & {
 
 export type FiltersState = {
   tipo: ResourceType | "";
+  modalidad: ResourceModalidad | "";
   poblacion: string;
   abiertoAhora: boolean;
 };

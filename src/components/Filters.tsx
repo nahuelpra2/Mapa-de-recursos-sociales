@@ -1,3 +1,4 @@
+import { RESOURCE_MODALIDADES } from "../data/resourceSchema";
 import type { FiltersState, ResourceType } from "../types/resource";
 
 const resourceTypes: ResourceType[] = [
@@ -29,7 +30,7 @@ export function Filters({ filters, populationOptions, onChange, onClear }: Filte
         </button>
       </div>
 
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <div className="mt-4 grid gap-4 sm:grid-cols-3">
         <label className="block text-sm font-semibold text-slate-800">
           Tipo de recurso
           <select
@@ -41,6 +42,22 @@ export function Filters({ filters, populationOptions, onChange, onClear }: Filte
             {resourceTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block text-sm font-semibold text-slate-800">
+          Modalidad
+          <select
+            value={filters.modalidad}
+            onChange={(event) => onChange({ ...filters, modalidad: event.target.value as FiltersState["modalidad"] })}
+            className="mt-2 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 outline-none transition focus:border-sky-600 focus:ring-4 focus:ring-sky-100"
+          >
+            <option value="">Todas</option>
+            {RESOURCE_MODALIDADES.map((modalidad) => (
+              <option key={modalidad} value={modalidad}>
+                {modalidad}
               </option>
             ))}
           </select>

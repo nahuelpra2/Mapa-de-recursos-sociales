@@ -5,6 +5,7 @@ import { filterResources } from "./useFilteredResources";
 
 const defaultFilters: FiltersState = {
   tipo: "",
+  modalidad: "",
   poblacion: "",
   abiertoAhora: false
 };
@@ -14,6 +15,7 @@ const resources: Resource[] = [
     id: "day-center",
     nombre: "Centro Ñandú",
     tipo: "Centro diurno",
+    modalidad: "Plan Nacional Invierno - Área Metropolitana",
     direccion: "Av. Siempre Viva 123",
     lat: -34.6037,
     lng: -58.3816,
@@ -25,6 +27,7 @@ const resources: Resource[] = [
     id: "shelter",
     nombre: "Albergue Sur",
     tipo: "Refugio nocturno",
+    modalidad: undefined,
     direccion: "Calle Sur 456",
     lat: -34.6137,
     lng: -58.3816,
@@ -35,6 +38,7 @@ const resources: Resource[] = [
     id: "care-center",
     nombre: "Beta Atencion",
     tipo: "Centro de atención",
+    modalidad: "Nocturno Mixto",
     direccion: "Calle Norte 789",
     lat: -34.6537,
     lng: -58.3816,
@@ -81,6 +85,29 @@ describe("resource filtering", () => {
     });
 
     expect(result.map((resource) => resource.id)).toEqual(["day-center"]);
+  });
+
+  it("matches modalidad in search text when the resource has one", () => {
+    const result = filter({ search: "plan nacional" });
+
+    expect(result.map((resource) => resource.id)).toEqual(["day-center"]);
+  });
+
+  it("filters by exact modalidad and keeps transitional nulls out of filtered results", () => {
+    const result = filter({
+      filters: {
+        ...defaultFilters,
+        modalidad: "Nocturno Mixto"
+      }
+    });
+
+    expect(result.map((resource) => resource.id)).toEqual(["care-center"]);
+  });
+
+  it("keeps resources without modalidad visible when no modalidad filter is selected", () => {
+    const result = filter();
+
+    expect(result.map((resource) => resource.id)).toEqual(["shelter", "care-center", "day-center"]);
   });
 
   it("filters resources open now using explicit 24-hour schedules", () => {
