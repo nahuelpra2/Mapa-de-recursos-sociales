@@ -18,7 +18,6 @@ export const RESOURCE_MODALIDADES = [
   "Nocturno Mixto",
   "Nocturno Mujeres",
   "Plan Nacional Invierno - Área Metropolitana",
-  "Plan Nacional Invierno",
   "Plan Nacional Invierno - Puertas Abiertas"
 ] as const;
 
