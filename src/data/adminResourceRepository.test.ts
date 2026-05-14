@@ -5,12 +5,14 @@ import {
   type AdminResourceClient
 } from "./adminResourceRepository";
 import { type AdminResourceDraft, type AdminResourceRow } from "./adminResourceSchema";
+import { RESOURCE_MODALIDADES } from "./resourceSchema";
 
 const validDraft: AdminResourceDraft = {
   nombre: "Centro admin",
   tipo: "Centro de atención",
   direccion: "Calle Admin 123",
   barrio: "Centro",
+  modalidad: RESOURCE_MODALIDADES[1],
   lat: -34.905,
   lng: -56.185,
   telefono: "2400 0000",
@@ -32,6 +34,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     tipo: "Centro de atención",
     direccion: "Calle Admin 123",
     barrio: "Centro",
+    modalidad: RESOURCE_MODALIDADES[1],
     lat: -34.905,
     lng: -56.185,
     telefono: "2400 0000",

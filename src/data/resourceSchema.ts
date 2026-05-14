@@ -11,6 +11,19 @@ export const resourceTypeSchema = z.enum([
   "Otro"
 ]);
 
+export const RESOURCE_MODALIDADES = [
+  "COLMENA - Nocturnos Hombres",
+  "COLMENA - Nocturno Mixto",
+  "Nocturno Hombres",
+  "Nocturno Mixto",
+  "Nocturno Mujeres",
+  "Plan Nacional Invierno - Area Metropolitana",
+  "Plan Nacional Invierno",
+  "Plan Nacional Invierno - Puertas Abiertas"
+] as const;
+
+export const resourceModalidadSchema = z.enum(RESOURCE_MODALIDADES);
+
 const requiredTextSchema = z.string().min(1);
 const optionalTextSchema = z.string().min(1).optional();
 
@@ -46,6 +59,7 @@ export const resourceSchema = z
     id: requiredTextSchema,
     nombre: requiredTextSchema,
     tipo: resourceTypeSchema,
+    modalidad: resourceModalidadSchema.optional(),
     direccion: requiredTextSchema,
     barrio: optionalTextSchema,
     lat: z.number().finite().min(-90).max(90),
@@ -64,6 +78,7 @@ export const resourceSchema = z
 export const resourcesSchema = z.array(resourceSchema);
 
 export type ResourceTypeFromSchema = z.infer<typeof resourceTypeSchema>;
+export type ResourceModalidadFromSchema = z.infer<typeof resourceModalidadSchema>;
 export type ResourceFromSchema = z.infer<typeof resourceSchema>;
 
 function formatIssuePath(path: PropertyKey[]): string {

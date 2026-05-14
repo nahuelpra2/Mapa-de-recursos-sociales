@@ -11,6 +11,7 @@ export type SupabaseResourceRow = {
   id: string;
   nombre: string;
   tipo: string;
+  modalidad: NullableText;
   direccion: string;
   barrio: NullableText;
   lat: number;
@@ -38,7 +39,10 @@ export type SupabaseResourceClient = {
 type SupabaseResourceRepositoryOptions = {
   client?: SupabaseResourceClient | null;
   fallbackRepository?: ResourceRepository;
+  allowFallback?: boolean;
 };
+
+const SUPABASE_PUBLIC_RESOURCES_ERROR_MESSAGE = "Unable to load public resources from Supabase.";
 
 function optionalText(value: NullableText): string | undefined {
   return value ?? undefined;
@@ -49,6 +53,7 @@ export function mapSupabaseResourceRow(row: SupabaseResourceRow): Resource {
     id: row.id,
     nombre: row.nombre,
     tipo: row.tipo,
+    modalidad: optionalText(row.modalidad),
     direccion: row.direccion,
     barrio: optionalText(row.barrio),
     lat: row.lat,
@@ -68,21 +73,28 @@ export function mapSupabaseResourceRow(row: SupabaseResourceRow): Resource {
 
 export function createSupabaseResourceRepository({
   client = supabase as SupabaseResourceClient | null,
-  fallbackRepository = localResourceRepository
+  fallbackRepository = localResourceRepository,
+  allowFallback = true
 }: SupabaseResourceRepositoryOptions = {}): AsyncResourceRepository {
   const fallback = toAsyncResourceRepository(fallbackRepository);
 
+  function resolveFallbackOrThrow(cause: unknown): Promise<Resource[]> {
+    if (allowFallback) return fallback.listResources();
+
+    throw new Error(SUPABASE_PUBLIC_RESOURCES_ERROR_MESSAGE, { cause });
+  }
+
   async function listResources(): Promise<Resource[]> {
-    if (!client) return fallback.listResources();
+    if (!client) return resolveFallbackOrThrow(new Error("Supabase client is not configured."));
 
     try {
       const { data, error } = await client.from("resources").select("*").order("nombre", { ascending: true });
 
-      if (error || !data) return fallback.listResources();
+      if (error || !data) return resolveFallbackOrThrow(error ?? new Error("Supabase returned no resource data."));
 
       return data.map(mapSupabaseResourceRow);
-    } catch {
-      return fallback.listResources();
+    } catch (cause) {
+      return resolveFallbackOrThrow(cause);
     }
   }
 
@@ -93,4 +105,6 @@ export function createSupabaseResourceRepository({
   };
 }
 
-export const supabaseResourceRepository = createSupabaseResourceRepository();
+export const supabaseResourceRepository = createSupabaseResourceRepository({
+  allowFallback: !import.meta.env.PROD
+});

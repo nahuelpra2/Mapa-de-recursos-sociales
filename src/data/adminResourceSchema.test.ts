@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createResource } from "../test/fixtures/resources";
+import { RESOURCE_MODALIDADES } from "./resourceSchema";
 import {
   adminResourceDraftSchema,
   mapAdminResourceRow,
@@ -15,6 +16,7 @@ const validDraft: AdminResourceDraft = {
   tipo: "Centro de atención",
   direccion: "Calle Admin 123",
   barrio: "Centro",
+  modalidad: RESOURCE_MODALIDADES[0],
   lat: -34.905,
   lng: -56.185,
   telefono: "2400 0000",
@@ -36,6 +38,7 @@ function createRow(overrides: Partial<AdminResourceRow> = {}): AdminResourceRow 
     tipo: "Centro de atención",
     direccion: "Calle Admin 123",
     barrio: "Centro",
+    modalidad: RESOURCE_MODALIDADES[0],
     lat: -34.905,
     lng: -56.185,
     telefono: "2400 0000",
@@ -86,6 +89,7 @@ describe("admin resource schema helpers", () => {
       tipo: "Centro de atención",
       direccion: "Calle Admin 123",
       barrio: null,
+      modalidad: RESOURCE_MODALIDADES[0],
       lat: -34.905,
       lng: -56.185,
       telefono: null,
@@ -154,6 +158,20 @@ describe("admin resource schema helpers", () => {
       createdAt: "2026-05-11T10:00:00Z",
       updatedAt: "2026-05-11T10:30:00Z"
     });
+  });
+
+  it("rejects admin drafts without modalidad before persistence", () => {
+    const result = adminResourceDraftSchema.safeParse({
+      ...validDraft,
+      modalidad: ""
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.map((issue) => issue.path.join(".")).sort()).toContain(
+        "modalidad"
+      );
+    }
   });
 
   it("builds archive payloads that mark the row inactive and preserve deletion timestamps", () => {

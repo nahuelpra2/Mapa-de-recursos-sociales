@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { resourceSchema } from "./resourceSchema";
+import { resourceModalidadSchema, resourceSchema } from "./resourceSchema";
 import type { Resource } from "../types/resource";
 
 type NullableText = string | null;
@@ -17,6 +17,7 @@ export type AdminResourceRow = {
   id: string;
   nombre: string;
   tipo: string;
+  modalidad: string | null;
   direccion: string;
   barrio: NullableText;
   lat: number;
@@ -38,6 +39,7 @@ export type AdminResourceRow = {
 export type AdminResourcePayload = {
   nombre: string;
   tipo: string;
+  modalidad: string;
   direccion: string;
   barrio: NullableText;
   lat: number;
@@ -64,6 +66,7 @@ const optionalBlankTextSchema = z.preprocess(
 );
 
 export const adminResourceDraftSchema = resourceSchema.omit({ id: true }).extend({
+  modalidad: resourceModalidadSchema,
   barrio: optionalBlankTextSchema,
   telefono: optionalBlankTextSchema,
   horario: optionalBlankTextSchema,
@@ -93,6 +96,7 @@ export function toAdminResourcePayload(input: AdminResourceDraft): AdminResource
   return {
     nombre: draft.nombre,
     tipo: draft.tipo,
+    modalidad: draft.modalidad,
     direccion: draft.direccion,
     barrio: optionalTextToSql(draft.barrio),
     lat: draft.lat,
@@ -121,6 +125,7 @@ export function mapAdminResourceRow(row: AdminResourceRow): AdminResource {
     id: row.id,
     nombre: row.nombre,
     tipo: row.tipo,
+    modalidad: optionalTextFromSql(row.modalidad),
     direccion: row.direccion,
     barrio: optionalTextFromSql(row.barrio),
     lat: row.lat,
@@ -150,6 +155,7 @@ export function toAdminResourceDraft(resource: AdminResource): AdminResourceDraf
   return validateAdminResourceDraft({
     nombre: resource.nombre,
     tipo: resource.tipo,
+    modalidad: resource.modalidad ?? "",
     direccion: resource.direccion,
     barrio: resource.barrio,
     lat: resource.lat,
