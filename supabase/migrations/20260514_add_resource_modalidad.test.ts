@@ -9,7 +9,8 @@ describe("add resource modalidad migration", () => {
 
     expect(sql).toContain("add column if not exists modalidad text");
     expect(sql).toContain("modalidad is null or modalidad in (");
-    expect(sql).toContain("COLMENA - Nocturnos Hombres");
+    expect(sql).toContain("COLMENA - Nocturno Hombres");
+    expect(sql).toContain("Plan Nacional Invierno - Área Metropolitana");
     expect(sql).toContain("Plan Nacional Invierno - Puertas Abiertas");
     expect(sql).toContain("create index if not exists resources_modalidad_idx");
     expect(sql).toContain("backfill existing resources before any later not null hardening");

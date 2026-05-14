@@ -10,12 +10,12 @@ import {
 describe("resource modalidad schema", () => {
   it("exports the confirmed modalidad catalog in order", () => {
     expect(RESOURCE_MODALIDADES).toEqual([
-      "COLMENA - Nocturnos Hombres",
+      "COLMENA - Nocturno Hombres",
       "COLMENA - Nocturno Mixto",
       "Nocturno Hombres",
       "Nocturno Mixto",
       "Nocturno Mujeres",
-      "Plan Nacional Invierno - Area Metropolitana",
+      "Plan Nacional Invierno - Área Metropolitana",
       "Plan Nacional Invierno",
       "Plan Nacional Invierno - Puertas Abiertas"
     ]);

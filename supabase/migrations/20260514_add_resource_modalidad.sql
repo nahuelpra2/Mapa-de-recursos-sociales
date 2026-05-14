@@ -11,12 +11,12 @@ alter table public.resources
 alter table public.resources
   add constraint resources_modalidad_allowed check (
     modalidad is null or modalidad in (
-      'COLMENA - Nocturnos Hombres',
+      'COLMENA - Nocturno Hombres',
       'COLMENA - Nocturno Mixto',
       'Nocturno Hombres',
       'Nocturno Mixto',
       'Nocturno Mujeres',
-      'Plan Nacional Invierno - Area Metropolitana',
+      'Plan Nacional Invierno - Área Metropolitana',
       'Plan Nacional Invierno',
       'Plan Nacional Invierno - Puertas Abiertas'
     )
