@@ -1,13 +1,7 @@
-import { RESOURCE_MODALIDADES } from "../data/resourceSchema";
+import { RESOURCE_MODALIDADES, resourceTypeSchema } from "../data/resourceSchema";
 import type { FiltersState, ResourceType } from "../types/resource";
 
-const resourceTypes: ResourceType[] = [
-  "Refugio nocturno",
-  "Centro diurno",
-  "Puerta abierta",
-  "Centro de atenci\u00f3n",
-  "Otro"
-];
+const resourceTypes: ResourceType[] = [...resourceTypeSchema.options];
 
 type FiltersProps = {
   filters: FiltersState;

@@ -47,6 +47,13 @@ describe("ResourceCard", () => {
     expect(text).not.toContain("Copiar datos");
   });
 
+  it("keeps public cards working when modalidad is still missing", () => {
+    const resource = createResource({ modalidad: undefined });
+
+    expect(renderCardText(resource)).toContain("Ver detalle");
+    expect(renderExpandedCardText(resource)).toContain("Copiar datos");
+  });
+
   it("shows the full operational detail when expanded", () => {
     const text = renderExpandedCardText(createResource({ observaciones: "Traer documentacion si corresponde" }));
 

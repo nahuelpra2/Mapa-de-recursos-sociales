@@ -34,4 +34,17 @@ describe("resource clipboard text", () => {
     expect(text).toContain("Centro: Recurso fixture");
     expect(text).not.toContain("Observaciones:");
   });
+
+  it("still builds clipboard text for transitional resources without modalidad", () => {
+    const text = buildResourceClipboardText(
+      createResource({
+        modalidad: undefined,
+        observaciones: undefined
+      })
+    );
+
+    expect(text).toContain("Centro: Recurso fixture");
+    expect(text).toContain("Tipo: Centro de atención");
+    expect(text).not.toContain("Modalidad:");
+  });
 });

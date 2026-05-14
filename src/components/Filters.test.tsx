@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { Filters } from "./Filters";
-import { RESOURCE_MODALIDADES } from "../data/resourceSchema";
+import { RESOURCE_MODALIDADES, resourceTypeSchema } from "../data/resourceSchema";
 import type { FiltersState } from "../types/resource";
 
 function collectElements(node: unknown): Array<{ type?: unknown; props?: { children?: unknown; value?: unknown } }> {
@@ -23,6 +23,27 @@ function collectText(node: unknown): string[] {
 }
 
 describe("Filters", () => {
+  it("reuses the canonical resource type catalog for the type filter", () => {
+    const filters: FiltersState = {
+      tipo: "Centro diurno",
+      modalidad: "",
+      poblacion: "",
+      abiertoAhora: false
+    };
+
+    const tree = Filters({ filters, populationOptions: ["Personas adultas"], onChange: () => undefined, onClear: () => undefined });
+    const labels = collectElements(tree).filter((element) => element.type === "label");
+    const tipoLabel = labels.find((element) => collectText(element).join(" ").includes("Tipo de recurso"));
+
+    expect(tipoLabel).toBeDefined();
+
+    const select = collectElements(tipoLabel).find((element) => element.type === "select");
+    const options = collectElements(select).filter((element) => element.type === "option");
+
+    expect(select?.props?.value).toBe("Centro diurno");
+    expect(options.map((option) => collectText(option).join(" "))).toEqual(["Todos", ...resourceTypeSchema.options]);
+  });
+
   it("renders the modalidad control with the current value and catalog options", () => {
     const filters: FiltersState = {
       tipo: "",
