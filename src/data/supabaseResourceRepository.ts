@@ -81,7 +81,7 @@ export function createSupabaseResourceRepository({
   function resolveFallbackOrThrow(cause: unknown): Promise<Resource[]> {
     if (allowFallback) return fallback.listResources();
 
-    throw new Error(SUPABASE_PUBLIC_RESOURCES_ERROR_MESSAGE, { cause });
+    throw Object.assign(new Error(SUPABASE_PUBLIC_RESOURCES_ERROR_MESSAGE), { cause });
   }
 
   async function listResources(): Promise<Resource[]> {
